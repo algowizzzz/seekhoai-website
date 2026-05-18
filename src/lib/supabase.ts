@@ -22,6 +22,11 @@ export function getSupabase(): SupabaseClient | null {
   if (cached) return cached;
   cached = createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
+    global: {
+      // Bypass Next.js's automatic fetch cache so reads always hit the DB.
+      // Without this, listAll() can return rows from a long-cached response.
+      fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
+    },
   });
   return cached;
 }
