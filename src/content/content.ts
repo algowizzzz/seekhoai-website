@@ -49,100 +49,189 @@ export const hero = {
 export const pillars = [
   {
     id: "01",
-    title: "Prompt Engineering",
+    title: "Prompt Engineering Mastery",
     description:
-      "Write prompts that ship. From zero-shot to chain-of-thought, learn the patterns top AI engineers use to extract reliable, production-grade output.",
+      "Learn advanced prompt techniques with ChatGPT 4 & MidJourney for high-quality content creation.",
   },
   {
     id: "02",
-    title: "ChatGPT Mastery",
+    title: "Business Productivity with AI",
     description:
-      "Move beyond casual use. Build custom GPTs, automate workflows, and turn ChatGPT into a force-multiplier for your work and business.",
+      "Optimize operations, save time, and reduce costs using cutting-edge AI tools.",
   },
   {
     id: "03",
-    title: "MidJourney & Visual AI",
+    title: "AI-Driven SEO & Marketing",
     description:
-      "Generate brand-grade visuals on demand. Master parameters, style references, and the full creative pipeline from prompt to print.",
+      "Generate SEO-optimized blog posts and affiliate content with ChatGPT automation.",
   },
   {
     id: "04",
-    title: "Vibe Coding",
+    title: "Creative & Digital Products",
     description:
-      "Build real software with AI as your co-pilot. Cursor, Claude Code, and the new way to ship products without a traditional engineering team.",
+      "Use MidJourney to create, publish, and sell artwork on Etsy and print-on-demand platforms.",
+  },
+  {
+    id: "05",
+    title: "Build a Startup with AI",
+    description:
+      "Develop MVP code, business strategy, operations, HR, and legal plans using ChatGPT.",
+  },
+  {
+    id: "06",
+    title: "Email Automation & Engagement",
+    description:
+      "Automate newsletters, customer support, and marketing campaigns effectively.",
+  },
+  {
+    id: "07",
+    title: "Career Development Tools",
+    description:
+      "Let ChatGPT assist with resumes, cover letters, and interview preparation.",
+  },
+  {
+    id: "08",
+    title: "Social Media & Campaigns",
+    description:
+      "Create engaging campaigns with ChatGPT and MidJourney content creation.",
+  },
+  {
+    id: "09",
+    title: "Vibe Coding & Data Projects",
+    description:
+      "Modern approach to coding: manage data, build GUIs, and visualize insights with ChatGPT support.",
+  },
+  {
+    id: "10",
+    title: "AI Agents and Automation",
+    description:
+      "Build sophisticated AI agents using LangChain and LangGraph for complex workflows and intelligent task orchestration.",
   },
 ];
 
 export const curriculum = {
-  title: "6 modules. 60+ lessons. 1 transformation.",
+  title: "Complete Curriculum",
   subtitle:
     "Most students finish in 4–6 weeks at ~3 hours/week. You set the pace.",
   modules: [
     {
       number: "01",
-      title: "AI Foundations & Mental Models",
-      lessons: [
-        "How modern AI actually works (no math required)",
-        "The capability ladder — what LLMs can and can't do",
-        "Picking the right tool for the right job",
-        "Setting up your AI workspace",
-        "Costs, limits, and how to think about pricing",
+      title: "Foundational Prompt Engineering",
+      description:
+        "Master core principles, prompt strategies, and scalable structures with ChatGPT.",
+      hours: "3 hours",
+      lessons: "12 lessons",
+      topics: [
+        "Understanding AI Language Models",
+        "Prompt Engineering Fundamentals",
+        "Advanced Prompting Techniques",
+        "ChatGPT Best Practices",
+        "Scalable Prompt Structures",
       ],
     },
     {
       number: "02",
-      title: "Prompt Engineering Deep Dive",
-      lessons: [
-        "The anatomy of a high-leverage prompt",
-        "Zero-shot, few-shot, chain-of-thought patterns",
-        "Roleplay, persona, and constraint techniques",
-        "Iterating: from rough draft to production prompt",
-        "Building your personal prompt library",
-        "Evaluating prompt quality at scale",
+      title: "Advanced AI Model Exploration",
+      description:
+        "Hands-on experience with Bing AI, Gemini, Claude, DALL-E, and Perplexity AI.",
+      hours: "2.5 hours",
+      lessons: "10 lessons",
+      topics: [
+        "Bing AI Integration",
+        "Google Gemini Workflows",
+        "Claude for Complex Tasks",
+        "DALL-E Image Generation",
+        "Perplexity AI Research",
       ],
     },
     {
       number: "03",
-      title: "ChatGPT, Custom GPTs & Automation",
-      lessons: [
-        "ChatGPT power-user workflows",
-        "Building Custom GPTs end-to-end",
-        "Hooking GPTs to your own data and APIs",
-        "Automation with Zapier + ChatGPT",
-        "Voice, vision, and the multimodal stack",
+      title: "MidJourney for AI Art Mastery",
+      description:
+        "Create, market, and monetize AI art from basics to advanced parameters.",
+      hours: "4 hours",
+      lessons: "15 lessons",
+      topics: [
+        "MidJourney Fundamentals",
+        "Advanced Parameters & Styles",
+        "Commercial Art Creation",
+        "Print-on-Demand Setup",
+        "Digital Product Marketing",
       ],
     },
     {
       number: "04",
-      title: "MidJourney & Generative Visuals",
-      lessons: [
-        "MidJourney syntax and the parameter cheat sheet",
-        "Style references and consistent character work",
-        "Brand-grade output: composition, color, lighting",
-        "Upscaling, editing, and print prep",
-        "The full creative pipeline from brief to delivery",
+      title: "Real-World Projects & Applications",
+      description:
+        "Build ebooks, blog content, startup ideas, and marketing campaigns.",
+      hours: "5 hours",
+      lessons: "18 lessons",
+      topics: [
+        "eBook Creation Pipeline",
+        "SEO Blog Content Generation",
+        "Startup Ideation Process",
+        "Email Marketing Automation",
+        "Social Media Campaign Design",
       ],
     },
     {
       number: "05",
-      title: "Vibe Coding — Building with Cursor & Claude",
-      lessons: [
-        "Setting up Cursor and Claude Code",
-        "The new development loop: prompt, review, ship",
-        "Building a full feature without writing it yourself",
-        "Reading code AI writes — and catching its mistakes",
-        "Deploying to the web in one afternoon",
+      title: "Vibe Coding & Data Visualization",
+      description:
+        "Modern coding approach: build apps, automate tasks, visualize data with AI.",
+      hours: "4.5 hours",
+      lessons: "16 lessons",
+      topics: [
+        "AI-Assisted Development",
+        "Interactive App Building",
+        "Task Automation Scripts",
+        "Data Visualization Techniques",
+        "GUI Development with AI",
       ],
     },
     {
       number: "06",
-      title: "Capstone — Ship Your First AI Product",
-      lessons: [
-        "Picking a problem worth solving",
-        "Scoping a one-week build",
-        "Building, testing, and shipping your project",
-        "Personalized written feedback from Saad",
-        "Going public: launching on social and IndieHackers",
+      title: "AI Business & Productivity Tools",
+      description:
+        "Leverage ChatGPT for SEO, affiliate marketing, and productivity optimization.",
+      hours: "3.5 hours",
+      lessons: "14 lessons",
+      topics: [
+        "SEO Content Strategy",
+        "Affiliate Marketing Systems",
+        "Business Process Automation",
+        "Customer Service AI",
+        "Productivity Workflows",
+      ],
+    },
+    {
+      number: "07",
+      title: "Creative Projects & Monetization",
+      description:
+        "Create coloring books, digital products, and marketable assets.",
+      hours: "3 hours",
+      lessons: "12 lessons",
+      topics: [
+        "Coloring Book Production",
+        "Digital Asset Creation",
+        "Etsy Store Optimization",
+        "Product Photography with AI",
+        "Sales Funnel Development",
+      ],
+    },
+    {
+      number: "08",
+      title: "AI Agents & Automation",
+      description:
+        "Build intelligent AI agents using LangChain and LangGraph for complex workflows and automation.",
+      hours: "3.5 hours",
+      lessons: "13 lessons",
+      topics: [
+        "LangChain Framework Fundamentals",
+        "LangGraph Multi-Agent Systems",
+        "Agent Workflow Design",
+        "Memory & State Management",
+        "Tool Integration & Custom Actions",
       ],
     },
   ],
@@ -196,50 +285,68 @@ export const instructor = {
 export const testimonials = [
   {
     quote:
-      "I was using ChatGPT for casual stuff. After this bootcamp I built a Custom GPT that handles my entire content workflow at the agency. My team thinks I'm a wizard now.",
-    name: "Hira S.",
-    role: "Marketing Lead",
-    location: "Lahore, Pakistan",
+      "This course completely transformed how I approach content creation. The prompt engineering techniques alone saved me 20+ hours per week. Highly recommend!",
+    name: "Sarah Chen",
+    role: "Marketing Director",
+    location: "Tech Startup",
   },
   {
     quote:
-      "The Vibe Coding module is unreal. I shipped a full MVP for my SaaS in nine days. As a non-engineer founder, this is the most valuable course I've ever taken.",
-    name: "Daniel R.",
-    role: "Founder, Indie SaaS",
-    location: "Austin, USA",
+      "MidJourney section was incredible! I'm now selling AI art on Etsy and making $2k+ monthly. The instructor's guidance on monetization was spot-on.",
+    name: "Michael Rodriguez",
+    role: "Freelance Designer",
+    location: "Creative Agency",
   },
   {
     quote:
-      "Saad teaches the way I wish more people did — practical, no fluff, and you feel like he's actually in the room with you. The prompt library alone is worth the price.",
-    name: "Bilal K.",
-    role: "Product Designer",
-    location: "Karachi, Pakistan",
+      "Vibe coding changed my perspective on programming. Building data visualizations with AI assistance made complex projects so much more manageable.",
+    name: "Jennifer Park",
+    role: "Business Analyst",
+    location: "Fortune 500",
   },
   {
     quote:
-      "I came in skeptical. I'm a journalist, not a tech person. By module 3 I was using AI to draft entire investigative outlines. It changed how I work.",
-    name: "Anika P.",
-    role: "Journalist",
-    location: "Mumbai, India",
+      "Used ChatGPT techniques from this course to develop my startup's entire business plan. The AI automation strategies are worth 10x the course price.",
+    name: "David Thompson",
+    role: "Entrepreneur",
+    location: "Startup Founder",
+  },
+  {
+    quote:
+      "SEO content creation has never been easier. My blog traffic increased 400% using the AI strategies taught in this comprehensive bootcamp.",
+    name: "Lisa Wang",
+    role: "Content Creator",
+    location: "Digital Marketing",
+  },
+  {
+    quote:
+      "The advanced AI models section opened up so many possibilities. Now I'm leveraging multiple AI tools daily to accelerate my research projects.",
+    name: "James Mitchell",
+    role: "Data Scientist",
+    location: "Healthcare Tech",
   },
 ];
 
 export const pricing = {
   eyebrow: "THE COMPLETE BOOTCAMP",
-  title: "One price. Everything included.",
-  priceAnchor: 799,
+  title: "GenAI and Prompt Engineering MasterClass",
+  priceAnchor: 1499,
   price: 499,
-  priceNote: "One-time payment. Lifetime access.",
-  cta: { label: "Enroll Now — $499", action: "openCheckout" },
+  priceNote: "One-time payment • Lifetime access",
+  cta: { label: "Enroll Now - Start Learning Today", action: "openCheckout" },
+  badges: ["30-Day Money-Back", "Lifetime Access"],
+  includesHeading: "Everything You Get:",
   includes: [
-    "60+ video lessons across all 4 pillars",
-    "Lifetime access — learn at your own pace",
-    "Downloadable prompt library, templates & cheat sheets",
-    "Capstone project with personalized written feedback",
-    "Private student community (Discord)",
-    "Verified certificate of completion",
-    "All future course updates included",
-    "7-day no-questions-asked refund",
+    "25+ Hours of Premium Content",
+    "97+ In-Depth Video Lessons",
+    "2000+ Real-World Prompts Library",
+    "Hands-On Project Portfolio",
+    "AI Art & MidJourney Mastery",
+    "Vibe Coding Fundamentals",
+    "Business AI Applications",
+    "Lifetime Access to Updates",
+    "Certificate of Completion",
+    "Expert Community Access",
   ],
 };
 
@@ -309,7 +416,7 @@ export const footer = {
       links: [
         { label: "Free first lesson", href: "#hero" },
         { label: "Prompt library", href: "#" },
-        { label: "Blog", href: "#" },
+        { label: "Blog", href: "/blog" },
       ],
     },
     {
@@ -326,16 +433,35 @@ export const footer = {
 
 export const popup = {
   eyebrow: "WAIT — BEFORE YOU GO",
-  title: "Ready to start your AI journey?",
-  bodyBefore: "Use code",
-  code: "AI20",
+  title: "Get 80% off the Complete AI Bootcamp",
+  bodyBefore: "Drop your email and we'll send code",
+  code: "MASTER80",
   bodyAfter:
-    "at checkout for 20% off the Complete AI Bootcamp. That's $499 →",
-  discountedDisplay: "$399.20",
+    "for 80% off — just $99.80 instead of $499.",
+  discountedDisplay: "$99.80",
   bodyEnd: "One-time payment. Lifetime access.",
-  primaryCta: "Claim My 20% Off →",
+  primaryCta: "Send me my 80% off code →",
   dismissCta: "No thanks, I'll pay full price",
+  successTitle: "Code unlocked. Check your inbox.",
+  successBody:
+    "Your discount has already been applied below. Use code MASTER80 at checkout if you need it again.",
+  emailPlaceholder: "you@example.com",
+  emailInvalid: "Please enter a valid email (must include @ and a domain).",
   cardEyebrow: "EXCLUSIVE OFFER",
-  cardHero: "20% OFF",
+  cardHero: "80% OFF",
   cardCodeLabel: "Use code",
+};
+
+// Where to send buyers after a successful checkout. Replace with the real
+// Udemy course URL once available.
+export const udemyCourseUrl =
+  "https://www.udemy.com/course/complete-ai-bootcamp/";
+
+// Admin notification email — receives "new signup" and "new purchase" alerts.
+export const adminEmail = "sa5425592@gmail.com";
+
+// The single universal discount code.
+export const discountCode = {
+  code: "MASTER80",
+  pct: 0.8,
 };

@@ -9,7 +9,13 @@ import { hero } from "@/content/content";
 import { cn } from "@/lib/cn";
 
 const schema = z.object({
-  email: z.string().email("Enter a valid email"),
+  email: z
+    .string()
+    .min(5, "Enter a valid email")
+    .regex(
+      /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/,
+      "Please enter a valid email (must include @ and a domain)",
+    ),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -26,7 +32,7 @@ export function EmailCaptureForm({ className }: { className?: string }) {
       const res = await fetch("/api/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, source: "hero" }),
       });
       const data = await res.json();
       if (data.ok) setStatus("success");

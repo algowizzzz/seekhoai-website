@@ -10,14 +10,28 @@ export function Curriculum() {
     number: `MODULE ${m.number}`,
     title: m.title,
     body: (
-      <ul className="space-y-2.5">
-        {m.lessons.map((lesson, i) => (
-          <li key={i} className="flex items-start gap-3">
-            <span className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-accent-warm-2" />
-            <span className="flex-1 text-base text-text-secondary">{lesson}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="space-y-5">
+        <p className="text-base text-text-secondary md:text-lg">
+          {m.description}
+        </p>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-text-tertiary">
+          <span>{m.hours}</span>
+          <span aria-hidden className="text-text-tertiary/50">
+            •
+          </span>
+          <span>{m.lessons}</span>
+        </div>
+        <ul className="grid grid-cols-1 gap-x-8 gap-y-2.5 pt-1 md:grid-cols-2">
+          {m.topics.map((topic) => (
+            <li key={topic} className="flex items-start gap-3">
+              <span className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-accent-warm-2" />
+              <span className="flex-1 text-base text-text-secondary">
+                {topic}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     ),
   }));
 

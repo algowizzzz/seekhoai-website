@@ -1,25 +1,24 @@
-// MOCK — replace with Resend / Mailchimp / your email provider.
+// Captures email signups (hero form + popup) and persists to Supabase.
+// On success it also:
+//  - fires the welcome email series (7 emails) via Supabase Edge Function
+//  - notifies the admin email so we can act on it
 //
-// To swap in a real provider:
-//   1. `npm i resend` (or equivalent SDK).
-//   2. Add API key to env: RESEND_API_KEY in .env.local (and Vercel Project Settings).
-//   3. Replace the mock delay below with a real send:
-//
-//        import { Resend } from 'resend';
-//        const resend = new Resend(process.env.RESEND_API_KEY!);
-//        await resend.emails.send({
-//          from: 'SeekhoAI <hello@seekhoai.pk>',
-//          to: parsed.data.email,
-//          subject: 'Your free first lesson',
-//          html: '...',
-//        });
-//
-// 4. Keep the same response shape so the client form keeps working.
+// See src/lib/supabase.ts for env-var setup.
 
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { insertEmailSignup } from "@/lib/supabase";
+import { discountCode } from "@/content/content";
+import { notify } from "@/lib/notify";
 
-const schema = z.object({ email: z.string().email() });
+// Strict format: must contain @ and a TLD of ≥2 letters.
+const schema = z.object({
+  email: z
+    .string()
+    .min(5)
+    .regex(/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/, "invalid_email_format"),
+  source: z.string().max(40).optional(),
+});
 
 export async function POST(req: Request) {
   let json: unknown;
@@ -34,10 +33,25 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });
   }
 
-  await new Promise((r) => setTimeout(r, 700));
+  const { email } = parsed.data;
+  const source = parsed.data.source ?? "hero";
 
-  // Visible in Vercel function logs.
-  console.log("[MOCK email signup]", parsed.data.email);
+  try {
+    await insertEmailSignup({ email, source });
+  } catch (err) {
+    console.error("[email] persist failed", err);
+    return NextResponse.json({ ok: false, error: "persist_failed" }, { status: 500 });
+  }
 
-  return NextResponse.json({ ok: true });
+  // Fire admin alert + welcome series (best-effort; never block the response on failure)
+  await Promise.allSettled([
+    notify.adminSignup({ email, source }),
+    notify.welcomeSeries({ email, source }),
+  ]);
+
+  return NextResponse.json({
+    ok: true,
+    couponCode: discountCode.code,
+    discountPct: discountCode.pct,
+  });
 }

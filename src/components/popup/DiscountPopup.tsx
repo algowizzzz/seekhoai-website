@@ -2,10 +2,13 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { Check, Loader2, X } from "lucide-react";
 import confetti from "canvas-confetti";
-import { popup } from "@/content/content";
+import { popup, discountCode } from "@/content/content";
 import { useCoupon } from "@/context/CouponContext";
 import { usePopupTriggers } from "./usePopupTriggers";
 import { Button } from "@/components/ui/Button";
@@ -16,17 +19,40 @@ const CouponScene = dynamic(
   { ssr: false, loading: () => null },
 );
 
+// Strict email schema: must include @, a domain label, a dot, and a TLD of >=2 letters.
+// Defends against inputs like "abc" or "abc@x" passing through.
+const emailSchema = z.object({
+  email: z
+    .string()
+    .min(5, popup.emailInvalid)
+    .regex(/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/, popup.emailInvalid),
+});
+
+type EmailForm = z.infer<typeof emailSchema>;
+
 export function DiscountPopup() {
   const { shouldShow, onDismiss, onClaim } = usePopupTriggers();
   const [open, setOpen] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [submitState, setSubmitState] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const { apply } = useCoupon();
   const titleId = "discount-popup-title";
-  const ctaRef = useRef<HTMLButtonElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const successButtonRef = useRef<HTMLButtonElement>(null);
+
+  const { register, handleSubmit, formState, reset } = useForm<EmailForm>({
+    resolver: zodResolver(emailSchema),
+  });
 
   const handleDismiss = () => {
     setOpen(false);
     onDismiss();
+    setTimeout(() => {
+      setSubmitState("idle");
+      reset();
+    }, 300);
   };
 
   useEffect(() => {
@@ -42,63 +68,69 @@ export function DiscountPopup() {
     if (shouldShow) setOpen(true);
   }, [shouldShow]);
 
-  // Body lock + Escape + focus management
+  // Body lock + Escape
   useEffect(() => {
     if (!open) return;
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
-    // Focus the CTA on open
-    const t = setTimeout(() => ctaRef.current?.focus(), 50);
-
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        onDismiss();
-      }
-      // Simple focus trap
-      if (e.key === "Tab") {
-        const focusables = document
-          .querySelectorAll<HTMLElement>(
-            '#discount-popup [href], #discount-popup button, #discount-popup [tabindex]:not([tabindex="-1"])',
-          );
-        if (!focusables.length) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          last.focus();
-          e.preventDefault();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          first.focus();
-          e.preventDefault();
-        }
-      }
+      if (e.key === "Escape") handleDismiss();
     };
     document.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = original;
       document.removeEventListener("keydown", onKey);
-      clearTimeout(t);
     };
-  }, [open, onDismiss]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
-  const handleClaim = (e: React.MouseEvent<HTMLButtonElement>) => {
-    apply(popup.code, 0.2);
-    onClaim();
-    // Small confetti from the button
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (rect.left + rect.width / 2) / window.innerWidth;
-    const y = (rect.top + rect.height / 2) / window.innerHeight;
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { x, y },
-      colors: ["#ff6b35", "#ffb084", "#f5f2eb"],
-    });
+  const onSubmit = async (values: EmailForm) => {
+    setSubmitState("loading");
+    try {
+      const res = await fetch("/api/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: values.email, source: "popup" }),
+      });
+      const data = await res.json();
+      if (!data.ok) {
+        setSubmitState("error");
+        return;
+      }
+
+      // Apply the coupon client-side so pricing reflects it immediately
+      apply(discountCode.code, discountCode.pct);
+      onClaim();
+      setSubmitState("success");
+
+      // Confetti from the form
+      if (formRef.current) {
+        const rect = formRef.current.getBoundingClientRect();
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: {
+            x: (rect.left + rect.width / 2) / window.innerWidth,
+            y: (rect.top + rect.height / 2) / window.innerHeight,
+          },
+          colors: ["#ff6b35", "#ffb084", "#f5f2eb"],
+        });
+      }
+
+      // Focus the "continue" button after success
+      setTimeout(() => successButtonRef.current?.focus(), 100);
+    } catch {
+      setSubmitState("error");
+    }
+  };
+
+  const handleContinueToPricing = () => {
     setOpen(false);
     setTimeout(() => {
       const el = document.getElementById("pricing");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setSubmitState("idle");
+      reset();
     }, 350);
   };
 
@@ -139,8 +171,11 @@ export function DiscountPopup() {
             <div className="flex flex-col">
               <div className="px-6 pt-4 md:px-10 md:pt-6">
                 <p className="eyebrow">[ {popup.eyebrow} ]</p>
-                <h2 id={titleId} className="mt-3 font-display text-display-md font-medium">
-                  {popup.title}
+                <h2
+                  id={titleId}
+                  className="mt-3 font-display text-display-md font-medium"
+                >
+                  {submitState === "success" ? popup.successTitle : popup.title}
                 </h2>
               </div>
 
@@ -149,33 +184,98 @@ export function DiscountPopup() {
               </div>
 
               <div className="mt-4 px-6 md:mt-6 md:px-10">
-                <p className="text-base text-text-secondary md:text-lg">
-                  {popup.bodyBefore}{" "}
-                  <span className="font-mono font-medium text-accent-warm">{popup.code}</span>{" "}
-                  {popup.bodyAfter}{" "}
-                  <span className="font-medium text-text-primary">{popup.discountedDisplay}</span>.{" "}
-                  {popup.bodyEnd}
-                </p>
+                {submitState === "success" ? (
+                  <p className="text-base text-text-secondary md:text-lg">
+                    {popup.successBody}
+                  </p>
+                ) : (
+                  <p className="text-base text-text-secondary md:text-lg">
+                    {popup.bodyBefore}{" "}
+                    <span className="font-mono font-medium text-accent-warm">
+                      {popup.code}
+                    </span>{" "}
+                    {popup.bodyAfter}{" "}
+                    <span className="font-medium text-text-primary">
+                      {popup.bodyEnd}
+                    </span>
+                  </p>
+                )}
               </div>
 
               <div className="sticky bottom-0 mt-4 bg-elevated/95 px-6 pb-4 pt-3 backdrop-blur-sm md:static md:mt-6 md:bg-transparent md:px-10 md:pb-8 md:pt-0 md:backdrop-blur-none">
-                <Button
-                  ref={ctaRef}
-                  variant="warm"
-                  size="lg"
-                  className="w-full"
-                  onClick={handleClaim}
-                >
-                  {popup.primaryCta}
-                </Button>
+                {submitState === "success" ? (
+                  <>
+                    <div className="mb-4 flex items-center justify-center gap-3 rounded-full border border-accent-warm/40 bg-accent-warm/10 px-5 py-3 text-sm text-text-primary">
+                      <Check className="size-4 text-accent-warm" />
+                      <span>
+                        Discount applied · code{" "}
+                        <span className="font-mono font-medium text-accent-warm">
+                          {discountCode.code}
+                        </span>
+                      </span>
+                    </div>
+                    <Button
+                      ref={successButtonRef}
+                      variant="warm"
+                      size="lg"
+                      className="w-full"
+                      onClick={handleContinueToPricing}
+                    >
+                      See discounted pricing →
+                    </Button>
+                  </>
+                ) : (
+                  <form
+                    ref={formRef}
+                    onSubmit={handleSubmit(onSubmit)}
+                    noValidate
+                  >
+                    <label htmlFor="popup-email" className="sr-only">
+                      Email address
+                    </label>
+                    <div className="flex flex-col gap-2 rounded-2xl border border-border-subtle bg-subtle/80 p-1.5 backdrop-blur-sm focus-within:border-accent-warm-2 sm:flex-row">
+                      <input
+                        id="popup-email"
+                        type="email"
+                        autoComplete="email"
+                        placeholder={popup.emailPlaceholder}
+                        {...register("email")}
+                        disabled={submitState === "loading"}
+                        className="h-11 flex-1 bg-transparent px-4 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none disabled:opacity-60"
+                      />
+                      <button
+                        type="submit"
+                        disabled={submitState === "loading"}
+                        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent-warm px-5 text-sm font-medium text-base transition-all duration-200 hover:bg-accent-warm-2 disabled:opacity-70 sm:rounded-full"
+                      >
+                        {submitState === "loading" ? (
+                          <Loader2 className="size-4 animate-spin" />
+                        ) : (
+                          popup.primaryCta
+                        )}
+                      </button>
+                    </div>
 
-                <button
-                  type="button"
-                  onClick={handleDismiss}
-                  className="mx-auto mt-3 block text-sm text-text-tertiary transition-colors hover:text-text-secondary"
-                >
-                  {popup.dismissCta}
-                </button>
+                    {formState.errors.email && (
+                      <p className="mt-2 pl-5 text-xs text-red-400">
+                        {formState.errors.email.message}
+                      </p>
+                    )}
+                    {submitState === "error" && (
+                      <p className="mt-2 pl-5 text-xs text-red-400">
+                        Something went wrong. Please try again.
+                      </p>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={handleDismiss}
+                      className="mx-auto mt-3 block text-sm text-text-tertiary transition-colors hover:text-text-secondary"
+                    >
+                      {popup.dismissCta}
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
           </motion.div>

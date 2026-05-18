@@ -16,6 +16,7 @@ export function CheckoutModal() {
   const { discountPct } = useCoupon();
   const { final } = priceWithCoupon(pricing.price, discountPct);
   const [success, setSuccess] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (!isOpen) {
@@ -36,7 +37,8 @@ export function CheckoutModal() {
     };
   }, [isOpen, close]);
 
-  const handleSuccess = () => {
+  const handleSuccess = (url?: string) => {
+    setRedirectUrl(url);
     setSuccess(true);
     confetti({
       particleCount: 120,
@@ -103,7 +105,7 @@ export function CheckoutModal() {
 
             <div className="mt-3">
               {success ? (
-                <SuccessState />
+                <SuccessState redirectUrl={redirectUrl} />
               ) : (
                 <CheckoutForm
                   onSuccess={handleSuccess}

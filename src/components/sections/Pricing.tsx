@@ -42,7 +42,7 @@ export function Pricing() {
             <div className="relative flex flex-col items-center text-center">
               <div className="flex items-baseline gap-3">
                 <span className="font-display text-2xl text-text-tertiary line-through">
-                  ${pricing.priceAnchor}
+                  ${pricing.priceAnchor.toLocaleString("en-US")}
                 </span>
                 {applied && (
                   <span className="font-display text-2xl text-text-tertiary line-through">
@@ -71,19 +71,42 @@ export function Pricing() {
               >
                 {ctaLabel}
               </Button>
+
+              <ul className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                {pricing.badges.map((badge) => (
+                  <li
+                    key={badge}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-elevated/40 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-text-secondary"
+                  >
+                    <Check
+                      className="size-3 text-accent-warm"
+                      strokeWidth={2.5}
+                    />
+                    {badge}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <ul className="mt-10 grid grid-cols-1 gap-3 border-t border-border-subtle pt-8 md:grid-cols-2 md:gap-x-8">
-              {pricing.includes.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm text-text-secondary">
-                  <Check
-                    className="mt-0.5 size-4 shrink-0 text-accent-warm"
-                    strokeWidth={2.5}
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-10 border-t border-border-subtle pt-8">
+              <p className="font-display text-lg font-medium text-text-primary">
+                {pricing.includesHeading}
+              </p>
+              <ul className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-8">
+                {pricing.includes.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm text-text-secondary"
+                  >
+                    <Check
+                      className="mt-0.5 size-4 shrink-0 text-accent-warm"
+                      strokeWidth={2.5}
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </RevealItem>
         </Reveal>
       </div>

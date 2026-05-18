@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { nav, brand } from "@/content/content";
 import { cn } from "@/lib/cn";
@@ -14,6 +15,10 @@ export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { scrollY } = useScroll();
   const { open: openCheckout } = useCheckout();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const toHomeHash = (hash: string) =>
+    onHome ? hash : `/${hash.startsWith("#") ? hash : `#${hash}`}`;
 
   useMotionValueEvent(scrollY, "change", (v) => {
     setScrolled(v > 80);
@@ -33,7 +38,10 @@ export function Nav() {
         )}
       >
         <div className="container-content flex h-16 items-center justify-between md:h-20">
-          <a href="#hero" className="font-display text-xl font-medium tracking-tight">
+          <a
+            href={onHome ? "#hero" : "/"}
+            className="font-display text-xl font-medium tracking-tight"
+          >
             {brand.name}
           </a>
 
@@ -41,7 +49,7 @@ export function Nav() {
             {nav.links.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={toHomeHash(link.href)}
                   className="text-sm text-text-secondary transition-colors duration-200 hover:text-text-primary"
                 >
                   {link.label}

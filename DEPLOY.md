@@ -26,9 +26,16 @@ That's it. Vercel will give you a `*.vercel.app` URL within ~2 minutes.
 3. Vercel shows you DNS records — paste them into your domain registrar (PKDomains, GoDaddy, etc.).
 4. DNS propagation usually takes 5–30 minutes.
 
-## Environment variables (for future real Stripe / email)
+## Environment variables
 
-When you swap the mocks for real services, add these in **Vercel → Settings → Environment Variables**:
+Required for purchase/email persistence + admin panel:
+
+| Variable | Used by | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | server | Supabase → Settings → API → Project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | server | Supabase → Settings → API → `service_role` key (secret) |
+
+Optional (for future real Stripe / email):
 
 | Variable | Used by | Notes |
 |---|---|---|
@@ -38,6 +45,23 @@ When you swap the mocks for real services, add these in **Vercel → Settings �
 | `RESEND_API_KEY` | `/api/email` | Resend / Mailchimp / etc. |
 
 After adding env vars, trigger a redeploy (Vercel → Deployments → ⋮ → Redeploy).
+
+## Supabase setup (one-time)
+
+1. Create a project at [supabase.com](https://supabase.com) (free tier is fine).
+2. Open **SQL Editor** → **New query** → paste the contents of [`supabase/schema.sql`](supabase/schema.sql) → **Run**.
+3. Go to **Settings → API**:
+   - Copy **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+   - Copy **service_role** secret → `SUPABASE_SERVICE_ROLE_KEY`
+4. Paste both into Vercel env vars (Production + Preview + Development) and redeploy.
+
+Until you do this, the app runs in **in-memory mode** — checkout/signups work but data resets on every server restart.
+
+## Admin panel
+
+Visit `/adminpanel` to see captured emails and purchases. CSV export included.
+
+> **⚠️ This panel is currently public — anyone with the URL can read your data.** Add auth before going to production. See `src/app/api/admin/data/route.ts` for where to add a check.
 
 ## Verifying the deploy
 

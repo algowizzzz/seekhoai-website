@@ -10,7 +10,13 @@ import { pricing } from "@/content/content";
 import { useCoupon, priceWithCoupon } from "@/context/CouponContext";
 
 const schema = z.object({
-  email: z.string().email("Enter a valid email"),
+  email: z
+    .string()
+    .min(5, "Enter a valid email")
+    .regex(
+      /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/,
+      "Please enter a valid email (must include @ and a domain)",
+    ),
   cardName: z.string().min(2, "Required"),
   cardNumber: z
     .string()
@@ -23,7 +29,7 @@ const schema = z.object({
 export type CheckoutFormValues = z.infer<typeof schema>;
 
 interface Props {
-  onSuccess: () => void;
+  onSuccess: (redirectUrl?: string) => void;
   finalPrice: number;
 }
 
@@ -56,12 +62,15 @@ export function CheckoutForm({ onSuccess, finalPrice }: Props) {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: values.email, couponCode: code }),
+        body: JSON.stringify({
+          email: values.email,
+          couponCode: code,
+        }),
       });
       const data = await res.json();
       if (data.ok) {
         await new Promise((r) => setTimeout(r, 400));
-        onSuccess();
+        onSuccess(data.redirectUrl as string | undefined);
       }
     } catch {
       /* swallow — mock */

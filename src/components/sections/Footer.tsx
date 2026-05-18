@@ -1,6 +1,15 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { brand, footer } from "@/content/content";
 
 export function Footer() {
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const resolveHref = (href: string) => {
+    if (href.startsWith("#")) return onHome ? href : `/${href}`;
+    return href;
+  };
   return (
     <footer
       className="border-t border-border-subtle bg-base"
@@ -21,7 +30,7 @@ export function Footer() {
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <a
-                      href={link.href}
+                      href={resolveHref(link.href)}
                       className="text-sm text-text-secondary transition-colors duration-200 hover:text-text-primary"
                     >
                       {link.label}
