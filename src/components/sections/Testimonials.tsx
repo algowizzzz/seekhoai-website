@@ -14,7 +14,7 @@ export function Testimonials() {
         <Reveal className="max-w-3xl">
           <p className="eyebrow">[ STUDENT VOICES ]</p>
           <h2 className="mt-4 font-display text-display-lg font-medium">
-            Built by students. For students.
+            Real students. Real results.
           </h2>
         </Reveal>
 

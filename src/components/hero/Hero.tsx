@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { hero } from "@/content/content";
 import { Button } from "@/components/ui/Button";
-import { EmailCaptureForm } from "@/components/forms/EmailCaptureForm";
 import { HeroBackground } from "./HeroBackground";
 import { WithUdemyLinks } from "@/components/ui/UdemyLink";
 import { useCheckout } from "@/context/CheckoutContext";
@@ -82,15 +81,6 @@ export function Hero() {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.85 }}
-          className="mt-8"
-        >
-          <EmailCaptureForm />
         </motion.div>
 
         <motion.div
