@@ -7,8 +7,12 @@ create table if not exists public.purchases (
   amount numeric(10, 2) not null,
   coupon_code text,
   session_id text not null,
+  user_id uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now()
 );
+
+alter table public.purchases
+  add column if not exists user_id uuid references auth.users(id) on delete set null;
 
 create index if not exists purchases_created_at_idx on public.purchases (created_at desc);
 create index if not exists purchases_email_idx on public.purchases (email);
@@ -16,9 +20,17 @@ create index if not exists purchases_email_idx on public.purchases (email);
 create table if not exists public.email_signups (
   id uuid primary key default gen_random_uuid(),
   email text not null unique,
+  phone text,
   source text not null default 'hero',
+  user_id uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now()
 );
+
+-- If the table already exists from an older schema, add the new columns:
+alter table public.email_signups
+  add column if not exists phone text;
+alter table public.email_signups
+  add column if not exists user_id uuid references auth.users(id) on delete set null;
 
 create index if not exists email_signups_created_at_idx on public.email_signups (created_at desc);
 

@@ -1,18 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { hero } from "@/content/content";
 import { Button } from "@/components/ui/Button";
 import { EmailCaptureForm } from "@/components/forms/EmailCaptureForm";
 import { HeroBackground } from "./HeroBackground";
 import { WithUdemyLinks } from "@/components/ui/UdemyLink";
 import { useCheckout } from "@/context/CheckoutContext";
-import { useTrailer } from "@/context/TrailerContext";
+
+const TRAILER_EMBED_URL =
+  "https://www.youtube.com/embed/homKQ7wx9BY?rel=0";
 
 export function Hero() {
   const { open: openCheckout } = useCheckout();
-  const { open: openTrailer } = useTrailer();
   return (
     <section id="hero" className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-base">
       {/* Background: mesh gradient + animated SVG blobs + drifting particles */}
@@ -58,22 +59,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
-          className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
+          className="mt-10"
         >
-          <Button
-            variant="warm"
-            size="lg"
-            onClick={openCheckout}
-          >
+          <Button variant="warm" size="lg" onClick={openCheckout}>
             {hero.ctas.primary.label}
-          </Button>
-          <Button
-            variant="ghost"
-            size="lg"
-            icon={<Play className="size-4" fill="currentColor" />}
-            onClick={openTrailer}
-          >
-            {hero.ctas.secondary.label}
           </Button>
         </motion.div>
 
@@ -81,6 +70,24 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
+          className="mt-8 w-full max-w-2xl overflow-hidden rounded-2xl border border-white/[0.10] bg-elevated/40 shadow-2xl"
+          style={{ aspectRatio: "16 / 9" }}
+        >
+          <iframe
+            className="h-full w-full"
+            src={TRAILER_EMBED_URL}
+            title="Complete AI Bootcamp — Course Trailer"
+            loading="lazy"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.85 }}
           className="mt-8"
         >
           <EmailCaptureForm />

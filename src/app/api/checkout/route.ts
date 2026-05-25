@@ -10,7 +10,7 @@
 
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { insertPurchase } from "@/lib/supabase";
+import { ensureAuthUser, insertPurchase } from "@/lib/supabase";
 import {
   discountCode,
   pricing,
@@ -49,27 +49,42 @@ export async function POST(req: Request) {
 
   const sessionId = `mock_${crypto.randomUUID()}`;
 
+  // Look up or create Supabase Auth user (links purchase to a stable identity).
+  let userId: string | null = null;
+  try {
+    userId = await ensureAuthUser(parsed.data.email);
+  } catch (err) {
+    console.error("[checkout] ensureAuthUser failed", err);
+  }
+
   try {
     await insertPurchase({
       email: parsed.data.email,
       amount,
       coupon_code: appliedCode,
       session_id: sessionId,
+      user_id: userId,
     });
   } catch (err) {
     console.error("[checkout] persist failed", err);
     return NextResponse.json({ ok: false, error: "persist_failed" }, { status: 500 });
   }
 
-  // Admin alert (best-effort; never block the response on failure)
-  notify
-    .adminPurchase({
+  // Customer receipt + admin alert (best-effort; never block the response on failure)
+  Promise.allSettled([
+    notify.orderConfirmation({
       email: parsed.data.email,
       amount,
       couponCode: appliedCode,
       sessionId,
-    })
-    .catch(() => undefined);
+    }),
+    notify.adminPurchase({
+      email: parsed.data.email,
+      amount,
+      couponCode: appliedCode,
+      sessionId,
+    }),
+  ]).catch(() => undefined);
 
   await new Promise((r) => setTimeout(r, 800));
 

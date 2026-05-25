@@ -37,13 +37,72 @@ export type Purchase = {
   amount: number;
   coupon_code: string | null;
   session_id: string;
+  user_id: string | null;
   created_at: string;
 };
+
+/**
+ * Ensures an auth.users row exists for the given email.
+ * Returns the user_id (uuid) if found/created, or null if Supabase isn't configured.
+ * Email is normalized to lowercase before look-up to avoid duplicates.
+ */
+export async function ensureAuthUser(email: string): Promise<string | null> {
+  const sb = getSupabase();
+  if (!sb) return null;
+
+  const normalized = email.trim().toLowerCase();
+
+  // Try to create. If the user already exists, fall back to lookup.
+  const { data: created, error: createError } = await sb.auth.admin.createUser({
+    email: normalized,
+    email_confirm: true, // skip verification email; we trust the form input
+  });
+
+  if (created?.user?.id) return created.user.id;
+
+  // Already-exists is fine — look the user up by listing and matching email.
+  // listUsers is paginated (50/page default); we walk pages until found.
+  if (createError) {
+    const message = createError.message?.toLowerCase() ?? "";
+    const alreadyExists =
+      message.includes("already") ||
+      message.includes("registered") ||
+      message.includes("exists");
+
+    if (alreadyExists) {
+      try {
+        for (let page = 1; page <= 50; page++) {
+          const { data: list, error: listError } = await sb.auth.admin.listUsers({
+            page,
+            perPage: 100,
+          });
+          if (listError) {
+            console.error("[auth] listUsers failed", listError);
+            return null;
+          }
+          const match = list?.users?.find(
+            (u) => (u.email ?? "").toLowerCase() === normalized,
+          );
+          if (match?.id) return match.id;
+          if (!list?.users?.length || list.users.length < 100) break;
+        }
+      } catch (err) {
+        console.error("[auth] ensureAuthUser lookup failed", err);
+      }
+    } else {
+      console.error("[auth] createUser failed", createError);
+    }
+  }
+
+  return null;
+}
 
 export type EmailSignup = {
   id: string;
   email: string;
+  phone: string | null;
   source: string;
+  user_id: string | null;
   created_at: string;
 };
 
@@ -65,6 +124,7 @@ export async function insertPurchase(row: Omit<Purchase, "id" | "created_at">): 
       amount: row.amount,
       coupon_code: row.coupon_code,
       session_id: row.session_id,
+      user_id: row.user_id,
     });
     if (error) throw new Error(`supabase insert purchase: ${error.message}`);
     return;
@@ -81,7 +141,9 @@ export async function insertEmailSignup(row: Omit<EmailSignup, "id" | "created_a
   if (sb) {
     const { error } = await sb.from("email_signups").insert({
       email: row.email,
+      phone: row.phone,
       source: row.source,
+      user_id: row.user_id,
     });
     if (error && error.code !== "23505") {
       // 23505 = unique violation; ignore duplicate emails silently

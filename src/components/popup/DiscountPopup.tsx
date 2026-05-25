@@ -19,16 +19,23 @@ const CouponScene = dynamic(
   { ssr: false, loading: () => null },
 );
 
-// Strict email schema: must include @, a domain label, a dot, and a TLD of >=2 letters.
-// Defends against inputs like "abc" or "abc@x" passing through.
-const emailSchema = z.object({
+// Strict email schema + optional phone. If phone is provided, it must contain
+// at least 7 digits (after stripping +/space/dashes/parens).
+const popupSchema = z.object({
   email: z
     .string()
     .min(5, popup.emailInvalid)
     .regex(/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/, popup.emailInvalid),
+  phone: z
+    .string()
+    .optional()
+    .refine(
+      (v) => !v || v.replace(/[\s+\-()]/g, "").replace(/\D/g, "").length >= 7,
+      popup.phoneInvalid,
+    ),
 });
 
-type EmailForm = z.infer<typeof emailSchema>;
+type PopupForm = z.infer<typeof popupSchema>;
 
 export function DiscountPopup() {
   const { shouldShow, onDismiss, onClaim } = usePopupTriggers();
@@ -42,8 +49,8 @@ export function DiscountPopup() {
   const formRef = useRef<HTMLFormElement>(null);
   const successButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { register, handleSubmit, formState, reset } = useForm<EmailForm>({
-    resolver: zodResolver(emailSchema),
+  const { register, handleSubmit, formState, reset } = useForm<PopupForm>({
+    resolver: zodResolver(popupSchema),
   });
 
   const handleDismiss = () => {
@@ -84,13 +91,17 @@ export function DiscountPopup() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const onSubmit = async (values: EmailForm) => {
+  const onSubmit = async (values: PopupForm) => {
     setSubmitState("loading");
     try {
       const res = await fetch("/api/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: values.email, source: "popup" }),
+        body: JSON.stringify({
+          email: values.email,
+          phone: values.phone || undefined,
+          source: "popup",
+        }),
       });
       const data = await res.json();
       if (!data.ok) {
@@ -233,34 +244,50 @@ export function DiscountPopup() {
                     <label htmlFor="popup-email" className="sr-only">
                       Email address
                     </label>
-                    <div className="flex flex-col gap-2 rounded-2xl border border-border-subtle bg-subtle/80 p-1.5 backdrop-blur-sm focus-within:border-accent-warm-2 sm:flex-row">
-                      <input
-                        id="popup-email"
-                        type="email"
-                        autoComplete="email"
-                        placeholder={popup.emailPlaceholder}
-                        {...register("email")}
-                        disabled={submitState === "loading"}
-                        className="h-11 flex-1 bg-transparent px-4 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none disabled:opacity-60"
-                      />
-                      <button
-                        type="submit"
-                        disabled={submitState === "loading"}
-                        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent-warm px-5 text-sm font-medium text-base transition-all duration-200 hover:bg-accent-warm-2 disabled:opacity-70 sm:rounded-full"
-                      >
-                        {submitState === "loading" ? (
-                          <Loader2 className="size-4 animate-spin" />
-                        ) : (
-                          popup.primaryCta
-                        )}
-                      </button>
-                    </div>
-
+                    <input
+                      id="popup-email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder={popup.emailPlaceholder}
+                      {...register("email")}
+                      disabled={submitState === "loading"}
+                      className="block h-11 w-full rounded-2xl border border-border-subtle bg-subtle/80 px-4 text-sm text-text-primary placeholder:text-text-tertiary backdrop-blur-sm focus:border-accent-warm-2 focus:outline-none disabled:opacity-60"
+                    />
                     {formState.errors.email && (
                       <p className="mt-2 pl-5 text-xs text-red-400">
                         {formState.errors.email.message}
                       </p>
                     )}
+
+                    <label htmlFor="popup-phone" className="sr-only">
+                      Phone number
+                    </label>
+                    <input
+                      id="popup-phone"
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder={popup.phonePlaceholder}
+                      {...register("phone")}
+                      disabled={submitState === "loading"}
+                      className="mt-2 block h-11 w-full rounded-2xl border border-border-subtle bg-subtle/80 px-4 text-sm text-text-primary placeholder:text-text-tertiary backdrop-blur-sm focus:border-accent-warm-2 focus:outline-none disabled:opacity-60"
+                    />
+                    {formState.errors.phone && (
+                      <p className="mt-2 pl-5 text-xs text-red-400">
+                        {formState.errors.phone.message}
+                      </p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={submitState === "loading"}
+                      className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent-warm px-5 text-sm font-medium text-base transition-all duration-200 hover:bg-accent-warm-2 disabled:opacity-70"
+                    >
+                      {submitState === "loading" ? (
+                        <Loader2 className="size-4 animate-spin" />
+                      ) : (
+                        popup.primaryCta
+                      )}
+                    </button>
                     {submitState === "error" && (
                       <p className="mt-2 pl-5 text-xs text-red-400">
                         Something went wrong. Please try again.

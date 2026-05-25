@@ -42,8 +42,17 @@ export const notify = {
   welcomeSeries(payload: { email: string; source: string }) {
     return callEdgeFunction({ kind: "welcome-series", ...payload });
   },
+  /** Send the order confirmation / receipt to a buyer. Fires on every purchase. */
+  orderConfirmation(payload: {
+    email: string;
+    amount: number;
+    couponCode: string | null;
+    sessionId: string;
+  }) {
+    return callEdgeFunction({ kind: "order-confirmation", ...payload });
+  },
   /** Notify the admin email of a new signup. */
-  adminSignup(payload: { email: string; source: string }) {
+  adminSignup(payload: { email: string; phone: string | null; source: string }) {
     return callEdgeFunction({ kind: "admin-signup", ...payload });
   },
   /** Notify the admin email of a new purchase. */

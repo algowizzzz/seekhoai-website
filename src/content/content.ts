@@ -447,6 +447,8 @@ export const popup = {
     "Your discount has already been applied below. Use code MASTER80 at checkout if you need it again.",
   emailPlaceholder: "you@example.com",
   emailInvalid: "Please enter a valid email (must include @ and a domain).",
+  phonePlaceholder: "Phone (optional, e.g. +92 300 1234567)",
+  phoneInvalid: "Phone looks off — use digits, spaces, +, or leave blank.",
   cardEyebrow: "EXCLUSIVE OFFER",
   cardHero: "80% OFF",
   cardCodeLabel: "Use code",

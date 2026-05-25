@@ -73,7 +73,10 @@ function AdminPanel() {
     if (!query.trim()) return signups;
     const q = query.toLowerCase();
     return signups.filter(
-      (s) => s.email.toLowerCase().includes(q) || s.source.toLowerCase().includes(q),
+      (s) =>
+        s.email.toLowerCase().includes(q) ||
+        (s.phone ?? "").toLowerCase().includes(q) ||
+        s.source.toLowerCase().includes(q),
     );
   }, [signups, query]);
 
@@ -310,6 +313,7 @@ function SignupsTable({ rows }: { rows: EmailSignup[] }) {
       <thead className="bg-subtle/40 text-left font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
         <tr>
           <Th>Email</Th>
+          <Th>Phone</Th>
           <Th>Source</Th>
           <Th>Date</Th>
         </tr>
@@ -321,6 +325,9 @@ function SignupsTable({ rows }: { rows: EmailSignup[] }) {
             className="border-t border-border-subtle/60 hover:bg-subtle/30"
           >
             <Td className="text-text-primary">{s.email}</Td>
+            <Td className="font-mono text-xs text-text-secondary">
+              {s.phone ?? "—"}
+            </Td>
             <Td>{s.source}</Td>
             <Td className="text-text-secondary">{formatDate(s.created_at)}</Td>
           </tr>
