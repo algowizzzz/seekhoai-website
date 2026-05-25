@@ -1,7 +1,19 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { GraduationCap, Instagram, Mail, Youtube } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 import { brand, footer } from "@/content/content";
+
+const SOCIAL_ICONS: Record<
+  "youtube" | "instagram" | "udemy" | "email",
+  ComponentType<SVGProps<SVGSVGElement>>
+> = {
+  youtube: Youtube,
+  instagram: Instagram,
+  udemy: GraduationCap,
+  email: Mail,
+};
 
 export function Footer() {
   const pathname = usePathname();
@@ -20,6 +32,25 @@ export function Footer() {
           <div className="col-span-2 md:col-span-2">
             <p className="font-display text-2xl font-medium">{brand.name}</p>
             <p className="mt-3 max-w-xs text-sm text-text-secondary">{footer.tagline}</p>
+            <ul className="mt-5 flex items-center gap-2">
+              {footer.socials.map((s) => {
+                const Icon = SOCIAL_ICONS[s.kind];
+                return (
+                  <li key={s.kind}>
+                    <a
+                      href={s.href}
+                      target={s.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel={s.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                      aria-label={s.label}
+                      title={s.label}
+                      className="inline-flex size-10 items-center justify-center rounded-full border border-border-subtle text-text-secondary transition-colors duration-200 hover:border-accent-warm hover:text-accent-warm"
+                    >
+                      <Icon className="size-4" />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
           {footer.columns.map((col) => (
             <div key={col.heading} className="col-span-1">

@@ -165,7 +165,7 @@ ${CHECKOUT_URL}`,
 "Used ChatGPT techniques from this course to develop my entire startup business plan. Worth 10x the price."
 — David Thompson, Founder
 
-24,318+ students · 4.6 average rating · 5+ years teaching.
+38,099+ students · 13,017+ reviews · 4.5 average · 100+ countries.
 
 ${CODE} is still active: ${CHECKOUT_URL}`,
     html: wrap(`
@@ -182,7 +182,7 @@ ${CODE} is still active: ${CHECKOUT_URL}`,
         "Used ChatGPT techniques from this course to develop my entire startup business plan. Worth 10x the price."
         <footer style="margin-top:10px;font-style:normal;font-size:13px;color:#7a8290;">— David Thompson, Founder</footer>
       </blockquote>
-      <p style="margin:0 0 8px;font-size:13px;color:#7a8290;letter-spacing:0.04em;">24,318+ students · 4.6 average rating · 5+ years teaching</p>
+      <p style="margin:0 0 8px;font-size:13px;color:#7a8290;letter-spacing:0.04em;">38,099+ students · 13,017+ reviews · 4.5 average · 100+ countries</p>
       ${cta("Join them →")}
     `),
   },

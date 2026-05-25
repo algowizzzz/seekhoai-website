@@ -30,7 +30,7 @@ export function FreeIntroCourse() {
                 {freeIntro.eyebrow}
               </span>
 
-              <h2 className="mt-5 font-display text-display-lg font-medium md:text-display-xl">
+              <h2 className="mt-5 text-balance font-display text-3xl font-medium leading-[1.1] md:text-5xl lg:text-6xl">
                 {freeIntro.title}
               </h2>
 

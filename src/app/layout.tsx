@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://seekhoai.pk"),
   title: "SeekhoAI — Complete AI Bootcamp | Master AI. Build the future.",
   description:
-    "Join 24,318+ students learning Prompt Engineering, ChatGPT, MidJourney, and Vibe Coding. Self-paced. Lifetime access. From one of the world's top-rated AI instructors.",
+    "Join 38,099+ students learning Prompt Engineering, ChatGPT, MidJourney, and Vibe Coding. Self-paced. Lifetime access. From one of the world's top-rated AI instructors.",
   keywords: [
     "AI course",
     "Prompt Engineering",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SeekhoAI — Complete AI Bootcamp",
     description:
-      "Master Prompt Engineering, ChatGPT, MidJourney & Vibe Coding. 24,318+ students. Lifetime access.",
+      "Master Prompt Engineering, ChatGPT, MidJourney & Vibe Coding. 38,099+ students. Lifetime access.",
     type: "website",
     url: "https://seekhoai.pk",
     siteName: "SeekhoAI",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SeekhoAI — Complete AI Bootcamp",
     description:
-      "Master Prompt Engineering, ChatGPT, MidJourney & Vibe Coding. 24,318+ students.",
+      "Master Prompt Engineering, ChatGPT, MidJourney & Vibe Coding. 38,099+ students.",
   },
 };
 

@@ -1,11 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
 import { hero } from "@/content/content";
 import { Button } from "@/components/ui/Button";
 import { HeroBackground } from "./HeroBackground";
-import { WithUdemyLinks } from "@/components/ui/UdemyLink";
 import { useCheckout } from "@/context/CheckoutContext";
 
 const TRAILER_EMBED_URL =
@@ -83,27 +81,6 @@ export function Hero() {
           />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.85 }}
-          className="mt-12 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-text-secondary md:mt-16"
-        >
-          <span className="flex items-center gap-1.5">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <Star
-                key={i}
-                className="size-4 fill-accent-warm text-accent-warm"
-                aria-hidden
-              />
-            ))}
-          </span>
-          <span>
-            <strong className="text-text-primary">{hero.trustStrip.rating}</strong> ·{" "}
-            {hero.trustStrip.students} ·{" "}
-            <WithUdemyLinks text={hero.trustStrip.featured} />
-          </span>
-        </motion.div>
       </div>
     </section>
   );

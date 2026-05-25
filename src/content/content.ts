@@ -7,8 +7,8 @@ export const brand = {
   course: "Complete AI Bootcamp",
   price: 499,
   priceAnchor: 799,
-  studentsEnrolled: "24,318+",
-  rating: "4.6",
+  studentsEnrolled: "38,099+",
+  rating: "4.5",
   instructorName: "Saad A",
 };
 
@@ -29,7 +29,7 @@ export const hero = {
     line2: "Build the future.",
     accent: "Starting today.",
   },
-  sub: "Join 24,318+ students learning Prompt Engineering, ChatGPT, MidJourney, and Vibe Coding from one of the world's top-rated AI instructors. Self-paced. Lifetime access.",
+  sub: "Join 38,099+ students learning Prompt Engineering, ChatGPT, MidJourney, and Vibe Coding from one of the world's top-rated AI instructors. Self-paced. Lifetime access.",
   ctas: {
     primary: { label: "Enroll Now — $499", href: "#pricing" },
     secondary: { label: "Watch the trailer", href: "#trailer" },
@@ -40,8 +40,8 @@ export const hero = {
     success: "Check your inbox — your first lesson is on the way.",
   },
   trustStrip: {
-    rating: "4.6 / 5",
-    students: "24,318+ students",
+    rating: "4.5 / 5",
+    students: "38,099+ students",
     featured: "Featured on Udemy",
   },
 };
@@ -298,12 +298,12 @@ export const whoFor = {
 export const instructor = {
   name: "Saad A",
   title: "AI Expert Instructor · Founder, SeekhoAI",
-  bio: "Saad is a Pakistani AI educator who has taught 24,318+ students worldwide on Udemy, holding a 4.6★ average rating across his courses. He's the founder of SeekhoAI and DeepLearnHQ, and has spent the last five years helping students and professionals across South Asia and beyond actually use AI — not just talk about it. He's built four AI products and writes about applied AI for working people.",
+  bio: "Saad's background is in Data Science, Business, and Finance, with a decade of experience at Fortune 500 companies including Deloitte, PwC, BMO, and Microsoft. He teaches AI on Udemy where 38,099+ students across 100+ countries have enrolled in his courses, earning him 13,017+ reviews with a 4.5★ average. He's the founder of SeekhoAI and DeepLearnHQ, and his focus is helping people actually use AI — not just talk about it.",
   stats: [
-    { value: "24,318+", label: "students" },
-    { value: "4.6★", label: "avg rating" },
-    { value: "5+", label: "years teaching" },
-    { value: "4", label: "AI products built" },
+    { value: "38,099+", label: "students" },
+    { value: "13,017+", label: "reviews" },
+    { value: "4.5★", label: "avg rating" },
+    { value: "7", label: "Udemy courses" },
   ],
 };
 
@@ -412,12 +412,34 @@ export const faq = [
 
 export const finalCTA = {
   title: "The future doesn't wait. Build with it.",
-  body: "Join 24,318+ students. Master AI. Ship real work.",
+  body: "Join 38,099+ students. Master AI. Ship real work.",
   cta: { label: "Enroll Now — $499", action: "openCheckout" },
 };
 
 export const footer = {
   tagline: "Practical AI education for the people building tomorrow.",
+  socials: [
+    {
+      kind: "youtube" as const,
+      label: "YouTube",
+      href: "https://youtube.com/@deeplearnhq",
+    },
+    {
+      kind: "instagram" as const,
+      label: "Instagram",
+      href: "https://www.instagram.com/deeplearnhq.ca",
+    },
+    {
+      kind: "udemy" as const,
+      label: "Udemy",
+      href: "https://www.udemy.com/user/saad-ahmed-434/",
+    },
+    {
+      kind: "email" as const,
+      label: "Email",
+      href: "mailto:saadahmed@deeplearnhq.ca",
+    },
+  ],
   columns: [
     {
       heading: "Course",
@@ -483,6 +505,26 @@ export const popup = {
 // Udemy course URL once available.
 export const udemyCourseUrl =
   "https://www.udemy.com/course/complete-ai-bootcamp/";
+
+// Udemy social-proof section. Edit numbers + cards here, swap icon
+// placeholders for screenshots by changing the `image` field on each card
+// (drop a PNG into /public/udemy/ and set `image: "/udemy/profile.png"`).
+export const udemyShowcase = {
+  eyebrow: "TRUSTED ON UDEMY",
+  title: "Top-rated by students worldwide.",
+  subtitle:
+    "Saad teaches AI on Udemy, the world's largest learning marketplace. Students from over a hundred countries have enrolled.",
+  stats: [
+    { value: "38,099+", label: "Students enrolled" },
+    { value: "13,017+", label: "Reviews" },
+    { value: "100+", label: "Countries reached" },
+  ],
+  instructorUrl: "https://www.udemy.com/user/saad-ahmed-434/",
+  cta: {
+    label: "Visit my Udemy profile →",
+    href: "https://www.udemy.com/user/saad-ahmed-434/",
+  },
+};
 
 // Admin notification email — receives "new signup" and "new purchase" alerts.
 export const adminEmail = "sa5425592@gmail.com";

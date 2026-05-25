@@ -1,6 +1,7 @@
 import { Nav } from "@/components/nav/Nav";
 import { Hero } from "@/components/hero/Hero";
 import { Pillars } from "@/components/sections/Pillars";
+import { UdemyShowcase } from "@/components/sections/UdemyShowcase";
 import { Curriculum } from "@/components/sections/Curriculum";
 import { FreeIntroCourse } from "@/components/sections/FreeIntroCourse";
 import { WhoFor } from "@/components/sections/WhoFor";
@@ -17,6 +18,7 @@ export default function Page() {
       <Nav />
       <Hero />
       <Pillars />
+      <UdemyShowcase />
       <Curriculum />
       <FreeIntroCourse />
       <WhoFor />

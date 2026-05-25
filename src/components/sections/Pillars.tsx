@@ -6,7 +6,7 @@ import { PillarCard } from "./PillarCard";
 
 export function Pillars() {
   return (
-    <section id="pillars" className="relative py-24 md:py-40">
+    <section id="pillars" className="relative py-16 md:py-40">
       <div className="mx-auto w-full max-w-6xl px-6 md:px-10">
         <Reveal className="max-w-3xl">
           <p className="eyebrow">[ THE FOUR PILLARS ]</p>
@@ -19,7 +19,7 @@ export function Pillars() {
           </p>
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:mt-20 md:grid-cols-2 md:gap-8">
+        <div className="mt-10 grid grid-cols-1 gap-3 md:mt-20 md:grid-cols-2 md:gap-8">
           {pillars.map((p, index) => (
             <PillarCard
               key={p.id}
