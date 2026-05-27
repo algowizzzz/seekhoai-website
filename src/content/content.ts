@@ -241,22 +241,21 @@ export const freeIntro = {
   eyebrow: "FREE — NO CARD REQUIRED",
   title: "Introduction to GenAI",
   subtitle:
-    "A free 45-minute primer that takes you from zero to your first useful AI workflow. Watch in your browser, no signup needed.",
+    "A full free Udemy course that takes you from zero to your first useful AI workflows. Watch in your browser — claim the coupon and lifetime access stays.",
   bullets: [
     "What generative AI actually is — without the jargon",
     "The 3 things every prompt needs to get reliable output",
-    "A live demo: building your first Custom GPT in 10 minutes",
+    "Hands-on demos: ChatGPT, Custom GPTs, and more",
     "How to know when AI is the right tool for a task (and when it's not)",
   ],
   stats: [
-    { value: "45 min", label: "Total length" },
-    { value: "6", label: "Lessons" },
-    { value: "Free", label: "Forever" },
+    { value: "14h 33m", label: "Total length" },
+    { value: "179", label: "Lectures" },
+    { value: "23", label: "Sections" },
   ],
   cta: {
     label: "Start the free course →",
-    // Replace with the real URL where the free course lives (Udemy, YouTube playlist, etc.)
-    href: "https://www.udemy.com/",
+    href: "https://www.udemy.com/course/generative-ai-chatgpt/?couponCode=CP260518SUMMX",
   },
   footnote:
     "Liked it? Continue with the Complete AI Bootcamp at 80% off — use code MASTER80 at checkout.",
