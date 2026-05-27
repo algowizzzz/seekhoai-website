@@ -9,9 +9,12 @@ import {
   type ReactNode,
 } from "react";
 
+export type CheckoutMode = "paid" | "free";
+
 interface CheckoutState {
   isOpen: boolean;
-  open: () => void;
+  mode: CheckoutMode;
+  open: (mode?: CheckoutMode) => void;
   close: () => void;
 }
 
@@ -19,11 +22,15 @@ const CheckoutCtx = createContext<CheckoutState | null>(null);
 
 export function CheckoutProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const open = useCallback(() => setIsOpen(true), []);
+  const [mode, setMode] = useState<CheckoutMode>("paid");
+  const open = useCallback((m: CheckoutMode = "paid") => {
+    setMode(m);
+    setIsOpen(true);
+  }, []);
   const close = useCallback(() => setIsOpen(false), []);
   const value = useMemo(
-    () => ({ isOpen, open, close }),
-    [isOpen, open, close],
+    () => ({ isOpen, mode, open, close }),
+    [isOpen, mode, open, close],
   );
   return <CheckoutCtx.Provider value={value}>{children}</CheckoutCtx.Provider>;
 }

@@ -1,7 +1,42 @@
 "use client";
 
+import { Quote, Star, Users } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { udemyShowcase } from "@/content/content";
+
+const SINGLE_ICONS: Record<
+  "users" | "quote",
+  ComponentType<SVGProps<SVGSVGElement>>
+> = {
+  users: Users,
+  quote: Quote,
+};
+
+function StatVisual({ icon }: { icon: "users" | "quote" | "stars" }) {
+  if (icon === "stars") {
+    return (
+      <div
+        className="flex h-9 items-center gap-0.5 md:h-12 md:gap-1"
+        aria-label="5 star rating"
+      >
+        {[0, 1, 2, 3, 4].map((i) => (
+          <Star
+            key={i}
+            className="size-3.5 fill-accent-warm text-accent-warm md:size-5"
+            aria-hidden
+          />
+        ))}
+      </div>
+    );
+  }
+  const Icon = SINGLE_ICONS[icon];
+  return (
+    <div className="grid size-9 place-items-center rounded-xl bg-accent-warm/15 text-accent-warm md:size-12">
+      <Icon className="size-4 md:size-6" />
+    </div>
+  );
+}
 
 export function UdemyShowcase() {
   return (
@@ -33,7 +68,8 @@ export function UdemyShowcase() {
               key={s.label}
               className="rounded-2xl border border-white/[0.08] bg-elevated/40 p-4 backdrop-blur-sm md:p-8"
             >
-              <p className="font-display text-2xl font-medium text-accent-warm md:text-5xl">
+              <StatVisual icon={s.icon} />
+              <p className="mt-3 font-display text-2xl font-medium text-accent-warm md:mt-5 md:text-5xl">
                 {s.value}
               </p>
               <p className="mt-1.5 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-text-tertiary md:mt-3 md:text-sm">

@@ -8,7 +8,7 @@ export function Instructor() {
   return (
     <section
       id="instructor"
-      className="relative py-24 md:py-40"
+      className="relative py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div className="container-content">

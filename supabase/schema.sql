@@ -4,15 +4,22 @@
 create table if not exists public.purchases (
   id uuid primary key default gen_random_uuid(),
   email text not null,
+  phone text,
   amount numeric(10, 2) not null,
   coupon_code text,
   session_id text not null,
+  status text not null default 'pending',
   user_id uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now()
 );
 
 alter table public.purchases
   add column if not exists user_id uuid references auth.users(id) on delete set null;
+alter table public.purchases
+  add column if not exists phone text;
+alter table public.purchases
+  add column if not exists status text not null default 'pending';
+create unique index if not exists purchases_session_id_uidx on public.purchases (session_id);
 
 create index if not exists purchases_created_at_idx on public.purchases (created_at desc);
 create index if not exists purchases_email_idx on public.purchases (email);

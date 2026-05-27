@@ -58,7 +58,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.55 }}
           className="mt-10"
         >
-          <Button variant="warm" size="lg" onClick={openCheckout}>
+          <Button variant="warm" size="lg" onClick={() => openCheckout()}>
             {hero.ctas.primary.label}
           </Button>
         </motion.div>

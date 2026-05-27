@@ -6,7 +6,7 @@ import { whoFor } from "@/content/content";
 
 export function WhoFor() {
   return (
-    <section className="relative py-24 md:py-40">
+    <section className="relative py-12 md:py-32">
       <div className="container-content">
         <Reveal className="max-w-3xl">
           <p className="eyebrow">[ WHO THIS IS FOR ]</p>

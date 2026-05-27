@@ -3,12 +3,14 @@
 import { Check, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { freeIntro } from "@/content/content";
+import { useCheckout } from "@/context/CheckoutContext";
 
 export function FreeIntroCourse() {
+  const { open } = useCheckout();
   return (
     <section
       id="free-intro"
-      className="relative py-24 md:py-32"
+      className="relative py-12 md:py-24"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 800px" }}
     >
       <div
@@ -59,7 +61,7 @@ export function FreeIntroCourse() {
                     key={s.label}
                     className="inline-flex items-baseline gap-2 rounded-full border border-white/[0.08] bg-base/40 px-4 py-2 backdrop-blur-sm"
                   >
-                    <span className="font-display text-base font-semibold text-accent-warm">
+                    <span className="font-display text-base font-semibold text-white">
                       {s.value}
                     </span>
                     <span className="font-mono text-xs uppercase tracking-[0.16em] text-text-tertiary">
@@ -70,14 +72,13 @@ export function FreeIntroCourse() {
               </ul>
 
               <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-                <a
-                  href={freeIntro.cta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => open("free")}
                   className="inline-flex items-center justify-center rounded-full bg-accent-warm px-7 py-3.5 font-display text-base font-medium text-black transition-transform duration-200 hover:scale-[1.02]"
                 >
                   {freeIntro.cta.label}
-                </a>
+                </button>
                 <p className="text-sm text-text-tertiary">
                   {freeIntro.footnote}
                 </p>

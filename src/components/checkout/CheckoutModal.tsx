@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import confetti from "canvas-confetti";
-import { CheckoutForm } from "@/components/forms/CheckoutForm";
+import { EnrollmentForm } from "@/components/forms/EnrollmentForm";
 import { SuccessState } from "./SuccessState";
 import { springModal } from "@/lib/motion-presets";
 import { useCheckout } from "@/context/CheckoutContext";
@@ -12,7 +12,8 @@ import { useCoupon, priceWithCoupon } from "@/context/CouponContext";
 import { pricing } from "@/content/content";
 
 export function CheckoutModal() {
-  const { isOpen, close } = useCheckout();
+  const { isOpen, mode, close } = useCheckout();
+  const isFree = mode === "free";
   const { discountPct } = useCoupon();
   const { final } = priceWithCoupon(pricing.price, discountPct);
   const [success, setSuccess] = useState(false);
@@ -91,7 +92,11 @@ export function CheckoutModal() {
                 id="checkout-title"
                 className="font-display text-2xl font-medium"
               >
-                {success ? "Welcome." : "Complete enrollment"}
+                {success
+                  ? "You're in."
+                  : isFree
+                    ? "Claim your free course"
+                    : "Complete enrollment"}
               </h2>
               <button
                 type="button"
@@ -107,7 +112,8 @@ export function CheckoutModal() {
               {success ? (
                 <SuccessState redirectUrl={redirectUrl} />
               ) : (
-                <CheckoutForm
+                <EnrollmentForm
+                  mode={mode}
                   onSuccess={handleSuccess}
                   finalPrice={final}
                 />

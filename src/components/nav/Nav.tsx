@@ -59,7 +59,7 @@ export function Nav() {
           </ul>
 
           <div className="hidden md:block">
-            <Button variant="primary" size="sm" onClick={openCheckout}>
+            <Button variant="primary" size="sm" onClick={() => openCheckout()}>
               {nav.cta.label}
             </Button>
           </div>

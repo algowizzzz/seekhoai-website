@@ -16,7 +16,7 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="relative py-24 md:py-40"
+      className="relative py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div
@@ -67,7 +67,7 @@ export function Pricing() {
                 variant="warm"
                 size="lg"
                 className="mt-8"
-                onClick={openCheckout}
+                onClick={() => openCheckout()}
               >
                 {ctaLabel}
               </Button>

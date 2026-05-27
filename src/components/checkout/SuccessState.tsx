@@ -63,7 +63,7 @@ export function SuccessState({ redirectUrl }: Props) {
         transition={{ delay: 0.4, duration: 0.4 }}
         className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary"
       >
-        [ Demo mode — no real payment processed ]
+        [ Free access — check your email for the welcome series ]
       </motion.p>
     </div>
   );

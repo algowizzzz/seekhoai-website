@@ -14,7 +14,7 @@ export function FinalCTA() {
 
   return (
     <section
-      className="relative overflow-hidden py-32 md:py-48"
+      className="relative overflow-hidden py-16 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div
@@ -39,7 +39,7 @@ export function FinalCTA() {
             {finalCTA.body}
           </p>
           <div className="mt-10 flex justify-center">
-            <Button variant="warm" size="lg" onClick={openCheckout}>
+            <Button variant="warm" size="lg" onClick={() => openCheckout()}>
               {label}
             </Button>
           </div>

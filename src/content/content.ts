@@ -241,7 +241,7 @@ export const freeIntro = {
   eyebrow: "FREE — NO CARD REQUIRED",
   title: "Introduction to GenAI",
   subtitle:
-    "A full free Udemy course that takes you from zero to your first useful AI workflows. Watch in your browser — claim the coupon and lifetime access stays.",
+    "A full free Udemy course that takes you from zero to your first useful AI workflows. Sign up with your email — we'll send your free access link and lifetime access stays.",
   bullets: [
     "What generative AI actually is — without the jargon",
     "The 3 things every prompt needs to get reliable output",
@@ -254,9 +254,13 @@ export const freeIntro = {
     { value: "23", label: "Sections" },
   ],
   cta: {
-    label: "Start the free course →",
-    href: "https://www.udemy.com/course/generative-ai-chatgpt/?couponCode=CP260518SUMMX",
+    label: "Sign up — start the free course →",
+    href: "#free-enroll",
   },
+  // The Udemy URL with the free coupon — handed to users after they sign up.
+  // Kept here so non-coders can rotate the coupon without touching API code.
+  enrollUrl:
+    "https://www.udemy.com/course/generative-ai-chatgpt/?couponCode=CP260518SUMMX",
   footnote:
     "Liked it? Continue with the Complete AI Bootcamp at 80% off — use code MASTER80 at checkout.",
 };
@@ -514,9 +518,9 @@ export const udemyShowcase = {
   subtitle:
     "Saad teaches AI on Udemy, the world's largest learning marketplace. Students from over a hundred countries have enrolled.",
   stats: [
-    { value: "38,099+", label: "Students enrolled" },
-    { value: "13,017+", label: "Reviews" },
-    { value: "100+", label: "Countries reached" },
+    { value: "39,341", label: "Students enrolled", icon: "users" as const },
+    { value: "13,017+", label: "Reviews", icon: "quote" as const },
+    { value: "4.5", label: "Average rating", icon: "stars" as const },
   ],
   instructorUrl: "https://www.udemy.com/user/saad-ahmed-434/",
   cta: {

@@ -34,9 +34,11 @@ export function getSupabase(): SupabaseClient | null {
 export type Purchase = {
   id: string;
   email: string;
+  phone: string | null;
   amount: number;
   coupon_code: string | null;
   session_id: string;
+  status: "pending" | "paid" | "failed";
   user_id: string | null;
   created_at: string;
 };
@@ -121,9 +123,11 @@ export async function insertPurchase(row: Omit<Purchase, "id" | "created_at">): 
   if (sb) {
     const { error } = await sb.from("purchases").insert({
       email: row.email,
+      phone: row.phone,
       amount: row.amount,
       coupon_code: row.coupon_code,
       session_id: row.session_id,
+      status: row.status,
       user_id: row.user_id,
     });
     if (error) throw new Error(`supabase insert purchase: ${error.message}`);
@@ -134,6 +138,24 @@ export async function insertPurchase(row: Omit<Purchase, "id" | "created_at">): 
     created_at: new Date().toISOString(),
     ...row,
   });
+}
+
+/**
+ * Promote a pending purchase to "paid" once Stripe confirms via webhook.
+ * Lookup is by Stripe checkout session id (stored in `session_id`).
+ */
+export async function markPurchasePaid(sessionId: string): Promise<void> {
+  const sb = getSupabase();
+  if (sb) {
+    const { error } = await sb
+      .from("purchases")
+      .update({ status: "paid" })
+      .eq("session_id", sessionId);
+    if (error) throw new Error(`supabase mark paid: ${error.message}`);
+    return;
+  }
+  const row = mem.purchases.find((p) => p.session_id === sessionId);
+  if (row) row.status = "paid";
 }
 
 export async function insertEmailSignup(row: Omit<EmailSignup, "id" | "created_at">): Promise<void> {

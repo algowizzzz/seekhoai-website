@@ -35,13 +35,21 @@ Required for purchase/email persistence + admin panel:
 | `NEXT_PUBLIC_SUPABASE_URL` | server | Supabase → Settings → API → Project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | server | Supabase → Settings → API → `service_role` key (secret) |
 
-Optional (for future real Stripe / email):
+Required for real Stripe payments (paid course):
 
 | Variable | Used by | Notes |
 |---|---|---|
-| `STRIPE_SECRET_KEY` | `/api/checkout` | Get from Stripe Dashboard |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | client (if needed) | Public key — fine to expose |
-| `NEXT_PUBLIC_SITE_URL` | `/api/checkout` | e.g. `https://seekhoai.pk` |
+| `STRIPE_SECRET_KEY` | `/api/checkout`, `/api/stripe/webhook` | Stripe Dashboard → Developers → API keys → `sk_test_...` / `sk_live_...` |
+| `STRIPE_PRICE_ID` | `/api/checkout` | Stripe Dashboard → Products → your product → Price → `price_...`. Used when no coupon is applied. |
+| `STRIPE_WEBHOOK_SECRET` | `/api/stripe/webhook` | Stripe Dashboard → Developers → Webhooks → endpoint → Signing secret `whsec_...`. Webhook endpoint: `https://<your-domain>/api/stripe/webhook`, event: `checkout.session.completed`. |
+| `NEXT_PUBLIC_SITE_URL` | `/api/checkout` success/cancel URLs | e.g. `https://seekhoai.pk` (no trailing slash) |
+
+Stripe local-dev tip: run `stripe listen --forward-to localhost:3000/api/stripe/webhook` and use the printed `whsec_...` as `STRIPE_WEBHOOK_SECRET` while developing.
+
+Optional:
+
+| Variable | Used by | Notes |
+|---|---|---|
 | `RESEND_API_KEY` | `/api/email` | Resend / Mailchimp / etc. |
 
 After adding env vars, trigger a redeploy (Vercel → Deployments → ⋮ → Redeploy).
