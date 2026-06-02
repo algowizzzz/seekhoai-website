@@ -1,12 +1,9 @@
-"use client";
-
+import Link from "next/link";
 import { Check, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { freeIntro } from "@/content/content";
-import { useCheckout } from "@/context/CheckoutContext";
 
 export function FreeIntroCourse() {
-  const { open } = useCheckout();
   return (
     <section
       id="free-intro"
@@ -72,13 +69,12 @@ export function FreeIntroCourse() {
               </ul>
 
               <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-                <button
-                  type="button"
-                  onClick={() => open("free")}
+                <Link
+                  href="/free"
                   className="inline-flex items-center justify-center rounded-full bg-accent-warm px-7 py-3.5 font-display text-base font-medium text-black transition-transform duration-200 hover:scale-[1.02]"
                 >
                   {freeIntro.cta.label}
-                </button>
+                </Link>
                 <p className="text-sm text-text-tertiary">
                   {freeIntro.footnote}
                 </p>

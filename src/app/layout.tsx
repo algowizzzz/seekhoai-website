@@ -4,9 +4,9 @@ import "./globals.css";
 import { CouponProvider } from "@/context/CouponContext";
 import { CheckoutProvider } from "@/context/CheckoutContext";
 import { TrailerProvider } from "@/context/TrailerContext";
-import { DiscountPopup } from "@/components/popup/DiscountPopup";
 import { CheckoutModal } from "@/components/checkout/CheckoutModal";
 import { TrailerModal } from "@/components/trailer/TrailerModal";
+import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -78,9 +78,9 @@ export default function RootLayout({
           <CheckoutProvider>
             <TrailerProvider>
               {children}
-              <DiscountPopup />
               <CheckoutModal />
               <TrailerModal />
+              <FloatingWhatsApp />
             </TrailerProvider>
           </CheckoutProvider>
         </CouponProvider>

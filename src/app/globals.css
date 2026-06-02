@@ -64,6 +64,35 @@
       18% 78%,
       50% 50%;
   }
+
+  .legal-prose {
+    @apply text-base leading-relaxed text-text-secondary;
+  }
+  .legal-prose h2 {
+    @apply mt-12 mb-4 font-display text-2xl font-medium text-text-primary md:text-3xl;
+  }
+  .legal-prose p {
+    @apply my-4;
+  }
+  .legal-prose ul,
+  .legal-prose ol {
+    @apply my-4 space-y-2 pl-6;
+  }
+  .legal-prose ul {
+    @apply list-disc;
+  }
+  .legal-prose ol {
+    @apply list-decimal;
+  }
+  .legal-prose li::marker {
+    @apply text-text-tertiary;
+  }
+  .legal-prose strong {
+    @apply font-medium text-text-primary;
+  }
+  .legal-prose a {
+    @apply text-accent-warm underline-offset-4 transition hover:underline;
+  }
 }
 
 @keyframes drift {

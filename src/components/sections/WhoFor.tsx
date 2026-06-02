@@ -11,6 +11,7 @@ export function WhoFor() {
         <Reveal className="max-w-3xl">
           <p className="eyebrow">[ WHO THIS IS FOR ]</p>
           <h2 className="mt-4 font-display text-display-lg font-medium">{whoFor.title}</h2>
+          <p className="mt-5 text-lg text-text-secondary">{whoFor.intro}</p>
         </Reveal>
 
         <Reveal stagger className="mt-16 grid grid-cols-1 gap-6 md:mt-20 md:grid-cols-3 md:gap-8">

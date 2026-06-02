@@ -23,6 +23,15 @@ export function Instructor() {
               <WithUdemyLinks text={instructor.bio} />
             </p>
 
+            <a
+              href={instructor.cta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent-warm underline-offset-4 hover:underline"
+            >
+              {instructor.cta.label}
+            </a>
+
             <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
               {instructor.stats.map((s) => (
                 <div key={s.label}>

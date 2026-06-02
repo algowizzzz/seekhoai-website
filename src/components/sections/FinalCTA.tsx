@@ -2,15 +2,11 @@
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
-import { finalCTA, pricing } from "@/content/content";
-import { useCoupon, priceWithCoupon } from "@/context/CouponContext";
+import { finalCTA } from "@/content/content";
 import { useCheckout } from "@/context/CheckoutContext";
 
 export function FinalCTA() {
   const { open: openCheckout } = useCheckout();
-  const { applied, discountPct } = useCoupon();
-  const { formatted } = priceWithCoupon(pricing.price, discountPct);
-  const label = applied ? `Enroll Now — ${formatted}` : finalCTA.cta.label;
 
   return (
     <section
@@ -38,10 +34,16 @@ export function FinalCTA() {
           <p className="mx-auto mt-6 max-w-xl text-lg text-text-secondary">
             {finalCTA.body}
           </p>
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button variant="warm" size="lg" onClick={() => openCheckout()}>
-              {label}
+              {finalCTA.cta.label}
             </Button>
+            <a
+              href={finalCTA.secondary.href}
+              className="text-sm text-text-secondary underline-offset-4 transition hover:text-accent-warm hover:underline"
+            >
+              {finalCTA.secondary.label}
+            </a>
           </div>
         </Reveal>
       </div>

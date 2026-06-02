@@ -1,31 +1,58 @@
 // Transactional + scheduled lifecycle emails.
 //
-//   order-confirmation  → fired immediately after a successful purchase
-//   pending-cart        → fired ~24h after signup if user hasn't purchased
-//   weekly-non-buyer    → fired weekly to non-buying signups (cron)
+//   orderConfirmationEmail() → fired immediately after a successful purchase
+//   pendingCartEmail        → ~24h after free-course signup with no purchase
+//   weeklyNewsletterEmail   → cron weekly broadcast to all signups
+//   weeklyNonBuyerEmail     → cron weekly to non-buying signups
 //
-// Edit subjects and bodies below to swap copy. Both `text` and `html` are sent.
+// Edit subjects and bodies below — both `text` and `html` send.
 
-export type Email = { subject: string; text: string; html: string };
+export type Email = {
+  subject: string;
+  preview?: string;
+  text: string;
+  html: string;
+};
 
-const CODE = "MASTER80";
-const CHECKOUT_URL = "https://seekhoai-lake.vercel.app/#pricing";
-const UDEMY_URL = "https://www.udemy.com/course/complete-ai-bootcamp/";
-const FULL_PRICE = "$499";
-const DISCOUNTED_PRICE = "$99.80";
+// ─── Brand constants ──────────────────────────────────────────────────────
+const SITE_URL = "https://seekhoai.pk";
+const PAID_URL = `${SITE_URL}/#pricing`;
+const FREE_URL = `${SITE_URL}/free`;
+const UDEMY_PAID_URL =
+  "https://www.udemy.com/course/complete-ai-bootcamp/";
 
-const wrap = (inner: string) => `<!doctype html>
-<html><body style="margin:0;padding:0;background:#0a0e1a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#e8eaed;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#0a0e1a;padding:32px 16px;">
+const PRICE_FULL = "4,999 PKR";
+const PRICE_NOW = "999 PKR";
+const PRICE_OFF = "80% off";
+
+// ─── Shared light-theme email shell (mirrors welcome-emails.ts) ────────────
+const wrap = (preview: string, inner: string) => `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SeekhoAI</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f3ef;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1a1d2a;-webkit-font-smoothing:antialiased;">
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;color:#f5f3ef;font-size:1px;line-height:1px;">${preview}</div>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f5f3ef;padding:24px 12px;">
     <tr><td align="center">
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width:560px;background:#11151f;border:1px solid #20242e;border-radius:16px;padding:32px;">
-        <tr><td>
-          <p style="margin:0 0 24px;font-family:'JetBrains Mono',Menlo,monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#f97316;">SeekhoAI</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;border-radius:14px;box-shadow:0 1px 2px rgba(20,20,20,0.04);overflow:hidden;">
+        <tr><td style="padding:24px 32px 0 32px;">
+          <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:#1a1d2a;">
+            <span style="color:#f97316;">●</span>&nbsp; SeekhoAI
+          </p>
+        </td></tr>
+        <tr><td style="padding:24px 32px 32px 32px;">
           ${inner}
-          <hr style="border:none;border-top:1px solid #20242e;margin:32px 0 16px;">
-          <p style="margin:0;font-size:12px;color:#7a8290;line-height:1.6;">
-            Got this by mistake? Just reply with "unsubscribe" and we'll remove you. <br>
-            SeekhoAI · Complete AI Bootcamp · seekhoai.pk
+        </td></tr>
+        <tr><td style="padding:20px 32px 28px 32px;border-top:1px solid #eeece6;background:#fafaf7;">
+          <p style="margin:0 0 8px;font-size:13px;color:#6b6f7d;line-height:1.6;">
+            SeekhoAI · Pakistan's most-enrolled AI course · 38,099+ students worldwide
+          </p>
+          <p style="margin:0;font-size:12px;color:#9aa0ad;line-height:1.6;">
+            <a href="${SITE_URL}" style="color:#9aa0ad;text-decoration:underline;">seekhoai.pk</a> ·
+            Don't want these? Reply <strong>unsubscribe</strong>.
           </p>
         </td></tr>
       </table>
@@ -34,152 +61,189 @@ const wrap = (inner: string) => `<!doctype html>
 </body></html>`;
 
 const cta = (label: string, href: string) =>
-  `<a href="${href}" style="display:inline-block;padding:14px 28px;background:#f97316;color:#000;font-weight:600;text-decoration:none;border-radius:999px;margin:8px 0 24px;">${label}</a>`;
+  `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 24px 0;">
+    <tr><td style="border-radius:999px;background:#f97316;">
+      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:999px;">${label}</a>
+    </td></tr>
+  </table>`;
 
-// ─── Order confirmation (transactional, sent on purchase) ──────────────
+// ─── Order confirmation (transactional, on successful purchase) ────────────
 export function orderConfirmationEmail(payload: {
   amount: number;
-  couponCode: string | null;
+  couponCode: string | null; // kept for backwards-compat; ignored in copy
   sessionId: string;
 }): Email {
-  const { amount, couponCode, sessionId } = payload;
-  const amountStr = `$${amount.toFixed(2)}`;
-  const couponLine = couponCode
-    ? `Discount applied: ${couponCode}\n`
-    : "";
+  const { amount, sessionId } = payload;
+  const amountStr = `${amount.toLocaleString("en-PK")} PKR`;
 
   return {
-    subject: `You're enrolled. Here's how to access your course.`,
+    subject: `You're enrolled. Here's how to access the course.`,
+    preview: `Your Complete AI Bootcamp access link is ready.`,
     text: `Thank you for enrolling in the Complete AI Bootcamp.
 
 Order summary
 ─────────────
 Amount paid:  ${amountStr}
-${couponLine}Order ID:     ${sessionId}
+Order ID:     ${sessionId}
 
-Access your course
-──────────────────
-${UDEMY_URL}
+Open your course
+────────────────
+${UDEMY_PAID_URL}
 
-Click the link above and use the email this was sent to. You have lifetime access — log in any time, from any device.
+Use the email this was sent to. You have lifetime access — log in any time, from any device.
 
-What to do next
-───────────────
+What to do first
+────────────────
 1. Open the course at the link above.
 2. Start with Module 1 (Foundational Prompt Engineering).
-3. Plan ~3 hours per week. Most students finish in 4-6 weeks.
+3. Plan ~3 hours per week. Most students finish in 4–6 weeks.
 
-If you can't access the course or anything looks wrong, just reply to this email and we'll fix it within 24 hours.
+Stuck on access or anything else? Reply to this email and we'll fix it within 24 hours.
 
-— Saad A
-Founder, SeekhoAI`,
-    html: wrap(`
-      <h1 style="margin:0 0 8px;font-size:26px;line-height:1.3;color:#fff;">You're enrolled.</h1>
-      <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#c2c8d3;">Thank you for joining the Complete AI Bootcamp. Your access is ready.</p>
+— Saad, Founder of SeekhoAI`,
+    html: wrap(
+      `Your Complete AI Bootcamp access link is ready.`,
+      `
+      <h1 style="margin:0 0 12px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-0.01em;color:#1a1d2a;">
+        You're enrolled.
+      </h1>
+      <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3d4250;">
+        Thank you for joining the Complete AI Bootcamp. Your access is ready.
+      </p>
 
-      <div style="background:#0a0e1a;border:1px solid #20242e;border-radius:12px;padding:20px;margin:0 0 24px;">
-        <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#7a8290;">Order summary</p>
-        <table style="width:100%;font-size:14px;color:#e8eaed;">
-          <tr><td style="padding:4px 0;color:#7a8290;">Amount paid</td><td style="padding:4px 0;text-align:right;color:#f97316;font-weight:600;">${amountStr}</td></tr>
-          ${couponCode ? `<tr><td style="padding:4px 0;color:#7a8290;">Discount applied</td><td style="padding:4px 0;text-align:right;font-family:'JetBrains Mono',Menlo,monospace;">${couponCode}</td></tr>` : ""}
-          <tr><td style="padding:4px 0;color:#7a8290;">Order ID</td><td style="padding:4px 0;text-align:right;font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;color:#c2c8d3;">${sessionId}</td></tr>
+      <div style="background:#fafaf7;border:1px solid #eeece6;border-radius:12px;padding:18px 22px;margin:0 0 24px;">
+        <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6f7d;">Order summary</p>
+        <table style="width:100%;font-size:14px;color:#1a1d2a;">
+          <tr><td style="padding:4px 0;color:#6b6f7d;">Amount paid</td><td style="padding:4px 0;text-align:right;color:#f97316;font-weight:700;">${amountStr}</td></tr>
+          <tr><td style="padding:4px 0;color:#6b6f7d;">Order ID</td><td style="padding:4px 0;text-align:right;font-family:Menlo,monospace;font-size:11px;color:#3d4250;">${sessionId}</td></tr>
         </table>
       </div>
 
-      <p style="margin:0 0 8px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;color:#7a8290;">Access your course</p>
-      ${cta("Open the course →", UDEMY_URL)}
+      ${cta("Open your course →", UDEMY_PAID_URL)}
 
-      <p style="margin:24px 0 12px;font-size:14px;color:#7a8290;letter-spacing:0.08em;text-transform:uppercase;">What to do next</p>
-      <ol style="margin:0 0 24px;padding-left:20px;color:#c2c8d3;line-height:1.8;">
+      <p style="margin:24px 0 8px;font-size:14px;font-weight:600;color:#1a1d2a;text-transform:uppercase;letter-spacing:0.04em;">What to do first</p>
+      <ol style="margin:0 0 24px;padding-left:20px;color:#3d4250;line-height:1.7;font-size:15px;">
         <li>Open the course at the link above.</li>
-        <li>Start with Module 1 (Foundational Prompt Engineering).</li>
-        <li>Plan ~3 hours per week. Most students finish in 4-6 weeks.</li>
+        <li>Start with <strong>Module 1</strong> — Foundational Prompt Engineering.</li>
+        <li>Plan ~3 hours per week. Most students finish in 4–6 weeks.</li>
       </ol>
 
-      <p style="margin:0 0 8px;font-size:14px;color:#7a8290;line-height:1.6;">If anything looks wrong, just reply to this email. We respond within 24 hours.</p>
-      <p style="margin:24px 0 0;font-size:14px;color:#7a8290;">— Saad A, Founder</p>
-    `),
+      <p style="margin:0 0 16px;font-size:14px;color:#6b6f7d;line-height:1.6;">
+        Stuck on access? Reply to this email — we'll fix it within 24 hours.
+      </p>
+      <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad, Founder of SeekhoAI</p>
+    `,
+    ),
   };
 }
 
-// ─── Pending cart (sent ~24h after signup, no purchase) ────────────────
+// ─── Pending cart (sent ~24h after signup, no purchase) ───────────────────
 export const pendingCartEmail: Email = {
   subject: `Still thinking about it?`,
-  text: `You signed up yesterday but haven't enrolled yet — totally fine, just wanted to make sure you didn't lose your discount.
+  preview: `The Complete AI Bootcamp is still 999 PKR — and the free course is still yours.`,
+  text: `You signed up yesterday for the free course but haven't picked up the full bootcamp yet — totally fine, just checking in.
 
-Your code ${CODE} is still active.
-${DISCOUNTED_PRICE} instead of ${FULL_PRICE}. One-time payment. Lifetime access.
+The Complete AI Bootcamp is still ${PRICE_NOW} (was ${PRICE_FULL}).
+One-time payment. Lifetime access. 30-day money-back guarantee.
 
-If you have questions about whether the course is right for you, just reply. I read every email.
+If you have questions about whether it's right for you, reply to this email. I read every one.
 
-Otherwise: ${CHECKOUT_URL}
+${PAID_URL}
 
 — Saad`,
-  html: wrap(`
-    <h1 style="margin:0 0 16px;font-size:24px;line-height:1.3;color:#fff;">Still thinking about it?</h1>
-    <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#c2c8d3;">You signed up yesterday but haven't enrolled yet — totally fine. Just wanted to make sure you didn't lose your discount.</p>
-    <div style="background:#0a0e1a;border:1px dashed #f97316;border-radius:12px;padding:20px;text-align:center;margin:0 0 24px;">
-      <p style="margin:0 0 6px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#7a8290;">Your code is still active</p>
-      <p style="margin:0;font-family:'JetBrains Mono',Menlo,monospace;font-size:28px;font-weight:600;color:#f97316;">${CODE}</p>
-      <p style="margin:8px 0 0;font-size:14px;color:#c2c8d3;">${DISCOUNTED_PRICE} · one-time · lifetime access</p>
+  html: wrap(
+    `The Complete AI Bootcamp is still 999 PKR — and the free course is still yours.`,
+    `
+    <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      Still thinking about it?
+    </h1>
+    <p style="margin:0 0 24px;font-size:16px;line-height:1.65;color:#3d4250;">
+      You signed up yesterday but haven't picked up the full bootcamp yet — totally fine. Just checking in.
+    </p>
+    <div style="background:#fafaf7;border:1px solid #eeece6;border-radius:12px;padding:18px 22px;margin:0 0 24px;">
+      <p style="margin:0 0 4px;font-size:13px;color:#6b6f7d;letter-spacing:0.04em;text-transform:uppercase;">Intro price still active</p>
+      <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1a1d2a;line-height:1.1;">
+        <span style="color:#9aa0ad;font-weight:400;text-decoration:line-through;font-size:16px;">${PRICE_FULL}</span>
+        &nbsp;${PRICE_NOW}
+      </p>
+      <p style="margin:8px 0 0;font-size:13px;color:#6b6f7d;">One-time · Lifetime access · 30-day money-back</p>
     </div>
-    <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#c2c8d3;">Have questions about whether the course is right for you? Just reply — I read every email.</p>
-    ${cta("Enroll now →", CHECKOUT_URL)}
-    <p style="margin:0;font-size:14px;color:#7a8290;">— Saad</p>
-  `),
+    <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#3d4250;">
+      Questions about whether the bootcamp is right for you? Just reply — I read every email.
+    </p>
+    ${cta("Enrol — " + PRICE_NOW + " →", PAID_URL)}
+    <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad</p>
+  `,
+  ),
 };
 
-// ─── Weekly newsletter (sent weekly to ALL signups, buyers + non-buyers) ─
-// Edit subject/body here to change the weekly broadcast. Redeploy after.
+// ─── Weekly newsletter (sent weekly to ALL signups) ───────────────────────
+// Edit the body each week before deploying.
 export const weeklyNewsletterEmail: Email = {
   subject: `This week at SeekhoAI`,
+  preview: `What's new in AI and inside the bootcamp.`,
   text: `Hi — your weekly update from SeekhoAI.
 
-We're here to keep you up to date on what's happening in AI and inside the
-Complete AI Bootcamp.
-
 What's new this week:
-· (Edit weeklyNewsletterEmail in lifecycle-emails.ts to write this week's body)
+· (Edit weeklyNewsletterEmail in lifecycle-emails.ts to write this week's body.)
 · Drop links, tips, student spotlights, or quick lessons here.
 · Keep it short — three to five bullet points is plenty.
 
-If you haven't enrolled yet, your MASTER80 code still works.
-${CHECKOUT_URL}
+If you haven't enrolled in the full bootcamp, intro price is still ${PRICE_NOW}.
+${PAID_URL}
 
 — Saad`,
-  html: wrap(`
-    <h1 style="margin:0 0 12px;font-size:22px;line-height:1.3;color:#fff;">This week at SeekhoAI</h1>
-    <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#c2c8d3;">Your weekly update from us. Here's what's new:</p>
-    <ul style="margin:0 0 24px;padding-left:20px;color:#c2c8d3;line-height:1.7;">
-      <li>Edit <code>weeklyNewsletterEmail</code> in <code>lifecycle-emails.ts</code> to write this week's body.</li>
+  html: wrap(
+    `What's new in AI and inside the bootcamp.`,
+    `
+    <h1 style="margin:0 0 12px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:22px;line-height:1.3;font-weight:700;color:#1a1d2a;">
+      This week at SeekhoAI
+    </h1>
+    <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#3d4250;">
+      Your weekly update from us. Here's what's new:
+    </p>
+    <ul style="margin:0 0 24px;padding-left:20px;color:#3d4250;line-height:1.75;font-size:15px;">
+      <li>Edit <code style="background:#fafaf7;padding:2px 6px;border-radius:4px;font-size:13px;">weeklyNewsletterEmail</code> in <code style="background:#fafaf7;padding:2px 6px;border-radius:4px;font-size:13px;">lifecycle-emails.ts</code> to write this week's body.</li>
       <li>Drop links, tips, student spotlights, or quick lessons here.</li>
       <li>Keep it short — three to five bullet points is plenty.</li>
     </ul>
-    <p style="margin:0 0 24px;font-size:14px;color:#7a8290;line-height:1.6;">Haven't enrolled yet? Your <strong style="color:#f97316;font-family:'JetBrains Mono',Menlo,monospace;">${CODE}</strong> code still works.</p>
-    ${cta("See the curriculum →", CHECKOUT_URL)}
-    <p style="margin:0;font-size:14px;color:#7a8290;">— Saad</p>
-  `),
+    <p style="margin:0 0 16px;font-size:14px;color:#6b6f7d;line-height:1.6;">
+      Haven't enrolled yet? Intro price is still <strong>${PRICE_NOW}</strong>.
+    </p>
+    ${cta("See the bootcamp →", PAID_URL)}
+    <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad</p>
+  `,
+  ),
 };
 
-// ─── Weekly non-buyer (sent weekly to non-buying signups) ──────────────
+// ─── Weekly non-buyer (sent weekly to free-course signups, no purchase) ────
 export const weeklyNonBuyerEmail: Email = {
-  subject: `This week at SeekhoAI`,
-  text: `Hi — a quick update from us.
+  subject: `Quick check-in from SeekhoAI`,
+  preview: `999 PKR intro price still live. No pressure.`,
+  text: `Quick check-in.
 
-The Complete AI Bootcamp is still open, and your ${CODE} code still works (80% off → ${DISCOUNTED_PRICE}).
+The Complete AI Bootcamp is still open at the intro price: ${PRICE_NOW} (was ${PRICE_FULL}, ${PRICE_OFF} off).
 
 If you want to see what's inside before committing:
-${CHECKOUT_URL}
+${PAID_URL}
 
-Or reply to this email with any question — I'll get back to you.
+Or reply with any question and I'll get back to you.
 
 — Saad`,
-  html: wrap(`
-    <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#fff;">This week at SeekhoAI</h1>
-    <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#c2c8d3;">A quick check-in.</p>
-    <p style="margin:0 0 20px;font-size:15px;line-height:1.7;color:#c2c8d3;">The Complete AI Bootcamp is still open, and your code <strong style="color:#f97316;font-family:'JetBrains Mono',Menlo,monospace;">${CODE}</strong> still works — 80% off, brings it to <strong>${DISCOUNTED_PRICE}</strong> for lifetime access.</p>
-    <p style="margin:0 0 24px;font-size:14px;color:#7a8290;line-height:1.6;">Have a question about whether it's right for you? Just reply.</p>
-    ${cta("See the curriculum →", CHECKOUT_URL)}
-    <p style="margin:0;font-size:14px;color:#7a8290;">— Saad</p>
-  `),
+  html: wrap(
+    `999 PKR intro price still live. No pressure.`,
+    `
+    <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:22px;line-height:1.3;font-weight:700;color:#1a1d2a;">
+      Quick check-in.
+    </h1>
+    <p style="margin:0 0 20px;font-size:16px;line-height:1.65;color:#3d4250;">
+      The Complete AI Bootcamp is still open at the intro price: <strong>${PRICE_NOW}</strong> (was ${PRICE_FULL}).
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:#6b6f7d;line-height:1.6;">
+      Want to see what's inside before committing? Have a question? Just reply.
+    </p>
+    ${cta("See the bootcamp →", PAID_URL)}
+    <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad</p>
+  `,
+  ),
 };

@@ -14,6 +14,9 @@ const schema = z.object({
     .min(5)
     .regex(/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/, "invalid_email_format"),
   phone: z.string().nullable().optional(),
+  // Optional today. The /free page collects this; persistence will pick it
+  // up once the email_signups table grows a `name` column.
+  name: z.string().max(120).nullable().optional(),
 });
 
 export async function POST(req: Request) {

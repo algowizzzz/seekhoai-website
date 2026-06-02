@@ -5,34 +5,41 @@ export const brand = {
   name: "SeekhoAI",
   domain: "seekhoai.pk",
   course: "Complete AI Bootcamp",
-  price: 499,
-  priceAnchor: 799,
+  price: 999,
+  priceAnchor: 4999,
+  currency: "PKR",
   studentsEnrolled: "38,099+",
   rating: "4.5",
   instructorName: "Saad A",
 };
 
+// Single primary CTA used everywhere on the site (per spec F12).
+export const primaryCtaLabel = "Enrol Now — 999 PKR";
+
+// Trust strip rendered as a full-width band just below the hero (spec F2).
+export const trustStrip = {
+  lead: "Taught on Udemy",
+  body:
+    "the world's largest learning marketplace — by an instructor with a decade across Deloitte, PwC, BMO, and Microsoft.",
+  employers: ["Deloitte", "PwC", "BMO", "Microsoft"],
+};
+
 export const nav = {
-  links: [
-    { label: "Curriculum", href: "#curriculum" },
-    { label: "Instructor", href: "#instructor" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
-  ],
-  cta: { label: "Enroll Now", href: "#pricing" },
+  links: [],
+  cta: { label: primaryCtaLabel, href: "#pricing" },
 };
 
 export const hero = {
-  eyebrow: "[ AI BOOTCAMP · LEARN AT YOUR PACE ]",
+  eyebrow: "PAKISTAN'S MOST-ENROLLED AI COURSE",
   headline: {
-    line1: "Master AI.",
-    line2: "Build the future.",
-    accent: "Starting today.",
+    line1: "Learn AI skills people",
+    line2: "actually get paid for.",
+    accent: "",
   },
-  sub: "Join 38,099+ students learning Prompt Engineering, ChatGPT, MidJourney, and Vibe Coding from one of the world's top-rated AI instructors. Self-paced. Lifetime access.",
+  sub: "ChatGPT, MidJourney, AI agents, and the workflows that save you hours every week — with English subtitles throughout. Self-paced, lifetime access. No experience, no maths, no jargon.",
   ctas: {
-    primary: { label: "Enroll Now — $499", href: "#pricing" },
-    secondary: { label: "Watch the trailer", href: "#trailer" },
+    primary: { label: primaryCtaLabel, href: "#pricing" },
+    secondary: { label: "Not ready? Start with the free course →", href: "/free" },
   },
   emailForm: {
     placeholder: "you@example.com",
@@ -40,12 +47,54 @@ export const hero = {
     success: "Check your inbox — your first lesson is on the way.",
   },
   trustStrip: {
-    rating: "4.5 / 5",
-    students: "38,099+ students",
-    featured: "Featured on Udemy",
+    rating: "4.5★ average",
+    students: "38,099+ students · 13,017+ reviews",
+    featured: "Learners in 100+ countries",
   },
 };
 
+// Six outcome-led accordions that replace the old 10-pillar + 8-module split.
+// Title shows by default; body expands. (Spec F4 + Part B "What You'll Learn".)
+export const learnings = {
+  eyebrow: "WHAT YOU'LL LEARN",
+  title: "Skills that turn into income and saved time.",
+  intro:
+    "This isn't a tour of features. Every section ends with something you can do, sell, or automate.",
+  items: [
+    {
+      id: "01",
+      title: "Write prompts that actually work.",
+      body: "Most people type a request and hope. You'll learn the structure behind reliable, professional output every time — the difference between a toy and a tool.",
+    },
+    {
+      id: "02",
+      title: "Create and sell AI art.",
+      body: "Use MidJourney to produce artwork good enough to sell, then put it to work on Etsy and print-on-demand platforms as a real income stream.",
+    },
+    {
+      id: "03",
+      title: "Automate your busywork.",
+      body: "Email, content, customer support, marketing follow-ups — you'll hand the repetitive work to AI and get your hours back.",
+    },
+    {
+      id: "04",
+      title: "Build products without a developer.",
+      body: "Through Vibe Coding, you'll turn ideas into working apps, dashboards, and data projects — even if you've never written code.",
+    },
+    {
+      id: "05",
+      title: "Pull traffic with AI marketing and SEO.",
+      body: "Generate search-optimized content and run campaigns that actually bring people in, without an agency.",
+    },
+    {
+      id: "06",
+      title: "Build your own AI agents.",
+      body: "When you're ready to go advanced, you'll create LangChain and LangGraph agents that handle real, multi-step workflows on their own.",
+    },
+  ],
+};
+
+// Legacy 10-pillar list — kept for any historical reference, no longer rendered.
 export const pillars = [
   {
     id: "01",
@@ -262,161 +311,193 @@ export const freeIntro = {
   enrollUrl:
     "https://www.udemy.com/course/generative-ai-chatgpt/?couponCode=CP260518SUMMX",
   footnote:
-    "Liked it? Continue with the Complete AI Bootcamp at 80% off — use code MASTER80 at checkout.",
+    "Liked it? Continue with the Complete AI Bootcamp — 4999 → 999 PKR (80% off).",
 };
 
 export const whoFor = {
-  title: "Built for ambitious learners.",
+  title: "Built for where you are right now.",
+  intro:
+    "Whatever your starting point, this course meets you there and takes you somewhere useful.",
   groups: [
     {
       label: "Beginners",
-      body: "You've heard about AI everywhere and you're tired of being on the sidelines. This bootcamp gives you a real foundation — no math, no jargon, just usable skill.",
+      body: "You've heard about AI everywhere and you're tired of watching from the sidelines. This gives you a real foundation — no maths, no jargon, just skills you can use this week.",
       outcomes: [
-        "Speak fluent AI without faking it",
+        "Speak about AI confidently instead of faking it",
         "Build your first real project",
-        "Know which tool fits which job",
+        "Finally know which tool fits which job",
       ],
     },
     {
       label: "Professionals",
-      body: "You want to use AI to be 3× better at your job. We focus on workflows: how to actually plug AI into the work you already do as a marketer, writer, designer, or analyst.",
+      body: "You don't want theory — you want to be noticeably better at the job you already do. We focus on workflows: how to actually plug AI into your work as a marketer, writer, designer, or analyst.",
       outcomes: [
-        "Save 10+ hours a week on routine work",
+        "Save 10+ hours a week on routine tasks",
         "Build custom GPTs for your team",
-        "Automate the boring parts of your role",
+        "Automate the parts of your role you've always disliked",
       ],
     },
     {
-      label: "Founders",
-      body: "You want to ship products without a 10-person engineering team. Vibe Coding + AI workflows are how solo and small teams now compete with funded startups.",
+      label: "Founders & Freelancers",
+      body: "You want to ship and earn without a big team behind you. AI workflows are how solo operators now compete with funded startups.",
       outcomes: [
-        "Build and ship without hiring engineers",
-        "Run lean using AI across product, design, and ops",
-        "Validate ideas in days, not quarters",
+        "Build and launch without hiring engineers",
+        "Package AI services clients will pay for",
+        "Validate ideas in days instead of months",
       ],
     },
   ],
 };
 
 export const instructor = {
-  name: "Saad A",
-  title: "AI Expert Instructor · Founder, SeekhoAI",
-  bio: "Saad's background is in Data Science, Business, and Finance, with a decade of experience at Fortune 500 companies including Deloitte, PwC, BMO, and Microsoft. He teaches AI on Udemy where 38,099+ students across 100+ countries have enrolled in his courses, earning him 13,017+ reviews with a 4.5★ average. He's the founder of SeekhoAI and DeepLearnHQ, and his focus is helping people actually use AI — not just talk about it.",
+  name: "Saad Ahmed",
+  title:
+    "A decade at Deloitte, PwC, BMO, and Microsoft — and 38,099+ students taught.",
+  bio: "Meet Saad Ahmed, the founder of SeekhoAI. His background is in data science, business, and finance, and his entire focus is on helping people use AI rather than just talk about it. Students across more than a hundred countries have taken his courses and left over 13,000 reviews at a 4.5-star average. When you enrol, you're learning from someone who has both done the work at Fortune 500 scale and taught it to tens of thousands of beginners.",
+  cta: {
+    label: "See Saad's Udemy profile →",
+    href: "https://www.udemy.com/user/saad-ahmed-434/",
+  },
   stats: [
     { value: "38,099+", label: "students" },
     { value: "13,017+", label: "reviews" },
     { value: "4.5★", label: "avg rating" },
-    { value: "7", label: "Udemy courses" },
+    { value: "100+", label: "countries" },
   ],
 };
 
-export const testimonials = [
-  {
-    quote:
-      "This course completely transformed how I approach content creation. The prompt engineering techniques alone saved me 20+ hours per week. Highly recommend!",
-    name: "Sarah Chen",
-    role: "Marketing Director",
-    location: "Tech Startup",
-  },
-  {
-    quote:
-      "MidJourney section was incredible! I'm now selling AI art on Etsy and making $2k+ monthly. The instructor's guidance on monetization was spot-on.",
-    name: "Michael Rodriguez",
-    role: "Freelance Designer",
-    location: "Creative Agency",
-  },
-  {
-    quote:
-      "Vibe coding changed my perspective on programming. Building data visualizations with AI assistance made complex projects so much more manageable.",
-    name: "Jennifer Park",
-    role: "Business Analyst",
-    location: "Fortune 500",
-  },
-  {
-    quote:
-      "Used ChatGPT techniques from this course to develop my startup's entire business plan. The AI automation strategies are worth 10x the course price.",
-    name: "David Thompson",
-    role: "Entrepreneur",
-    location: "Startup Founder",
-  },
-  {
-    quote:
-      "SEO content creation has never been easier. My blog traffic increased 400% using the AI strategies taught in this comprehensive bootcamp.",
-    name: "Lisa Wang",
-    role: "Content Creator",
-    location: "Digital Marketing",
-  },
-  {
-    quote:
-      "The advanced AI models section opened up so many possibilities. Now I'm leveraging multiple AI tools daily to accelerate my research projects.",
-    name: "James Mitchell",
-    role: "Data Scientist",
-    location: "Healthcare Tech",
-  },
-];
+export const testimonialSection = {
+  eyebrow: "[ STUDENT VOICES ]",
+  title: "Real students. Real reviews.",
+  intro:
+    "These come straight from the 13,017+ reviews on Udemy — unedited, from people who took the course.",
+  ctaLabel: "See all reviews on Udemy →",
+  ctaHref: "https://www.udemy.com/user/saad-ahmed-434/",
+  stats: [
+    { value: "38,099+", label: "students" },
+    { value: "13,017+", label: "reviews" },
+    { value: "4.5★", label: "average" },
+    { value: "100+", label: "countries" },
+  ],
+  // Real reviews from Saad's Udemy course. Each can be a text quote, an image screenshot, or both.
+  // To add a screenshot: drop the PNG into /public/reviews/ and set `src: "/reviews/<file>.png"`.
+  reviews: [
+    {
+      name: "Ananya",
+      quote: "Amazing, above expectations!",
+      rating: 5,
+      when: "5 months ago",
+    },
+    {
+      name: "Farhan",
+      quote: "Well structured videos very helpful to understand.",
+      rating: 5,
+      when: "9 months ago",
+    },
+    {
+      name: "Sabeena",
+      quote: "Relevant and good content. BENEFICIAL!",
+      rating: 5,
+      when: "9 months ago",
+    },
+    {
+      name: "Junaid",
+      quote: "The experience was so good.",
+      rating: 5,
+      when: "9 months ago",
+    },
+    {
+      name: "Luis",
+      quote: "Great course. Lots of information and very easy to get through.",
+      rating: 4.5,
+      when: "2 years ago",
+    },
+    {
+      name: "Sujoy",
+      quote: "Great learning and share… These are very useful.",
+      rating: 4,
+      when: "1 year ago",
+    },
+  ] as {
+    name: string;
+    quote?: string;
+    rating?: number;
+    when?: string;
+    src?: string;
+    alt?: string;
+    location?: string;
+  }[],
+};
 
 export const pricing = {
   eyebrow: "THE COMPLETE BOOTCAMP",
-  title: "GenAI and Prompt Engineering MasterClass",
-  priceAnchor: 1499,
-  price: 499,
-  priceNote: "One-time payment • Lifetime access",
-  cta: { label: "Enroll Now - Start Learning Today", action: "openCheckout" },
-  badges: ["30-Day Money-Back", "Lifetime Access"],
-  includesHeading: "Everything You Get:",
+  title: "The Complete AI Bootcamp",
+  currency: "PKR",
+  priceAnchor: 4999,
+  price: 999,
+  discountLabel: "80% off",
+  priceNote: "One-time payment. Lifetime access. 30-day money-back guarantee.",
+  paymentNote: "Pay easily with JazzCash or Easypaisa.",
+  urgency: "Intro price — going up soon.",
+  cta: { label: primaryCtaLabel, action: "openCheckout" },
+  badges: ["30-day money-back", "Lifetime access", "JazzCash / Easypaisa"],
+  includesHeading: "Here's everything you get:",
   includes: [
-    "25+ Hours of Premium Content",
-    "97+ In-Depth Video Lessons",
-    "2000+ Real-World Prompts Library",
-    "Hands-On Project Portfolio",
-    "AI Art & MidJourney Mastery",
-    "Vibe Coding Fundamentals",
-    "Business AI Applications",
-    "Lifetime Access to Updates",
-    "Certificate of Completion",
-    "Expert Community Access",
+    "25+ hours of premium content",
+    "97+ in-depth video lessons",
+    "2000+ real-world prompts library",
+    "Full AI art and MidJourney mastery",
+    "Vibe Coding fundamentals",
+    "Business AI applications",
+    "Certificate of completion",
+    "Lifetime access to every future update",
   ],
 };
 
 export const faq = [
   {
     q: "Is this for absolute beginners?",
-    a: "Yes. Module 1 starts from zero — no math, no coding required. If you can use a web browser, you can take this course. We deliberately built the early modules so a complete beginner and a technical professional can both get value.",
+    a: "Yes. There's no maths and no coding background required — we start from zero and build up.",
   },
   {
     q: "How much time per week?",
-    a: "Plan for about 3 hours per week. The whole bootcamp is self-paced — binge it in a weekend, stretch it over months, or come back to it whenever. Lifetime access means there's no deadline.",
+    a: "Around three hours. Most students finish in four to six weeks, but it's fully self-paced, so you set the speed.",
   },
   {
     q: "What if I fall behind?",
-    a: "There's no cohort and no deadline. The Complete AI Bootcamp is fully self-paced — you start when you want, you finish when you want, and you keep access for life.",
+    a: "Nothing is lost. You have lifetime access, so you can pick it back up whenever life allows.",
   },
   {
     q: "Do you offer refunds?",
-    a: "Yes — 7-day no-questions-asked refund. Try the first two modules, and if the course isn't for you, email us within seven days for a full refund.",
+    a: "Yes — a 30-day money-back guarantee. If the course isn't right for you, you get your money back, no hassle.",
   },
   {
     q: "Is the certificate recognized?",
-    a: "You receive a verified SeekhoAI certificate of completion. It's not a university degree, but it works the way a great Udemy or Coursera certificate works — proof of skill that you can attach to a LinkedIn profile or résumé.",
+    a: "You'll earn a certificate of completion you can add to LinkedIn and share with employers.",
   },
   {
     q: "Can I pay in PKR?",
-    a: "Yes. Pakistani students can pay via JazzCash or Easypaisa in PKR — email us at hello@seekhoai.pk after enrollment and we'll send local payment instructions and a discount adjustment for currency differences.",
+    a: "Yes. You can pay easily with JazzCash or Easypaisa.",
   },
   {
     q: "Do I need a powerful computer?",
-    a: "No. Everything runs in the browser — ChatGPT, MidJourney, Cursor (which works on any modern laptop), and Claude. A basic laptop with a stable internet connection is all you need.",
+    a: "No. Everything runs in the browser — a basic laptop, or even a phone, works for most of the lessons.",
+  },
+  {
+    q: "Is the course in Urdu?",
+    a: "The course is taught in English with subtitles, so it's easy to follow.",
   },
   {
     q: "What happens after I finish?",
-    a: "Lifetime access stays. You keep the videos, prompt libraries, community, and every future update we ship — at no extra cost. Many students dip back in months later as new modules launch.",
+    a: "You keep lifetime access and all future updates, plus a spot in the student community.",
   },
 ];
 
 export const finalCTA = {
-  title: "The future doesn't wait. Build with it.",
-  body: "Join 38,099+ students. Master AI. Ship real work.",
-  cta: { label: "Enroll Now — $499", action: "openCheckout" },
+  title: "Start learning AI today.",
+  body: "Join more than 38,099 students. Enrol in the full bootcamp for 999 PKR — or start free if you're not ready yet.",
+  cta: { label: primaryCtaLabel, action: "openCheckout" },
+  secondary: { label: "Start with the free course →", href: "/free" },
 };
 
 export const footer = {
@@ -472,9 +553,9 @@ export const footer = {
     {
       heading: "Legal",
       links: [
-        { label: "Terms", href: "#" },
-        { label: "Privacy", href: "#" },
-        { label: "Refund policy", href: "#" },
+        { label: "Terms", href: "/terms" },
+        { label: "Privacy", href: "/privacy" },
+        { label: "Refund policy", href: "/refund" },
       ],
     },
   ],
@@ -532,8 +613,32 @@ export const udemyShowcase = {
 // Admin notification email — receives "new signup" and "new purchase" alerts.
 export const adminEmail = "sa5425592@gmail.com";
 
-// The single universal discount code.
+// MASTER80 path retired per spec — the 4999 → 999 PKR price IS the discount.
+// Kept as no-op so legacy callers don't crash; code can never match.
 export const discountCode = {
-  code: "MASTER80",
-  pct: 0.8,
+  code: "__DISABLED__",
+  pct: 0,
+};
+
+// Floating WhatsApp click-to-chat (spec F13 + T6).
+// Number is formatted for display; wa.me link strips non-digits automatically.
+export const whatsapp = {
+  number: "+92 337 7223246",
+  message: "Hi! I'm interested in the SeekhoAI AI course. Can you tell me more?",
+};
+
+// Payment rails for the 999 PKR close.
+// The Easypaisa account is the destination customers transfer to in the
+// WhatsApp follow-up — NOT shown on public pages. Use only inside the
+// WhatsApp message sequence (Funnel M3 / M4) and on the post-checkout
+// payment instructions screen, where appropriate.
+export const payments = {
+  easypaisa: {
+    accountNumber: "03322497026",
+    accountTitle: "SeekhoAI", // TODO: confirm registered account title with Maaz
+  },
+  jazzcash: {
+    accountNumber: "", // TODO: ask Maaz if a separate JazzCash account is needed
+    accountTitle: "",
+  },
 };

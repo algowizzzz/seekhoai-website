@@ -4,14 +4,14 @@ import { Check } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { pricing } from "@/content/content";
-import { useCoupon, priceWithCoupon } from "@/context/CouponContext";
 import { useCheckout } from "@/context/CheckoutContext";
+
+function formatPkr(n: number) {
+  return `${n.toLocaleString("en-PK")} ${pricing.currency}`;
+}
 
 export function Pricing() {
   const { open: openCheckout } = useCheckout();
-  const { applied, code, discountPct } = useCoupon();
-  const { formatted } = priceWithCoupon(pricing.price, discountPct);
-  const ctaLabel = applied ? `Enroll Now — ${formatted}` : pricing.cta.label;
 
   return (
     <section
@@ -42,26 +42,23 @@ export function Pricing() {
             <div className="relative flex flex-col items-center text-center">
               <div className="flex items-baseline gap-3">
                 <span className="font-display text-2xl text-text-tertiary line-through">
-                  ${pricing.priceAnchor.toLocaleString("en-US")}
+                  {formatPkr(pricing.priceAnchor)}
                 </span>
-                {applied && (
-                  <span className="font-display text-2xl text-text-tertiary line-through">
-                    ${pricing.price}
-                  </span>
-                )}
+                <span className="rounded-full bg-accent-warm/15 px-2.5 py-0.5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
+                  {pricing.discountLabel}
+                </span>
               </div>
 
               <p className="mt-2 font-display text-display-xl font-medium text-accent-warm">
-                {applied ? formatted : `$${pricing.price}`}
+                {formatPkr(pricing.price)}
               </p>
 
-              <p className="mt-3 text-sm text-text-secondary">{pricing.priceNote}</p>
-
-              {applied && (
-                <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-accent-warm/40 bg-accent-warm/10 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
-                  🏷 {code} applied — {Math.round(discountPct * 100)}% off
-                </span>
-              )}
+              <p className="mt-3 max-w-sm text-sm text-text-secondary">
+                {pricing.priceNote}
+              </p>
+              <p className="mt-1 text-sm text-text-secondary">
+                {pricing.paymentNote}
+              </p>
 
               <Button
                 variant="warm"
@@ -69,8 +66,11 @@ export function Pricing() {
                 className="mt-8"
                 onClick={() => openCheckout()}
               >
-                {ctaLabel}
+                {pricing.cta.label}
               </Button>
+              <p className="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
+                {pricing.urgency}
+              </p>
 
               <ul className="mt-5 flex flex-wrap items-center justify-center gap-2">
                 {pricing.badges.map((badge) => (

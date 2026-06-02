@@ -14,7 +14,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { ensureAuthUser, insertPurchase } from "@/lib/supabase";
-import { discountCode, pricing, brand } from "@/content/content";
+import { pricing, brand } from "@/content/content";
 import { getStripe, getStripePriceId, getSiteUrl } from "@/lib/stripe";
 
 const schema = z.object({
@@ -23,6 +23,7 @@ const schema = z.object({
     .min(5)
     .regex(/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/, "invalid_email_format"),
   phone: z.string().nullable().optional(),
+  // Accepted for backwards-compat with old clients; ignored — single PKR price.
   couponCode: z.string().nullable().optional(),
 });
 
@@ -52,18 +53,12 @@ export async function POST(req: Request) {
   const email = parsed.data.email.trim().toLowerCase();
   const phone = parsed.data.phone?.toString().trim() || null;
 
-  // Validate coupon server-side against the canonical list. We never trust the
-  // client's claimed `amount` — we recompute it here.
-  const rawCode = (parsed.data.couponCode ?? "").trim().toUpperCase();
-  const couponValid = rawCode === discountCode.code;
-  const appliedCode = couponValid ? discountCode.code : null;
-  const appliedPct = couponValid ? discountCode.pct : 0;
-  const amount = +(pricing.price * (1 - appliedPct)).toFixed(2);
-  const amountCents = Math.round(amount * 100);
+  // Single PKR price. No coupon path; the 4999→999 IS the discount.
+  const amount = pricing.price;
+  const amountSubunits = Math.round(amount * 100);
 
-  // Use a configured STRIPE_PRICE_ID when no coupon is applied (lets the
-  // Stripe Dashboard own the canonical price). With a coupon we fall back to
-  // inline `price_data` so we can pass the discounted amount.
+  // Use a configured STRIPE_PRICE_ID when one exists (Stripe Dashboard owns
+  // the canonical price); otherwise inline price_data in PKR.
   const stripePriceId = getStripePriceId();
   const siteUrl = getSiteUrl();
 
@@ -73,17 +68,14 @@ export async function POST(req: Request) {
       mode: "payment",
       customer_email: email,
       line_items: [
-        couponValid || !stripePriceId
+        !stripePriceId
           ? {
               quantity: 1,
               price_data: {
-                currency: "usd",
-                unit_amount: amountCents,
+                currency: "pkr",
+                unit_amount: amountSubunits,
                 product_data: {
                   name: brand.course,
-                  description: couponValid
-                    ? `Discount applied: ${appliedCode}`
-                    : undefined,
                 },
               },
             }
@@ -94,7 +86,6 @@ export async function POST(req: Request) {
       metadata: {
         email,
         phone: phone ?? "",
-        coupon_code: appliedCode ?? "",
       },
     });
   } catch (err) {
@@ -127,7 +118,7 @@ export async function POST(req: Request) {
       email,
       phone,
       amount,
-      coupon_code: appliedCode,
+      coupon_code: null,
       session_id: session.id,
       status: "pending",
       user_id: userId,
@@ -142,7 +133,6 @@ export async function POST(req: Request) {
     ok: true,
     sessionId: session.id,
     amount,
-    couponApplied: couponValid,
     redirectUrl: session.url,
   });
 }
