@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
 import { udemyCourseUrl } from "@/content/content";
 import { PixelPurchase } from "@/components/tracking/PixelPurchase";
+import { GAPurchase } from "@/components/tracking/GAPurchase";
 
 export const metadata = {
   title: "You're in. — SeekhoAI",
@@ -17,6 +18,7 @@ export default function SuccessPage() {
   return (
     <main className="grid min-h-screen place-items-center bg-base px-6 py-16 text-text-primary">
       <PixelPurchase />
+      <GAPurchase />
       <div className="flex w-full max-w-md flex-col items-center gap-6 text-center">
         <div className="grid size-20 place-items-center rounded-full bg-accent-warm/15 ring-2 ring-accent-warm/40">
           <Check className="size-10 text-accent-warm" strokeWidth={3} />

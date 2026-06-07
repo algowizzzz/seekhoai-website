@@ -8,6 +8,7 @@ import { CheckoutModal } from "@/components/checkout/CheckoutModal";
 import { TrailerModal } from "@/components/trailer/TrailerModal";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
+import { GoogleAnalytics } from "@/components/tracking/GoogleAnalytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -83,6 +84,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${sora.variable} ${mono.variable}`}>
       <body className="bg-base text-text-primary">
         <MetaPixel />
+        <GoogleAnalytics />
         <CouponProvider>
           <CheckoutProvider>
             <TrailerProvider>
