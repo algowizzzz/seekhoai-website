@@ -103,6 +103,7 @@ export type EmailSignup = {
   id: string;
   email: string;
   phone: string | null;
+  name: string | null;
   source: string;
   user_id: string | null;
   created_at: string;
@@ -164,6 +165,7 @@ export async function insertEmailSignup(row: Omit<EmailSignup, "id" | "created_a
     const { error } = await sb.from("email_signups").insert({
       email: row.email,
       phone: row.phone,
+      name: row.name,
       source: row.source,
       user_id: row.user_id,
     });

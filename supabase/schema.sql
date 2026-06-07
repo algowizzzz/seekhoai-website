@@ -38,6 +38,8 @@ alter table public.email_signups
   add column if not exists phone text;
 alter table public.email_signups
   add column if not exists user_id uuid references auth.users(id) on delete set null;
+alter table public.email_signups
+  add column if not exists name text;
 
 create index if not exists email_signups_created_at_idx on public.email_signups (created_at desc);
 

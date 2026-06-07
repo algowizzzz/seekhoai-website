@@ -7,6 +7,7 @@ import { TrailerProvider } from "@/context/TrailerContext";
 import { CheckoutModal } from "@/components/checkout/CheckoutModal";
 import { TrailerModal } from "@/components/trailer/TrailerModal";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
+import { MetaPixel } from "@/components/tracking/MetaPixel";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,6 +59,13 @@ export const metadata: Metadata = {
     description:
       "Master Prompt Engineering, ChatGPT, MidJourney & Vibe Coding. 38,099+ students.",
   },
+  // Meta Business Manager domain verification (Brand Safety → Domains).
+  // Renders <meta name="facebook-domain-verification" content="..."> in <head>.
+  verification: {
+    other: {
+      "facebook-domain-verification": "eopi0b6ae0qy8wz7ytd5mmoneiowvn",
+    },
+  },
 };
 
 export const viewport: Viewport = {
@@ -74,6 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable} ${mono.variable}`}>
       <body className="bg-base text-text-primary">
+        <MetaPixel />
         <CouponProvider>
           <CheckoutProvider>
             <TrailerProvider>

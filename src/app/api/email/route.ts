@@ -56,7 +56,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    await insertEmailSignup({ email, phone, source, user_id: userId });
+    await insertEmailSignup({ email, phone, name: null, source, user_id: userId });
   } catch (err) {
     console.error("[email] persist failed", err);
     return NextResponse.json({ ok: false, error: "persist_failed" }, { status: 500 });
