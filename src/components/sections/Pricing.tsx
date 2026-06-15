@@ -1,10 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { Check } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
-import { pricing } from "@/content/content";
+import { pricing, payments } from "@/content/content";
 import { useCheckout } from "@/context/CheckoutContext";
+
+const hasManualPayment = Boolean(
+  payments.easypaisa.accountNumber || payments.jazzcash.accountNumber,
+);
 
 function formatPkr(n: number) {
   return `${n.toLocaleString("en-PK")} ${pricing.currency}`;
@@ -68,6 +73,14 @@ export function Pricing() {
               >
                 {pricing.cta.label}
               </Button>
+              {hasManualPayment && (
+                <Link
+                  href="/pay"
+                  className="mt-3 text-sm text-text-secondary underline-offset-4 transition hover:text-accent-warm hover:underline"
+                >
+                  Pay via JazzCash / Easypaisa instead →
+                </Link>
+              )}
               <p className="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
                 {pricing.urgency}
               </p>

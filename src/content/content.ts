@@ -631,17 +631,21 @@ export const whatsapp = {
 };
 
 // Payment rails for the 999 PKR close.
-// The Easypaisa account is the destination customers transfer to in the
-// WhatsApp follow-up — NOT shown on public pages. Use only inside the
-// WhatsApp message sequence (Funnel M3 / M4) and on the post-checkout
-// payment instructions screen, where appropriate.
+//
+// The manual-transfer + WhatsApp-confirm flow is rendered at /pay. Customer
+// transfers 999 PKR to whichever account they prefer, sends the receipt
+// screenshot via the floating WhatsApp button, we manually confirm + unlock
+// access. Leave a provider's accountNumber empty to hide its card on /pay.
 export const payments = {
   easypaisa: {
     accountNumber: "03322497026",
     accountTitle: "SeekhoAI", // TODO: confirm registered account title with Maaz
   },
   jazzcash: {
-    accountNumber: "", // TODO: ask Maaz if a separate JazzCash account is needed
+    accountNumber: "", // TODO: ask Maaz for JazzCash account number + title
     accountTitle: "",
   },
+  // Pre-filled WhatsApp message customer sends after paying.
+  receiptMessage:
+    "Hi! I just paid 999 PKR for the SeekhoAI Complete AI Bootcamp. Here's my receipt — please unlock my access. Thanks!",
 };
