@@ -351,6 +351,9 @@ export const whoFor = {
 
 export const instructor = {
   name: "Saad Ahmed",
+  // Real instructor photo — drop a replacement at /public/instructor/saad.jpg
+  // (3:4 portrait, ~800x1067 ideal). Set to null to fall back to placeholder.
+  photo: "/instructor/saad.jpg",
   title:
     "A decade at Deloitte, PwC, BMO, and Microsoft — and 38,099+ students taught.",
   bio: "Meet Saad Ahmed, the founder of SeekhoAI. His background is in data science, business, and finance, and his entire focus is on helping people use AI rather than just talk about it. Students across more than a hundred countries have taken his courses and left over 13,000 reviews at a 4.5-star average. When you enrol, you're learning from someone who has both done the work at Fortune 500 scale and taught it to tens of thousands of beginners.",
