@@ -288,9 +288,9 @@ export const curriculum = {
 
 export const freeIntro = {
   eyebrow: "FREE — NO CARD REQUIRED",
-  title: "Introduction to GenAI",
+  title: "Intro to GenAI & ChatGPT",
   subtitle:
-    "A full free Udemy course that takes you from zero to your first useful AI workflows. Sign up with your email — we'll send your free access link and lifetime access stays.",
+    "A focused 2-hour intro that takes you from zero to your first useful ChatGPT workflows. Sign up with your email and we'll send your free access link — lifetime access stays.",
   bullets: [
     "What generative AI actually is — without the jargon",
     "The 3 things every prompt needs to get reliable output",
@@ -298,9 +298,9 @@ export const freeIntro = {
     "How to know when AI is the right tool for a task (and when it's not)",
   ],
   stats: [
-    { value: "14h 33m", label: "Total length" },
-    { value: "179", label: "Lectures" },
-    { value: "23", label: "Sections" },
+    { value: "2 hours", label: "Total length" },
+    { value: "GenAI + ChatGPT", label: "Focus" },
+    { value: "Lifetime", label: "Access" },
   ],
   cta: {
     label: "Sign up — start the free course →",

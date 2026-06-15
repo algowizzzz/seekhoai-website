@@ -15,9 +15,9 @@ const FREE_COURSE_BULLETS = [
 ];
 
 const FREE_COURSE_STATS = [
-  { value: "14h 33m", label: "Total length" },
-  { value: "179", label: "Lectures" },
-  { value: "23", label: "Sections" },
+  { value: "2 hours", label: "Total length" },
+  { value: "GenAI + ChatGPT", label: "Focus" },
+  { value: "Lifetime", label: "Access" },
 ];
 
 declare global {
@@ -154,22 +154,22 @@ export function FreeLanding() {
             <div className="md:col-span-7">
               <p className="eyebrow text-accent-warm">FREE · NO CARD REQUIRED</p>
               <h1 className="mt-4 font-display text-display-xl font-medium leading-[1.05]">
-                Free 14-hour GenAI course —
+                Free 2-hour intro to GenAI &amp; ChatGPT —
                 <br />
                 <span className="text-accent-warm">start learning AI today.</span>
               </h1>
               <p className="mt-6 max-w-xl text-lg text-text-secondary">
-                The full Introduction to GenAI course on Udemy, free. Over 14
-                hours and 179 lectures that take you from zero to your first
-                useful AI workflows. English with subtitles. Lifetime access.
+                A focused intro to GenAI and ChatGPT. Covers what AI really
+                is, how prompts work, and how to use ChatGPT for real
+                workflows. English with subtitles. Lifetime access.
               </p>
 
               <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-[0.16em] text-text-secondary">
-                <li>14h 33m</li>
+                <li>2 hours</li>
                 <li aria-hidden className="text-text-tertiary">·</li>
-                <li>179 lectures</li>
+                <li>GenAI + ChatGPT</li>
                 <li aria-hidden className="text-text-tertiary">·</li>
-                <li>23 sections</li>
+                <li>Lifetime access</li>
                 <li aria-hidden className="text-text-tertiary">·</li>
                 <li>38,099+ students</li>
               </ul>
