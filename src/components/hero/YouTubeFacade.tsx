@@ -84,7 +84,7 @@ export function YouTubeFacade({ videoId, title, posterSrc }: Props) {
         alt=""
         fill
         sizes="(min-width: 768px) 640px, 100vw"
-        priority
+        loading="lazy"
         className="object-cover"
       />
       <span
