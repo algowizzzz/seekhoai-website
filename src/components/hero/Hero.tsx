@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { hero } from "@/content/content";
 import { Button } from "@/components/ui/Button";
 import { HeroBackground } from "./HeroBackground";
+import { YouTubeFacade } from "./YouTubeFacade";
 import { useCheckout } from "@/context/CheckoutContext";
 
-const TRAILER_EMBED_URL =
-  "https://www.youtube.com/embed/homKQ7wx9BY?rel=0";
+const TRAILER_VIDEO_ID = "homKQ7wx9BY";
 
 export function Hero() {
   const { open: openCheckout } = useCheckout();
@@ -98,14 +98,9 @@ export function Hero() {
           className="mt-10 w-full max-w-2xl overflow-hidden rounded-2xl border border-white/[0.10] bg-elevated/40 shadow-2xl"
           style={{ aspectRatio: "16 / 9" }}
         >
-          <iframe
-            className="h-full w-full"
-            src={TRAILER_EMBED_URL}
+          <YouTubeFacade
+            videoId={TRAILER_VIDEO_ID}
             title="Complete AI Bootcamp — Course Trailer"
-            loading="lazy"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
           />
         </motion.div>
       </div>
