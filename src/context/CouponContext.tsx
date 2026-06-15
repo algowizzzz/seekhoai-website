@@ -84,13 +84,14 @@ export function useCoupon() {
 }
 
 /**
- * Apply the (possibly-active) coupon to a USD-cents-ish price and return both
- * raw and formatted strings.
+ * Apply the (possibly-active) coupon to the base price and return both raw
+ * and formatted strings. Currency is PKR — the 4999 → 999 sale price IS the
+ * discount; the coupon path is a no-op (kept for back-compat with consumers).
  */
 export function priceWithCoupon(basePrice: number, discountPct: number) {
-  const final = Math.max(0, basePrice * (1 - discountPct));
+  const final = Math.max(0, Math.round(basePrice * (1 - discountPct)));
   return {
     final,
-    formatted: `$${final.toFixed(2)}`,
+    formatted: `${final.toLocaleString("en-PK")} PKR`,
   };
 }

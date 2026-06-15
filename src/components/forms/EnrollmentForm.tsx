@@ -35,6 +35,10 @@ interface Props {
   finalPrice: number;
 }
 
+function formatPkr(amount: number) {
+  return `${amount.toLocaleString("en-PK")} ${pricing.currency}`;
+}
+
 export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
   const { code, applied, discountPct } = useCoupon();
   const discount = pricing.price - finalPrice;
@@ -43,9 +47,7 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
   const isFree = mode === "free";
   const submitLabel = isFree
     ? "Get free access →"
-    : applied
-      ? `Continue to payment — ${totalLabel}`
-      : `Continue to payment — $${pricing.price}`;
+    : `Continue to payment — ${applied ? totalLabel : formatPkr(pricing.price)}`;
 
   const {
     register,
@@ -89,14 +91,14 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
         <div className="flex items-center justify-between text-text-secondary">
           <span>{isFree ? "Introduction to GenAI" : "Complete AI Bootcamp"}</span>
           <span className="font-medium">
-            {isFree ? "Free" : `$${pricing.price.toFixed(2)}`}
+            {isFree ? "Free" : formatPkr(pricing.price)}
           </span>
         </div>
         {!isFree && applied && (
           <div className="mt-2 flex items-center justify-between">
             <span className="text-text-secondary">Discount ({code})</span>
             <span className="font-medium text-accent-warm">
-              −${discount.toFixed(2)}
+              −{formatPkr(discount)}
             </span>
           </div>
         )}
