@@ -11,12 +11,12 @@ export function Curriculum() {
     title: m.title,
     body: (
       <div className="space-y-5">
-        <p className="text-base text-text-secondary md:text-lg">
+        <p className="text-base text-muted md:text-lg">
           {m.description}
         </p>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-text-tertiary">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.14em] text-muted-2">
           <span>{m.hours}</span>
-          <span aria-hidden className="text-text-tertiary/50">
+          <span aria-hidden className="text-muted-2/50">
             •
           </span>
           <span>{m.lessons}</span>
@@ -24,8 +24,8 @@ export function Curriculum() {
         <ul className="grid grid-cols-1 gap-x-8 gap-y-2.5 pt-1 md:grid-cols-2">
           {m.topics.map((topic) => (
             <li key={topic} className="flex items-start gap-3">
-              <span className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-accent-warm-2" />
-              <span className="flex-1 text-base text-text-secondary">
+              <span className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-gold" />
+              <span className="flex-1 text-base text-muted">
                 {topic}
               </span>
             </li>
@@ -38,16 +38,16 @@ export function Curriculum() {
   return (
     <section
       id="curriculum"
-      className="relative py-12 md:py-32"
+      className="relative bg-cream py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div className="container-content">
         <Reveal className="max-w-3xl">
-          <p className="eyebrow">[ THE CURRICULUM ]</p>
-          <h2 className="mt-4 font-display text-display-lg font-medium">
+          <p className="eyebrow">THE CURRICULUM</p>
+          <h2 className="mt-4 font-display text-display-lg font-semibold text-ink">
             {curriculum.title}
           </h2>
-          <p className="mt-5 text-lg text-text-secondary">{curriculum.subtitle}</p>
+          <p className="mt-5 text-lg text-muted">{curriculum.subtitle}</p>
         </Reveal>
 
         <Reveal className="mt-16 md:mt-20">

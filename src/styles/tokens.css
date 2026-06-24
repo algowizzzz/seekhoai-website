@@ -1,21 +1,62 @@
 :root {
-  /* Surfaces */
-  --bg-base: #0a0e1a;
-  --bg-elevated: #11172a;
-  --bg-subtle: #1a2138;
+  /* === INK + TEAL (brand / trust) === */
+  --ink: #07302e;
+  --teal-900: #0a3a3c;
+  --teal-800: #0c494b;
+  --teal-700: #0e5f63;
+  --teal-600: #11716f;
+  --teal-500: #15837f;
+  --teal-300: #7ab8b1;
+  --teal-100: #cfe5e1;
+  --teal-50: #e9f2f0;
 
-  /* Text */
-  --text-primary: #f5f2eb;
-  --text-secondary: #a8aec0;
-  --text-tertiary: #5c6378;
+  /* === WARM NEUTRALS (page surfaces) === */
+  --cream: #f6f3ec;
+  --cream-2: #efe9dd;
+  --paper: #ffffff;
+  --muted: #5d736f;
+  --muted-2: #7e9490;
 
-  /* Accents */
-  --accent-warm: #ff6b35;
-  --accent-warm-2: #ffb084;
-  --accent-cool: #4a9eff;
-  --accent-cool-2: #8fc4ff;
+  /* === GOLD (CTA + AI accent) === */
+  --gold: #f4b455;
+  --gold-600: #e09c34;
+  --gold-700: #b87a1f;
+  --gold-50: #fdf3e0;
+  --gold-glow: #ffd27a;
 
-  /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  /* === LINES === */
+  --line: rgba(7, 48, 46, 0.10);
+  --line-2: rgba(7, 48, 46, 0.06);
+  --line-gold: rgba(244, 180, 85, 0.35);
+  --line-on-dark: rgba(255, 255, 255, 0.10);
+  --line-on-dark-strong: rgba(255, 255, 255, 0.18);
+
+  /* === SHADOWS (ink-tinted, not black) === */
+  --shadow-sm: 0 1px 2px rgba(7, 48, 46, 0.06), 0 1px 3px rgba(7, 48, 46, 0.05);
+  --shadow: 0 6px 18px -6px rgba(7, 48, 46, 0.14), 0 2px 6px rgba(7, 48, 46, 0.06);
+  --shadow-lg: 0 28px 60px -24px rgba(7, 48, 46, 0.30), 0 8px 24px -10px rgba(7, 48, 46, 0.14);
+  --shadow-cta: 0 10px 24px -8px rgba(224, 156, 52, 0.55), 0 2px 6px rgba(184, 122, 31, 0.30);
+
+  /* === SEMANTIC (light = default page chrome) === */
+  --bg-base: var(--cream);
+  --bg-elevated: var(--paper);
+  --bg-subtle: var(--cream-2);
+  --bg-dark: var(--ink);
+  --bg-dark-elevated: var(--teal-900);
+
+  --text-primary: var(--ink);
+  --text-secondary: var(--muted);
+  --text-tertiary: var(--muted-2);
+  --text-on-dark: #f5efe3;
+  --text-on-dark-muted: rgba(245, 239, 227, 0.72);
+
+  --accent: var(--gold);
+  --accent-hover: var(--gold-600);
+  --accent-strong: var(--gold-700);
+
+  --border-subtle: var(--line);
+  --border-strong: var(--line-2);
+
+  /* === MOTION === */
+  --ease-brand: cubic-bezier(0.22, 0.61, 0.36, 1);
 }

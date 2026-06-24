@@ -6,29 +6,31 @@ import { whoFor } from "@/content/content";
 
 export function WhoFor() {
   return (
-    <section className="relative py-12 md:py-32">
+    <section className="relative bg-cream-2 py-12 md:py-32">
       <div className="container-content">
         <Reveal className="max-w-3xl">
-          <p className="eyebrow">[ WHO THIS IS FOR ]</p>
-          <h2 className="mt-4 font-display text-display-lg font-medium">{whoFor.title}</h2>
-          <p className="mt-5 text-lg text-text-secondary">{whoFor.intro}</p>
+          <p className="eyebrow">WHO THIS IS FOR</p>
+          <h2 className="mt-4 font-display text-display-lg font-semibold text-ink">
+            {whoFor.title}
+          </h2>
+          <p className="mt-5 text-lg text-muted">{whoFor.intro}</p>
         </Reveal>
 
         <Reveal stagger className="mt-16 grid grid-cols-1 gap-6 md:mt-20 md:grid-cols-3 md:gap-8">
           {whoFor.groups.map((g) => (
             <RevealItem
               key={g.label}
-              className="flex flex-col gap-5 rounded-3xl border border-border-subtle bg-elevated/40 p-8 backdrop-blur-sm"
+              className="flex flex-col gap-5 rounded-lg border border-[color:var(--line)] bg-paper p-8 shadow-sm"
             >
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent-warm">
+              <p className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-teal-600">
                 {g.label}
               </p>
-              <p className="text-text-secondary">{g.body}</p>
-              <ul className="mt-auto space-y-2 border-t border-border-subtle pt-5">
+              <p className="text-muted">{g.body}</p>
+              <ul className="mt-auto space-y-2 border-t border-[color:var(--line)] pt-5">
                 {g.outcomes.map((o) => (
-                  <li key={o} className="flex items-start gap-2.5 text-sm text-text-primary">
+                  <li key={o} className="flex items-start gap-2.5 text-sm text-ink">
                     <Check
-                      className="mt-0.5 size-4 shrink-0 text-accent-warm"
+                      className="mt-0.5 size-4 shrink-0 text-gold-700"
                       strokeWidth={2.5}
                     />
                     <span>{o}</span>

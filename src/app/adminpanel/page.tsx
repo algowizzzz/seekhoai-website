@@ -106,25 +106,20 @@ function AdminPanel() {
   };
 
   return (
-    <main className="min-h-screen bg-base text-text-primary">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-radial-warm opacity-20"
-      />
-
+    <main className="min-h-screen bg-cream text-ink">
       <div className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
         <header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">Admin</p>
-            <h1 className="mt-2 font-display text-display-md font-medium">
-              SeekhoAI Dashboard
+            <h1 className="mt-2 font-display text-display-md font-semibold">
+              SeekhoAI <span className="text-gold-700">Dashboard</span>
             </h1>
-            <p className="mt-2 text-sm text-text-secondary">
+            <p className="mt-2 text-sm text-muted">
               Captured emails and purchases.{" "}
               {data?.usingSupabase ? (
-                <span className="text-accent-warm">Connected to Supabase.</span>
+                <span className="text-gold-700">Connected to Supabase.</span>
               ) : (
-                <span className="text-text-tertiary">
+                <span className="text-muted-2">
                   In-memory mode — connect Supabase to persist.
                 </span>
               )}
@@ -134,7 +129,7 @@ function AdminPanel() {
             <button
               type="button"
               onClick={load}
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border-subtle bg-subtle/60 px-4 text-sm text-text-primary transition-colors hover:border-border-strong"
+              className="inline-flex h-10 items-center gap-2 rounded-pill border border-[color:var(--line)] bg-paper px-4 text-sm text-ink transition-colors hover:border-gold"
             >
               <RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} />
               Refresh
@@ -142,7 +137,7 @@ function AdminPanel() {
             <button
               type="button"
               onClick={exportCsv}
-              className="inline-flex h-10 items-center gap-2 rounded-full bg-accent-warm px-4 text-sm font-medium text-base transition-colors hover:bg-accent-warm-2"
+              className="inline-flex h-10 items-center gap-2 rounded-pill bg-gold px-4 text-sm font-semibold text-ink shadow-cta transition-all duration-200 ease-brand hover:bg-gold-600 hover:-translate-y-[1px]"
             >
               <Download className="size-4" />
               Export CSV
@@ -168,9 +163,9 @@ function AdminPanel() {
           />
         </section>
 
-        <section className="mt-8 rounded-3xl border border-border-strong bg-elevated">
-          <div className="flex flex-col gap-3 border-b border-border-subtle px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
-            <div className="flex gap-1 rounded-full bg-subtle/60 p-1">
+        <section className="mt-8 rounded-xl border border-[color:var(--line)] bg-paper shadow-sm">
+          <div className="flex flex-col gap-3 border-b border-[color:var(--line)] px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
+            <div className="flex gap-1 rounded-pill bg-cream-2 p-1">
               <TabBtn
                 active={tab === "purchases"}
                 onClick={() => setTab("purchases")}
@@ -185,20 +180,20 @@ function AdminPanel() {
               />
             </div>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-tertiary" />
+              <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-2" />
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search email, coupon, source…"
-                className="h-10 w-full rounded-full border border-border-subtle bg-subtle/60 pl-9 pr-4 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent-warm focus:outline-none md:w-80"
+                className="h-10 w-full rounded-pill border border-[color:var(--line)] bg-cream/60 pl-9 pr-4 text-sm text-ink placeholder:text-muted-2 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 md:w-80"
               />
             </div>
           </div>
 
           <div className="overflow-x-auto">
             {loading && !data ? (
-              <div className="px-6 py-16 text-center text-text-tertiary">Loading…</div>
+              <div className="px-6 py-16 text-center text-muted-2">Loading…</div>
             ) : tab === "purchases" ? (
               <PurchasesTable rows={filteredPurchases} />
             ) : (
@@ -208,7 +203,7 @@ function AdminPanel() {
         </section>
 
         {data?.error && (
-          <p className="mt-6 text-sm text-red-400">Error: {data.error}</p>
+          <p className="mt-6 text-sm text-red-600">Error: {data.error}</p>
         )}
       </div>
     </main>
@@ -225,13 +220,13 @@ function StatCard({
   tint: "warm" | "cool";
 }) {
   return (
-    <div className="rounded-3xl border border-border-strong bg-elevated p-6">
-      <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
+    <div className="rounded-xl border border-[color:var(--line)] bg-paper p-6 shadow-sm">
+      <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-2">
         {label}
       </p>
       <p
-        className={`mt-3 font-display text-4xl font-medium ${
-          tint === "warm" ? "text-accent-warm" : "text-accent-cool"
+        className={`mt-3 font-display text-4xl font-semibold ${
+          tint === "warm" ? "text-gold-700" : "text-teal-700"
         }`}
       >
         {value}
@@ -255,10 +250,10 @@ function TabBtn({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm transition-colors ${
+      className={`inline-flex h-9 items-center gap-2 rounded-pill px-4 text-sm font-semibold transition-colors ${
         active
-          ? "bg-accent-warm text-base"
-          : "text-text-secondary hover:text-text-primary"
+          ? "bg-gold text-ink shadow-cta"
+          : "text-muted hover:text-ink"
       }`}
     >
       {icon}
@@ -273,7 +268,7 @@ function PurchasesTable({ rows }: { rows: Purchase[] }) {
   }
   return (
     <table className="w-full text-sm">
-      <thead className="bg-subtle/40 text-left font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
+      <thead className="bg-cream-2/60 text-left text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-2">
         <tr>
           <Th>Email</Th>
           <Th>Amount</Th>
@@ -286,17 +281,17 @@ function PurchasesTable({ rows }: { rows: Purchase[] }) {
         {rows.map((p) => (
           <tr
             key={p.id}
-            className="border-t border-border-subtle/60 hover:bg-subtle/30"
+            className="border-t border-[color:var(--line)] hover:bg-cream-2/40"
           >
-            <Td className="text-text-primary">{p.email}</Td>
-            <Td className="font-medium text-accent-warm">
+            <Td className="text-ink">{p.email}</Td>
+            <Td className="font-semibold text-gold-700">
               ${Number(p.amount).toFixed(2)}
             </Td>
             <Td>{p.coupon_code ?? "—"}</Td>
-            <Td className="font-mono text-xs text-text-tertiary">
+            <Td className="font-mono text-xs text-muted-2">
               {p.session_id.slice(0, 20)}…
             </Td>
-            <Td className="text-text-secondary">{formatDate(p.created_at)}</Td>
+            <Td className="text-muted">{formatDate(p.created_at)}</Td>
           </tr>
         ))}
       </tbody>
@@ -310,7 +305,7 @@ function SignupsTable({ rows }: { rows: EmailSignup[] }) {
   }
   return (
     <table className="w-full text-sm">
-      <thead className="bg-subtle/40 text-left font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
+      <thead className="bg-cream-2/60 text-left text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-2">
         <tr>
           <Th>Email</Th>
           <Th>Phone</Th>
@@ -322,14 +317,14 @@ function SignupsTable({ rows }: { rows: EmailSignup[] }) {
         {rows.map((s) => (
           <tr
             key={s.id}
-            className="border-t border-border-subtle/60 hover:bg-subtle/30"
+            className="border-t border-[color:var(--line)] hover:bg-cream-2/40"
           >
-            <Td className="text-text-primary">{s.email}</Td>
-            <Td className="font-mono text-xs text-text-secondary">
+            <Td className="text-ink">{s.email}</Td>
+            <Td className="font-mono text-xs text-muted">
               {s.phone ?? "—"}
             </Td>
             <Td>{s.source}</Td>
-            <Td className="text-text-secondary">{formatDate(s.created_at)}</Td>
+            <Td className="text-muted">{formatDate(s.created_at)}</Td>
           </tr>
         ))}
       </tbody>
@@ -353,7 +348,7 @@ function Td({
 
 function EmptyRow({ label }: { label: string }) {
   return (
-    <div className="px-6 py-16 text-center text-text-tertiary">{label}</div>
+    <div className="px-6 py-16 text-center text-muted-2">{label}</div>
   );
 }
 

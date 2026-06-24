@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora, JetBrains_Mono } from "next/font/google";
+import { Figtree, Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CouponProvider } from "@/context/CouponContext";
 import { CheckoutProvider } from "@/context/CheckoutContext";
@@ -10,15 +10,16 @@ import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
 import { GoogleAnalytics } from "@/components/tracking/GoogleAnalytics";
 
-const inter = Inter({
+const figtree = Figtree({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const sora = Sora({
+const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0e1a",
+  themeColor: "#f6f3ec",
   width: "device-width",
   initialScale: 1,
 };
@@ -81,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable} ${mono.variable}`}>
+    <html lang="en" className={`${figtree.variable} ${schibsted.variable} ${mono.variable}`}>
       <body className="bg-base text-text-primary">
         <MetaPixel />
         <GoogleAnalytics />

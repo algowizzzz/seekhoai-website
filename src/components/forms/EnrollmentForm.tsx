@@ -73,8 +73,6 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
       const data = await res.json();
       if (!data.ok) return;
 
-      // Paid: server returns a Stripe Checkout URL — hard-redirect to it.
-      // Free: server returns the Udemy enroll URL — let the modal show success first.
       if (!isFree && data.redirectUrl) {
         window.location.href = data.redirectUrl;
         return;
@@ -87,24 +85,24 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-6 pb-8">
-      <div className="rounded-2xl border border-border-subtle bg-base/40 p-4 text-sm">
-        <div className="flex items-center justify-between text-text-secondary">
+      <div className="rounded-md border border-[color:var(--line)] bg-cream-2/60 p-4 text-sm">
+        <div className="flex items-center justify-between text-muted">
           <span>{isFree ? "Introduction to GenAI" : "Complete AI Bootcamp"}</span>
-          <span className="font-medium">
+          <span className="font-semibold text-ink">
             {isFree ? "Free" : formatPkr(pricing.price)}
           </span>
         </div>
         {!isFree && applied && (
           <div className="mt-2 flex items-center justify-between">
-            <span className="text-text-secondary">Discount ({code})</span>
-            <span className="font-medium text-accent-warm">
+            <span className="text-muted">Discount ({code})</span>
+            <span className="font-semibold text-gold-700">
               −{formatPkr(discount)}
             </span>
           </div>
         )}
-        <div className="mt-3 flex items-baseline justify-between border-t border-white/10 pt-3">
-          <span className="font-medium text-text-primary">Total</span>
-          <span className="font-bold text-2xl text-accent-warm md:text-3xl">
+        <div className="mt-3 flex items-baseline justify-between border-t border-[color:var(--line)] pt-3">
+          <span className="font-semibold text-ink">Total</span>
+          <span className="font-display text-2xl font-semibold text-gold-700 md:text-3xl">
             {isFree ? "Free" : totalLabel}
           </span>
         </div>
@@ -128,10 +126,10 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
         {...register("phone")}
       />
 
-      <div className="sticky bottom-0 -mx-6 mt-6 bg-elevated/95 px-6 pb-4 pt-3 backdrop-blur-sm md:static md:mx-0 md:bg-transparent md:px-0 md:pb-0 md:pt-0 md:backdrop-blur-none">
+      <div className="sticky bottom-0 -mx-6 mt-6 bg-paper/95 px-6 pb-4 pt-3 backdrop-blur-sm md:static md:mx-0 md:bg-transparent md:px-0 md:pb-0 md:pt-0 md:backdrop-blur-none">
         <Button
           type="submit"
-          variant="warm"
+          variant="primary"
           size="lg"
           className="w-full font-semibold"
           disabled={isSubmitting}
@@ -146,7 +144,7 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
           )}
         </Button>
 
-        <p className="mt-3 text-center font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
+        <p className="mt-3 text-center text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-2">
           {isFree
             ? "No card required — just your email"
             : "Secure checkout via Stripe"}

@@ -19,8 +19,6 @@ const CouponScene = dynamic(
   { ssr: false, loading: () => null },
 );
 
-// Strict email schema + optional phone. If phone is provided, it must contain
-// at least 7 digits (after stripping +/space/dashes/parens).
 const popupSchema = z.object({
   email: z
     .string()
@@ -75,7 +73,6 @@ export function DiscountPopup() {
     if (shouldShow) setOpen(true);
   }, [shouldShow]);
 
-  // Body lock + Escape
   useEffect(() => {
     if (!open) return;
     const original = document.body.style.overflow;
@@ -109,12 +106,10 @@ export function DiscountPopup() {
         return;
       }
 
-      // Apply the coupon client-side so pricing reflects it immediately
       apply(discountCode.code, discountCode.pct);
       onClaim();
       setSubmitState("success");
 
-      // Confetti from the form
       if (formRef.current) {
         const rect = formRef.current.getBoundingClientRect();
         confetti({
@@ -124,11 +119,10 @@ export function DiscountPopup() {
             x: (rect.left + rect.width / 2) / window.innerWidth,
             y: (rect.top + rect.height / 2) / window.innerHeight,
           },
-          colors: ["#ff6b35", "#ffb084", "#f5f2eb"],
+          colors: ["#f4b455", "#ffd27a", "#15837f"],
         });
       }
 
-      // Focus the "continue" button after success
       setTimeout(() => successButtonRef.current?.focus(), 100);
     } catch {
       setSubmitState("error");
@@ -157,7 +151,7 @@ export function DiscountPopup() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: reducedMotion ? 0 : 0.35 }}
-          className="fixed inset-0 z-[60] grid place-items-center bg-base/95 px-4 backdrop-blur-2xl"
+          className="fixed inset-0 z-[60] grid place-items-center bg-ink/85 px-4 backdrop-blur-2xl"
           onClick={handleDismiss}
         >
           <motion.div
@@ -165,14 +159,14 @@ export function DiscountPopup() {
             animate={reducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.92 }}
             transition={reducedMotion ? { duration: 0.18 } : springModal}
-            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto overflow-x-hidden rounded-3xl border border-border-strong bg-elevated shadow-2xl"
+            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto overflow-x-hidden rounded-xl border border-[color:var(--line)] bg-paper shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="pointer-events-none sticky top-0 z-20 h-0">
               <button
                 type="button"
                 onClick={handleDismiss}
-                className="pointer-events-auto absolute right-4 top-4 grid size-9 place-items-center rounded-full border border-border-subtle bg-base/60 text-text-secondary backdrop-blur-sm transition-colors hover:text-text-primary"
+                className="pointer-events-auto absolute right-4 top-4 grid size-9 place-items-center rounded-pill border border-[color:var(--line)] bg-cream/80 text-muted backdrop-blur-sm transition-colors hover:text-ink hover:border-gold"
                 aria-label="Close"
               >
                 <X className="size-4" />
@@ -181,10 +175,10 @@ export function DiscountPopup() {
 
             <div className="flex flex-col">
               <div className="px-6 pt-4 md:px-10 md:pt-6">
-                <p className="eyebrow">[ {popup.eyebrow} ]</p>
+                <p className="eyebrow">{popup.eyebrow}</p>
                 <h2
                   id={titleId}
-                  className="mt-3 font-display text-display-md font-medium"
+                  className="mt-3 font-display text-display-md font-semibold text-ink"
                 >
                   {submitState === "success" ? popup.successTitle : popup.title}
                 </h2>
@@ -196,38 +190,38 @@ export function DiscountPopup() {
 
               <div className="mt-4 px-6 md:mt-6 md:px-10">
                 {submitState === "success" ? (
-                  <p className="text-base text-text-secondary md:text-lg">
+                  <p className="text-base text-muted md:text-lg">
                     {popup.successBody}
                   </p>
                 ) : (
-                  <p className="text-base text-text-secondary md:text-lg">
+                  <p className="text-base text-muted md:text-lg">
                     {popup.bodyBefore}{" "}
-                    <span className="font-mono font-medium text-accent-warm">
+                    <span className="font-mono font-semibold text-gold-700">
                       {popup.code}
                     </span>{" "}
                     {popup.bodyAfter}{" "}
-                    <span className="font-medium text-text-primary">
+                    <span className="font-semibold text-ink">
                       {popup.bodyEnd}
                     </span>
                   </p>
                 )}
               </div>
 
-              <div className="sticky bottom-0 mt-4 bg-elevated/95 px-6 pb-4 pt-3 backdrop-blur-sm md:static md:mt-6 md:bg-transparent md:px-10 md:pb-8 md:pt-0 md:backdrop-blur-none">
+              <div className="sticky bottom-0 mt-4 bg-paper/95 px-6 pb-4 pt-3 backdrop-blur-sm md:static md:mt-6 md:bg-transparent md:px-10 md:pb-8 md:pt-0 md:backdrop-blur-none">
                 {submitState === "success" ? (
                   <>
-                    <div className="mb-4 flex items-center justify-center gap-3 rounded-full border border-accent-warm/40 bg-accent-warm/10 px-5 py-3 text-sm text-text-primary">
-                      <Check className="size-4 text-accent-warm" />
+                    <div className="mb-4 flex items-center justify-center gap-3 rounded-pill border border-gold/40 bg-gold-50 px-5 py-3 text-sm text-ink">
+                      <Check className="size-4 text-gold-700" />
                       <span>
                         Discount applied · code{" "}
-                        <span className="font-mono font-medium text-accent-warm">
+                        <span className="font-mono font-semibold text-gold-700">
                           {discountCode.code}
                         </span>
                       </span>
                     </div>
                     <Button
                       ref={successButtonRef}
-                      variant="warm"
+                      variant="primary"
                       size="lg"
                       className="w-full"
                       onClick={handleContinueToPricing}
@@ -251,10 +245,10 @@ export function DiscountPopup() {
                       placeholder={popup.emailPlaceholder}
                       {...register("email")}
                       disabled={submitState === "loading"}
-                      className="block h-11 w-full rounded-2xl border border-border-subtle bg-subtle/80 px-4 text-sm text-text-primary placeholder:text-text-tertiary backdrop-blur-sm focus:border-accent-warm-2 focus:outline-none disabled:opacity-60"
+                      className="block h-11 w-full rounded-md border border-[color:var(--line)] bg-cream/60 px-4 text-sm text-ink placeholder:text-muted-2 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:opacity-60"
                     />
                     {formState.errors.email && (
-                      <p className="mt-2 pl-5 text-xs text-red-400">
+                      <p className="mt-2 pl-5 text-xs text-red-600">
                         {formState.errors.email.message}
                       </p>
                     )}
@@ -269,10 +263,10 @@ export function DiscountPopup() {
                       placeholder={popup.phonePlaceholder}
                       {...register("phone")}
                       disabled={submitState === "loading"}
-                      className="mt-2 block h-11 w-full rounded-2xl border border-border-subtle bg-subtle/80 px-4 text-sm text-text-primary placeholder:text-text-tertiary backdrop-blur-sm focus:border-accent-warm-2 focus:outline-none disabled:opacity-60"
+                      className="mt-2 block h-11 w-full rounded-md border border-[color:var(--line)] bg-cream/60 px-4 text-sm text-ink placeholder:text-muted-2 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:opacity-60"
                     />
                     {formState.errors.phone && (
-                      <p className="mt-2 pl-5 text-xs text-red-400">
+                      <p className="mt-2 pl-5 text-xs text-red-600">
                         {formState.errors.phone.message}
                       </p>
                     )}
@@ -280,7 +274,7 @@ export function DiscountPopup() {
                     <button
                       type="submit"
                       disabled={submitState === "loading"}
-                      className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent-warm px-5 text-sm font-medium text-base transition-all duration-200 hover:bg-accent-warm-2 disabled:opacity-70"
+                      className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-pill bg-gold px-5 text-sm font-semibold text-ink shadow-cta transition-all duration-200 ease-brand hover:bg-gold-600 disabled:opacity-70"
                     >
                       {submitState === "loading" ? (
                         <Loader2 className="size-4 animate-spin" />
@@ -289,7 +283,7 @@ export function DiscountPopup() {
                       )}
                     </button>
                     {submitState === "error" && (
-                      <p className="mt-2 pl-5 text-xs text-red-400">
+                      <p className="mt-2 pl-5 text-xs text-red-600">
                         Something went wrong. Please try again.
                       </p>
                     )}
@@ -297,7 +291,7 @@ export function DiscountPopup() {
                     <button
                       type="button"
                       onClick={handleDismiss}
-                      className="mx-auto mt-3 block text-sm text-text-tertiary transition-colors hover:text-text-secondary"
+                      className="mx-auto mt-3 block text-sm text-muted-2 transition-colors hover:text-muted"
                     >
                       {popup.dismissCta}
                     </button>

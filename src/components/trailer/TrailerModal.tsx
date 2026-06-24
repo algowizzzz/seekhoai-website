@@ -34,7 +34,7 @@ export function TrailerModal() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="trailer-title"
-          className="fixed inset-0 z-50 grid place-items-center bg-base/95 px-4 backdrop-blur-2xl"
+          className="fixed inset-0 z-50 grid place-items-center bg-ink/85 px-4 backdrop-blur-2xl"
           onClick={close}
         >
           <motion.div
@@ -42,27 +42,27 @@ export function TrailerModal() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.96, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="relative mx-4 w-full max-w-3xl rounded-2xl border border-white/[0.10] bg-elevated p-4 shadow-2xl md:p-6"
+            className="relative mx-4 w-full max-w-3xl rounded-lg border border-[color:var(--line)] bg-paper p-4 shadow-lg md:p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               onClick={close}
               aria-label="Close"
-              className="absolute right-3 top-3 z-10 grid size-9 place-items-center rounded-full border border-border-subtle bg-base/60 text-text-secondary backdrop-blur-sm transition-colors hover:text-text-primary"
+              className="absolute right-3 top-3 z-10 grid size-9 place-items-center rounded-pill border border-[color:var(--line)] bg-cream/80 text-muted backdrop-blur-sm transition-colors hover:text-ink hover:border-gold"
             >
               <X className="size-4" />
             </button>
 
             <h3
               id="trailer-title"
-              className="mb-3 pr-12 font-display text-lg text-text-primary"
+              className="mb-3 pr-12 font-display text-2xl font-semibold text-ink"
             >
               Course Trailer
             </h3>
 
             <div
-              className="relative w-full overflow-hidden rounded-lg"
+              className="relative w-full overflow-hidden rounded-md"
               style={{ aspectRatio: "16 / 9" }}
             >
               <iframe

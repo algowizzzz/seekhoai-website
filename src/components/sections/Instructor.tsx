@@ -9,18 +9,24 @@ export function Instructor() {
   return (
     <section
       id="instructor"
-      className="relative py-12 md:py-32"
+      className="relative bg-ink py-12 text-text-on-dark md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
-      <div className="container-content">
+      {/* Soft teal glow in the corner */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 top-1/3 -z-0 size-96 rounded-full bg-teal-500/20 blur-3xl"
+      />
+
+      <div className="container-content relative z-10">
         <Reveal className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-16">
           <div className="md:col-span-7">
-            <p className="eyebrow">[ YOUR INSTRUCTOR ]</p>
-            <h2 className="mt-4 font-display text-display-lg font-medium">
-              Meet {instructor.name}.
+            <p className="eyebrow eyebrow-on-dark">YOUR INSTRUCTOR</p>
+            <h2 className="mt-4 font-display text-display-lg font-semibold">
+              Meet <span className="text-gold">{instructor.name}</span>.
             </h2>
-            <p className="mt-5 text-base text-accent-warm">{instructor.title}</p>
-            <p className="mt-6 max-w-xl text-lg text-text-secondary">
+            <p className="mt-5 text-base text-gold">{instructor.title}</p>
+            <p className="mt-6 max-w-xl text-lg text-text-on-dark-muted">
               <WithUdemyLinks text={instructor.bio} />
             </p>
 
@@ -28,7 +34,7 @@ export function Instructor() {
               href={instructor.cta.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent-warm underline-offset-4 hover:underline"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold underline-offset-4 hover:underline"
             >
               {instructor.cta.label}
             </a>
@@ -36,10 +42,10 @@ export function Instructor() {
             <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
               {instructor.stats.map((s) => (
                 <div key={s.label}>
-                  <dt className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
+                  <dt className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-teal-300">
                     {s.label}
                   </dt>
-                  <dd className="mt-1.5 font-display text-2xl font-medium text-text-primary md:text-3xl">
+                  <dd className="mt-1.5 font-display text-2xl font-semibold text-text-on-dark md:text-3xl">
                     {s.value}
                   </dd>
                 </div>
@@ -48,7 +54,7 @@ export function Instructor() {
           </div>
 
           <div className="md:col-span-5">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-border-subtle bg-elevated">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-white/10 bg-teal-900 shadow-lg">
               {instructor.photo ? (
                 <>
                   <Image
@@ -61,13 +67,13 @@ export function Instructor() {
                   />
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-base/70 via-base/0 to-base/0"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/0 to-ink/0"
                   />
                   <div className="absolute inset-x-0 bottom-0 p-6">
-                    <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-text-tertiary">
+                    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-teal-300">
                       FOUNDER
                     </p>
-                    <p className="mt-1 font-display text-2xl text-text-primary">
+                    <p className="mt-1 font-display text-2xl font-semibold text-text-on-dark">
                       {instructor.name}
                     </p>
                   </div>
@@ -76,21 +82,21 @@ export function Instructor() {
                 <>
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-[linear-gradient(135deg,#1a2138_0%,#11172a_45%,#0a0e1a_100%)]"
+                    className="absolute inset-0 bg-[linear-gradient(135deg,#0a3a3c_0%,#0c494b_45%,#07302e_100%)]"
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_30%,rgba(255,107,53,0.35),transparent_60%)]"
+                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_30%,rgba(244,180,85,0.25),transparent_60%)]"
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_70%,rgba(74,158,255,0.18),transparent_60%)]"
+                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_70%,rgba(122,184,177,0.18),transparent_60%)]"
                   />
                   <div className="absolute inset-x-0 bottom-0 p-6">
-                    <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-text-tertiary">
+                    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-teal-300">
                       PORTRAIT · PLACEHOLDER
                     </p>
-                    <p className="mt-1 font-display text-2xl">
+                    <p className="mt-1 font-display text-2xl font-semibold">
                       {instructor.name}
                     </p>
                   </div>

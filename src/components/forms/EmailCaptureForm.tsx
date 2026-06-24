@@ -46,12 +46,12 @@ export function EmailCaptureForm({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          "flex items-center gap-3 rounded-full border border-accent-warm/40 bg-accent-warm/10 px-5 py-3 text-sm text-text-primary",
+          "flex items-center gap-3 rounded-pill border border-gold/40 bg-gold-50 px-5 py-3 text-sm text-ink",
           className,
         )}
         role="status"
       >
-        <Check className="size-4 text-accent-warm" />
+        <Check className="size-4 text-gold-700" />
         <span>{hero.emailForm.success}</span>
       </div>
     );
@@ -59,7 +59,7 @@ export function EmailCaptureForm({ className }: { className?: string }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn("w-full max-w-xl", className)}>
-      <div className="flex flex-col gap-2 rounded-full border border-border-subtle bg-subtle/80 p-1.5 backdrop-blur-sm focus-within:border-accent-warm-2 sm:flex-row">
+      <div className="flex flex-col gap-2 rounded-pill border border-[color:var(--line)] bg-paper p-1.5 focus-within:border-gold sm:flex-row">
         <label htmlFor="hero-email" className="sr-only">
           Email address
         </label>
@@ -69,12 +69,12 @@ export function EmailCaptureForm({ className }: { className?: string }) {
           autoComplete="email"
           placeholder={hero.emailForm.placeholder}
           {...register("email")}
-          className="h-10 flex-1 bg-transparent px-4 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
+          className="h-10 flex-1 bg-transparent px-4 text-sm text-ink placeholder:text-muted-2 focus:outline-none"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-accent-warm px-5 text-sm font-medium text-base transition-all duration-200 hover:bg-accent-warm-2 disabled:opacity-70"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-pill bg-gold px-5 text-sm font-semibold text-ink shadow-cta transition-all duration-200 ease-brand hover:bg-gold-600 disabled:opacity-70"
         >
           {status === "loading" ? (
             <Loader2 className="size-4 animate-spin" />
@@ -84,10 +84,10 @@ export function EmailCaptureForm({ className }: { className?: string }) {
         </button>
       </div>
       {formState.errors.email && (
-        <p className="mt-2 pl-5 text-xs text-red-400">{formState.errors.email.message}</p>
+        <p className="mt-2 pl-5 text-xs text-red-600">{formState.errors.email.message}</p>
       )}
       {status === "error" && (
-        <p className="mt-2 pl-5 text-xs text-red-400">Something went wrong. Please try again.</p>
+        <p className="mt-2 pl-5 text-xs text-red-600">Something went wrong. Please try again.</p>
       )}
     </form>
   );

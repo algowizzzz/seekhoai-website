@@ -10,7 +10,7 @@ export function FAQ() {
     id: `faq-${i}`,
     title: f.q,
     body: (
-      <p className="text-base text-text-secondary">
+      <p className="text-base text-muted">
         <WithUdemyLinks text={f.a} />
       </p>
     ),
@@ -19,13 +19,13 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="relative py-12 md:py-32"
+      className="relative bg-cream py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div className="container-content">
         <Reveal className="max-w-3xl">
-          <p className="eyebrow">[ FAQ ]</p>
-          <h2 className="mt-4 font-display text-display-lg font-medium">
+          <p className="eyebrow">FAQ</p>
+          <h2 className="mt-4 font-display text-display-lg font-semibold text-ink">
             Questions, answered.
           </h2>
         </Reveal>

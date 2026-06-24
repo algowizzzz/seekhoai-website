@@ -27,7 +27,7 @@ export function CouponScene({ reducedMotion }: Props) {
 
   return (
     <div
-      className="relative h-56 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#11172a] via-[#0a0e1a] to-[#1a1024] sm:h-64 md:h-72 lg:h-80"
+      className="relative h-56 w-full overflow-hidden rounded-lg bg-gradient-to-br from-[#0c494b] via-[#07302e] to-[#0a3a3c] sm:h-64 md:h-72 lg:h-80"
       aria-hidden
     >
       <Canvas
@@ -37,9 +37,9 @@ export function CouponScene({ reducedMotion }: Props) {
         style={{ height: "100%", width: "100%", touchAction: "none" }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.2} />
-          <directionalLight position={[4, 4, 3]} intensity={1.4} color="#ff8855" />
-          <directionalLight position={[-3, -3, 1]} intensity={0.5} color="#4a9eff" />
+          <ambientLight intensity={0.25} />
+          <directionalLight position={[4, 4, 3]} intensity={1.4} color="#f4b455" />
+          <directionalLight position={[-3, -3, 1]} intensity={0.5} color="#7ab8b1" />
 
           <CouponCard hovered={hovered} onHover={setHovered} reducedMotion={reducedMotion} />
           <CouponParticles

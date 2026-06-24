@@ -21,52 +21,53 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="relative py-12 md:py-32"
+      className="relative bg-ink py-12 text-text-on-dark md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
+      {/* Gold glow accent */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-radial-warm opacity-40"
+        className="pointer-events-none absolute right-0 top-0 -z-0 size-[40rem] rounded-full bg-gold/10 blur-3xl"
       />
 
-      <div className="container-content">
+      <div className="container-content relative z-10">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">[ {pricing.eyebrow} ]</p>
-          <h2 className="mt-4 font-display text-display-lg font-medium">
+          <p className="eyebrow eyebrow-on-dark justify-center">{pricing.eyebrow}</p>
+          <h2 className="mt-4 font-display text-display-lg font-semibold">
             {pricing.title}
           </h2>
         </Reveal>
 
         <Reveal stagger className="mx-auto mt-14 max-w-2xl">
-          <RevealItem className="relative overflow-hidden rounded-3xl border border-border-strong bg-elevated p-8 backdrop-blur-md md:p-12">
+          <RevealItem className="relative overflow-hidden rounded-xl border border-white/10 bg-teal-900/60 p-8 shadow-lg backdrop-blur-md md:p-12">
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-accent-warm/20 blur-3xl"
+              className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-gold/20 blur-3xl"
             />
 
             <div className="relative flex flex-col items-center text-center">
               <div className="flex items-baseline gap-3">
-                <span className="font-display text-2xl text-text-tertiary line-through">
+                <span className="font-display text-2xl text-text-on-dark-muted line-through">
                   {formatPkr(pricing.priceAnchor)}
                 </span>
-                <span className="rounded-full bg-accent-warm/15 px-2.5 py-0.5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
+                <span className="rounded-pill bg-gold/15 px-2.5 py-0.5 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-gold">
                   {pricing.discountLabel}
                 </span>
               </div>
 
-              <p className="mt-2 font-display text-display-xl font-medium text-accent-warm">
+              <p className="mt-2 font-display text-display-xl font-semibold text-gold">
                 {formatPkr(pricing.price)}
               </p>
 
-              <p className="mt-3 max-w-sm text-sm text-text-secondary">
+              <p className="mt-3 max-w-sm text-sm text-text-on-dark-muted">
                 {pricing.priceNote}
               </p>
-              <p className="mt-1 text-sm text-text-secondary">
+              <p className="mt-1 text-sm text-text-on-dark-muted">
                 {pricing.paymentNote}
               </p>
 
               <Button
-                variant="warm"
+                variant="primary"
                 size="lg"
                 className="mt-8"
                 onClick={() => openCheckout()}
@@ -76,12 +77,12 @@ export function Pricing() {
               {hasManualPayment && (
                 <Link
                   href="/pay"
-                  className="mt-3 text-sm text-text-secondary underline-offset-4 transition hover:text-accent-warm hover:underline"
+                  className="mt-3 text-sm text-text-on-dark-muted underline-offset-4 transition hover:text-gold hover:underline"
                 >
                   Pay via JazzCash / Easypaisa instead →
                 </Link>
               )}
-              <p className="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
+              <p className="mt-3 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-gold">
                 {pricing.urgency}
               </p>
 
@@ -89,10 +90,10 @@ export function Pricing() {
                 {pricing.badges.map((badge) => (
                   <li
                     key={badge}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-elevated/40 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-text-secondary"
+                    className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-text-on-dark-muted"
                   >
                     <Check
-                      className="size-3 text-accent-warm"
+                      className="size-3 text-gold"
                       strokeWidth={2.5}
                     />
                     {badge}
@@ -101,18 +102,18 @@ export function Pricing() {
               </ul>
             </div>
 
-            <div className="mt-10 border-t border-border-subtle pt-8">
-              <p className="font-display text-lg font-medium text-text-primary">
+            <div className="mt-10 border-t border-white/10 pt-8">
+              <p className="font-display text-xl font-semibold text-text-on-dark">
                 {pricing.includesHeading}
               </p>
               <ul className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-8">
                 {pricing.includes.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-3 text-sm text-text-secondary"
+                    className="flex items-start gap-3 text-sm text-text-on-dark-muted"
                   >
                     <Check
-                      className="mt-0.5 size-4 shrink-0 text-accent-warm"
+                      className="mt-0.5 size-4 shrink-0 text-gold"
                       strokeWidth={2.5}
                     />
                     <span>{item}</span>

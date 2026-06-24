@@ -94,14 +94,14 @@ export function CouponCard({ hovered, onHover, reducedMotion }: Props) {
 
   return (
     <group>
-      {/* Warm halo behind the card */}
+      {/* Gold halo behind the card */}
       <group ref={halo} position={[0, 0, -0.12]}>
         <mesh>
           <planeGeometry args={[4.6, 3.0]} />
           <meshBasicMaterial
-            color="#ff6b35"
+            color="#f4b455"
             transparent
-            opacity={hovered ? 0.35 : 0.22}
+            opacity={hovered ? 0.32 : 0.20}
             blending={AdditiveBlending}
             depthWrite={false}
           />
@@ -117,16 +117,16 @@ export function CouponCard({ hovered, onHover, reducedMotion }: Props) {
       >
         <RoundedBox args={[4, 2.4, 0.16]} radius={0.15} smoothness={5}>
           <meshPhysicalMaterial
-            color="#11172a"
-            emissive="#ff6b35"
+            color="#07302e"
+            emissive="#f4b455"
             emissiveIntensity={haloIntensity}
             roughness={0.15}
-            metalness={0.15}
+            metalness={0.2}
             clearcoat={1}
             clearcoatRoughness={0.2}
-            transmission={0.4}
+            transmission={0.35}
             thickness={0.5}
-            iridescence={0.6}
+            iridescence={0.5}
             iridescenceIOR={1.3}
           />
         </RoundedBox>
@@ -135,7 +135,7 @@ export function CouponCard({ hovered, onHover, reducedMotion }: Props) {
         <Text
           position={[0, 0.78, 0.09]}
           fontSize={0.16}
-          color="#a8aec0"
+          color="#7ab8b1"
           letterSpacing={0.18}
           anchorX="center"
           anchorY="middle"
@@ -146,7 +146,7 @@ export function CouponCard({ hovered, onHover, reducedMotion }: Props) {
         <Text
           position={[0, 0.12, 0.09]}
           fontSize={0.78}
-          color="#ff6b35"
+          color="#f4b455"
           letterSpacing={-0.03}
           anchorX="center"
           anchorY="middle"
@@ -159,7 +159,7 @@ export function CouponCard({ hovered, onHover, reducedMotion }: Props) {
         <Text
           position={[0, -0.55, 0.09]}
           fontSize={0.14}
-          color="#a8aec0"
+          color="#7ab8b1"
           letterSpacing={0.12}
           anchorX="center"
           anchorY="middle"
@@ -171,16 +171,16 @@ export function CouponCard({ hovered, onHover, reducedMotion }: Props) {
         <group position={[0, -0.85, 0.09]}>
           <mesh>
             <planeGeometry args={[1.2, 0.34]} />
-            <meshBasicMaterial color="#0a0e1a" transparent opacity={0.65} />
+            <meshBasicMaterial color="#07302e" transparent opacity={0.7} />
           </mesh>
           <mesh position={[0, 0, 0.001]}>
             <ringGeometry args={[0.59, 0.6, 32]} />
-            <meshBasicMaterial color="#ff6b35" />
+            <meshBasicMaterial color="#f4b455" />
           </mesh>
           <Text
             position={[0, 0, 0.002]}
             fontSize={0.2}
-            color="#f5f2eb"
+            color="#f6f3ec"
             letterSpacing={0.32}
             anchorX="center"
             anchorY="middle"

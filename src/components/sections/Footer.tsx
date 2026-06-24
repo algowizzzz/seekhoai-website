@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { GraduationCap, Instagram, Mail, Youtube } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { brand, footer } from "@/content/content";
+import { Wordmark } from "@/components/ui/Wordmark";
 
 const SOCIAL_ICONS: Record<
   "youtube" | "instagram" | "udemy" | "email",
@@ -24,14 +25,14 @@ export function Footer() {
   };
   return (
     <footer
-      className="border-t border-border-subtle bg-base"
+      className="border-t border-white/10 bg-teal-900 text-text-on-dark"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div className="container-content py-16 md:py-24">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
           <div className="col-span-2 md:col-span-2">
-            <p className="font-display text-2xl font-medium">{brand.name}</p>
-            <p className="mt-3 max-w-xs text-sm text-text-secondary">{footer.tagline}</p>
+            <Wordmark tone="onDark" size="nav" />
+            <p className="mt-3 max-w-xs text-sm text-text-on-dark-muted">{footer.tagline}</p>
             <ul className="mt-5 flex items-center gap-2">
               {footer.socials.map((s) => {
                 const Icon = SOCIAL_ICONS[s.kind];
@@ -43,7 +44,7 @@ export function Footer() {
                       rel={s.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                       aria-label={s.label}
                       title={s.label}
-                      className="inline-flex size-10 items-center justify-center rounded-full border border-border-subtle text-text-secondary transition-colors duration-200 hover:border-accent-warm hover:text-accent-warm"
+                      className="inline-flex size-10 items-center justify-center rounded-pill border border-white/15 text-text-on-dark-muted transition-colors duration-200 hover:border-gold hover:text-gold"
                     >
                       <Icon className="size-4" />
                     </a>
@@ -54,7 +55,7 @@ export function Footer() {
           </div>
           {footer.columns.map((col) => (
             <div key={col.heading} className="col-span-1">
-              <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-teal-300">
                 {col.heading}
               </p>
               <ul className="mt-4 space-y-2.5">
@@ -62,7 +63,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={resolveHref(link.href)}
-                      className="text-sm text-text-secondary transition-colors duration-200 hover:text-text-primary"
+                      className="text-sm text-text-on-dark-muted transition-colors duration-200 hover:text-gold"
                     >
                       {link.label}
                     </a>
@@ -72,7 +73,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border-subtle pt-6 text-xs text-text-tertiary md:flex-row md:items-center">
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-text-on-dark-muted md:flex-row md:items-center">
           <p>{footer.copyright}</p>
           <p>{brand.domain}</p>
         </div>

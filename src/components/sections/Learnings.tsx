@@ -9,22 +9,22 @@ export function Learnings() {
     id: it.id,
     number: `0${parseInt(it.id, 10)}`.slice(-2),
     title: it.title,
-    body: <p className="text-base leading-relaxed text-text-secondary md:text-lg">{it.body}</p>,
+    body: <p className="text-base leading-relaxed text-muted md:text-lg">{it.body}</p>,
   }));
 
   return (
     <section
       id="learnings"
-      className="relative py-12 md:py-32"
+      className="relative bg-cream py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
       <div className="container-content">
         <Reveal className="max-w-3xl">
-          <p className="eyebrow">[ {learnings.eyebrow} ]</p>
-          <h2 className="mt-4 font-display text-display-lg font-medium">
+          <p className="eyebrow">{learnings.eyebrow}</p>
+          <h2 className="mt-4 font-display text-display-lg font-semibold text-ink">
             {learnings.title}
           </h2>
-          <p className="mt-5 text-lg text-text-secondary">{learnings.intro}</p>
+          <p className="mt-5 text-lg text-muted">{learnings.intro}</p>
         </Reveal>
 
         <Reveal className="mt-12 md:mt-16">

@@ -7,33 +7,28 @@ export function FreeIntroCourse() {
   return (
     <section
       id="free-intro"
-      className="relative py-12 md:py-24"
+      className="relative bg-cream-2 py-12 md:py-24"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 800px" }}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-radial-warm opacity-25"
-      />
-
       <div className="container-content">
         <Reveal className="mx-auto max-w-3xl">
-          <div className="relative overflow-hidden rounded-3xl border border-accent-warm/30 bg-elevated/60 p-8 backdrop-blur-md md:p-12">
+          <div className="relative overflow-hidden rounded-xl border border-[color:var(--line-gold)] bg-paper p-8 shadow-lg md:p-12">
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-accent-warm/15 blur-3xl"
+              className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-gold/20 blur-3xl"
             />
 
             <div className="relative">
-              <span className="inline-flex items-center gap-2 rounded-full border border-accent-warm/40 bg-accent-warm/10 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-warm">
+              <span className="inline-flex items-center gap-2 rounded-pill border border-[color:var(--line-gold)] bg-gold-50 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-gold-700">
                 <Sparkles className="size-3" />
                 {freeIntro.eyebrow}
               </span>
 
-              <h2 className="mt-5 text-balance font-display text-3xl font-medium leading-[1.1] md:text-5xl lg:text-6xl">
+              <h2 className="mt-5 text-balance font-display text-3xl font-semibold leading-[1.1] text-ink md:text-5xl lg:text-6xl">
                 {freeIntro.title}
               </h2>
 
-              <p className="mt-5 max-w-2xl text-lg text-text-secondary">
+              <p className="mt-5 max-w-2xl text-lg text-muted">
                 {freeIntro.subtitle}
               </p>
 
@@ -41,10 +36,10 @@ export function FreeIntroCourse() {
                 {freeIntro.bullets.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-3 text-base text-text-secondary"
+                    className="flex items-start gap-3 text-base text-muted"
                   >
                     <Check
-                      className="mt-1 size-4 shrink-0 text-accent-warm"
+                      className="mt-1 size-4 shrink-0 text-gold-700"
                       strokeWidth={2.5}
                     />
                     <span>{item}</span>
@@ -56,12 +51,12 @@ export function FreeIntroCourse() {
                 {freeIntro.stats.map((s) => (
                   <li
                     key={s.label}
-                    className="inline-flex items-baseline gap-2 rounded-full border border-white/[0.08] bg-base/40 px-4 py-2 backdrop-blur-sm"
+                    className="inline-flex items-baseline gap-2 rounded-pill border border-[color:var(--line)] bg-cream/60 px-4 py-2"
                   >
-                    <span className="font-display text-base font-semibold text-white">
+                    <span className="font-display text-base font-semibold text-ink">
                       {s.value}
                     </span>
-                    <span className="font-mono text-xs uppercase tracking-[0.16em] text-text-tertiary">
+                    <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-2">
                       {s.label}
                     </span>
                   </li>
@@ -71,11 +66,11 @@ export function FreeIntroCourse() {
               <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                 <Link
                   href="/free"
-                  className="inline-flex items-center justify-center rounded-full bg-accent-warm px-7 py-3.5 font-display text-base font-medium text-black transition-transform duration-200 hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center rounded-pill bg-gold px-7 py-3.5 font-sans text-base font-semibold text-ink shadow-cta transition-all duration-200 ease-brand hover:bg-gold-600 hover:-translate-y-[1px]"
                 >
                   {freeIntro.cta.label}
                 </Link>
-                <p className="text-sm text-text-tertiary">
+                <p className="text-sm text-muted-2">
                   {freeIntro.footnote}
                 </p>
               </div>

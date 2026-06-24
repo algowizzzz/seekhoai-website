@@ -17,25 +17,21 @@ export default function PrivacyPage() {
     <main className="relative">
       <Nav />
 
-      <section className="relative pt-32 pb-16 md:pt-44 md:pb-20">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-radial-warm opacity-30"
-        />
+      <section className="relative bg-cream-2 pt-32 pb-16 md:pt-44 md:pb-20">
         <div className="container-content">
           <Reveal className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow">Legal</p>
-            <h1 className="mt-4 font-display text-display-xl font-medium">
-              Privacy Policy
+            <p className="eyebrow justify-center">Legal</p>
+            <h1 className="mt-4 font-display text-display-xl font-semibold text-ink">
+              Privacy <span className="text-gold-700">Policy</span>
             </h1>
-            <p className="mt-5 text-base text-text-secondary">
+            <p className="mt-5 text-base text-muted">
               Last updated: {LAST_UPDATED}
             </p>
           </Reveal>
         </div>
       </section>
 
-      <section className="pb-24">
+      <section className="bg-cream pb-24 pt-16">
         <div className="container-content">
           <Reveal className="legal-prose mx-auto max-w-3xl">
             <p>

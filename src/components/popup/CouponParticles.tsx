@@ -44,7 +44,7 @@ export function CouponParticles({ hovered, reducedMotion, count = 120 }: Props) 
         </bufferGeometry>
         <pointsMaterial
           size={0.03}
-          color="#ffb084"
+          color="#ffd27a"
           transparent
           opacity={0.85}
           depthWrite={false}
@@ -59,7 +59,7 @@ export function CouponParticles({ hovered, reducedMotion, count = 120 }: Props) 
           scale={[3.6, 2.2, 0.5]}
           size={3}
           speed={0.6}
-          color="#ffb084"
+          color="#ffd27a"
           opacity={0.9}
         />
       )}

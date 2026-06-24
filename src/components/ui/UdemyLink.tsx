@@ -3,7 +3,7 @@ import { Fragment } from "react";
 export const UDEMY_PROFILE_URL = "https://www.udemy.com/user/saad-ahmed-434/";
 
 const LINK_CLASSES =
-  "text-accent-warm hover:text-accent-warm-2 underline underline-offset-4 decoration-accent-warm/40 hover:decoration-accent-warm transition-colors";
+  "text-gold hover:text-gold-glow underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition-colors";
 
 export function UdemyLink() {
   return (

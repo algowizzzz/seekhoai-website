@@ -30,9 +30,9 @@ export function SuccessState({ redirectUrl }: Props) {
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", damping: 14, stiffness: 200 }}
-        className="grid size-20 place-items-center rounded-full bg-accent-warm/15 ring-2 ring-accent-warm/40"
+        className="grid size-20 place-items-center rounded-pill bg-gold/15 ring-2 ring-gold/40"
       >
-        <Check className="size-10 text-accent-warm" strokeWidth={3} />
+        <Check className="size-10 text-gold-700" strokeWidth={3} />
       </motion.div>
 
       <motion.div
@@ -40,8 +40,8 @@ export function SuccessState({ redirectUrl }: Props) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, duration: 0.4 }}
       >
-        <h3 className="font-display text-3xl font-medium">You're in.</h3>
-        <p className="mt-2 max-w-sm text-text-secondary">
+        <h3 className="font-display text-3xl font-semibold text-ink">You're in.</h3>
+        <p className="mt-2 max-w-sm text-muted">
           Redirecting you to your course on Udemy in {secondsLeft}s.
         </p>
       </motion.div>
@@ -51,7 +51,7 @@ export function SuccessState({ redirectUrl }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.4 }}
-        className="inline-flex items-center gap-2 rounded-full bg-accent-warm px-6 py-3 font-display font-medium text-black transition-transform duration-200 hover:scale-[1.02]"
+        className="inline-flex items-center gap-2 rounded-pill bg-gold px-6 py-3 font-semibold text-ink shadow-cta transition-all duration-200 ease-brand hover:bg-gold-600 hover:-translate-y-[1px]"
       >
         Open course now
         <ExternalLink className="size-4" />
@@ -61,9 +61,9 @@ export function SuccessState({ redirectUrl }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.4 }}
-        className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary"
+        className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-2"
       >
-        [ Free access — check your email for the welcome series ]
+        Free access — check your email for the welcome series
       </motion.p>
     </div>
   );

@@ -61,9 +61,9 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
   if (state.status === "loading") {
     return (
       <AdminShell>
-        <div className="flex flex-col items-center gap-3 text-text-tertiary">
+        <div className="flex flex-col items-center gap-3 text-muted-2">
           <Loader2 className="size-6 animate-spin" />
-          <p className="font-mono text-xs uppercase tracking-[0.18em]">
+          <p className="text-xs font-bold uppercase tracking-[0.14em]">
             Checking session…
           </p>
         </div>
@@ -75,13 +75,13 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
     return (
       <AdminShell>
         <div className="max-w-md text-center">
-          <ShieldAlert className="mx-auto size-10 text-accent-warm" />
-          <h2 className="mt-4 font-display text-2xl font-medium">
+          <ShieldAlert className="mx-auto size-10 text-gold-700" />
+          <h2 className="mt-4 font-display text-2xl font-semibold text-ink">
             Supabase auth not configured
           </h2>
-          <p className="mt-3 text-sm text-text-secondary">
-            Set <code>NEXT_PUBLIC_SUPABASE_URL</code> and{" "}
-            <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> in your env, then enable
+          <p className="mt-3 text-sm text-muted">
+            Set <code className="font-mono text-gold-700">NEXT_PUBLIC_SUPABASE_URL</code> and{" "}
+            <code className="font-mono text-gold-700">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> in your env, then enable
             the Google provider in your Supabase project (Authentication →
             Providers → Google) to lock this page down.
           </p>
@@ -93,16 +93,16 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
   if (state.status === "signed-out") {
     return (
       <AdminShell>
-        <div className="w-full max-w-sm rounded-3xl border border-border-strong bg-elevated p-8 text-center">
-          <p className="eyebrow">Admin</p>
-          <h2 className="mt-3 font-display text-2xl font-medium">Sign in to continue</h2>
-          <p className="mt-2 text-sm text-text-secondary">
-            Only <span className="font-mono">{adminEmail}</span> can access this dashboard.
+        <div className="w-full max-w-sm rounded-xl border border-[color:var(--line)] bg-paper p-8 text-center shadow-sm">
+          <p className="eyebrow justify-center">Admin</p>
+          <h2 className="mt-3 font-display text-2xl font-semibold text-ink">Sign in to continue</h2>
+          <p className="mt-2 text-sm text-muted">
+            Only <span className="font-mono text-gold-700">{adminEmail}</span> can access this dashboard.
           </p>
           <button
             type="button"
             onClick={signIn}
-            className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent-warm font-medium text-base transition-colors hover:bg-accent-warm-2"
+            className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-pill bg-gold font-semibold text-ink shadow-cta transition-all duration-200 ease-brand hover:bg-gold-600 hover:-translate-y-[1px]"
           >
             <LogIn className="size-4" />
             Sign in with Google
@@ -115,20 +115,20 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
   if (state.status === "unauthorized") {
     return (
       <AdminShell>
-        <div className="w-full max-w-md rounded-3xl border border-border-strong bg-elevated p-8 text-center">
-          <ShieldAlert className="mx-auto size-10 text-red-400" />
-          <h2 className="mt-4 font-display text-2xl font-medium">
+        <div className="w-full max-w-md rounded-xl border border-[color:var(--line)] bg-paper p-8 text-center shadow-sm">
+          <ShieldAlert className="mx-auto size-10 text-red-500" />
+          <h2 className="mt-4 font-display text-2xl font-semibold text-ink">
             Not authorized
           </h2>
-          <p className="mt-2 text-sm text-text-secondary">
-            <span className="font-mono">{state.email}</span> isn't allowed on
-            this dashboard. Only <span className="font-mono">{adminEmail}</span>{" "}
+          <p className="mt-2 text-sm text-muted">
+            <span className="font-mono">{state.email}</span> isn&apos;t allowed on
+            this dashboard. Only <span className="font-mono text-gold-700">{adminEmail}</span>{" "}
             has access.
           </p>
           <button
             type="button"
             onClick={signOut}
-            className="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-subtle px-4 text-sm text-text-primary hover:border-border-strong"
+            className="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-pill border border-[color:var(--line)] px-4 text-sm text-ink hover:border-gold"
           >
             <LogOut className="size-4" />
             Sign out
@@ -140,15 +140,15 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div className="border-b border-border-subtle bg-elevated/40 backdrop-blur-sm">
+      <div className="border-b border-[color:var(--line)] bg-cream/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 md:px-8">
-          <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-text-tertiary">
-            Signed in as <span className="text-accent-warm">{state.email}</span>
+          <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-2">
+            Signed in as <span className="text-gold-700">{state.email}</span>
           </p>
           <button
             type="button"
             onClick={signOut}
-            className="inline-flex h-8 items-center gap-2 rounded-full border border-border-subtle px-3 text-xs text-text-secondary hover:border-border-strong hover:text-text-primary"
+            className="inline-flex h-8 items-center gap-2 rounded-pill border border-[color:var(--line)] px-3 text-xs text-muted hover:border-gold hover:text-ink"
           >
             <LogOut className="size-3" />
             Sign out
@@ -162,11 +162,7 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
 
 function AdminShell({ children }: { children: ReactNode }) {
   return (
-    <main className="grid min-h-screen place-items-center bg-base text-text-primary px-4">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-radial-warm opacity-20"
-      />
+    <main className="relative grid min-h-screen place-items-center bg-cream px-4 text-ink">
       {children}
     </main>
   );

@@ -45,7 +45,7 @@ export function CheckoutModal() {
       particleCount: 120,
       spread: 80,
       origin: { y: 0.45 },
-      colors: ["#ff6b35", "#ffb084", "#4a9eff", "#f5f2eb"],
+      colors: ["#f4b455", "#ffd27a", "#15837f", "#07302e"],
     });
     setTimeout(() => {
       confetti({
@@ -53,14 +53,14 @@ export function CheckoutModal() {
         angle: 60,
         spread: 70,
         origin: { x: 0, y: 0.55 },
-        colors: ["#ff6b35", "#ffb084"],
+        colors: ["#f4b455", "#ffd27a"],
       });
       confetti({
         particleCount: 80,
         angle: 120,
         spread: 70,
         origin: { x: 1, y: 0.55 },
-        colors: ["#4a9eff", "#8fc4ff"],
+        colors: ["#15837f", "#7ab8b1"],
       });
     }, 250);
   };
@@ -73,7 +73,7 @@ export function CheckoutModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 grid place-items-center bg-base/95 px-4 backdrop-blur-2xl"
+          className="fixed inset-0 z-50 grid place-items-center bg-ink/80 px-4 backdrop-blur-2xl"
           role="dialog"
           aria-modal="true"
           aria-labelledby="checkout-title"
@@ -84,13 +84,13 @@ export function CheckoutModal() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.94, opacity: 0 }}
             transition={springModal}
-            className="relative flex max-h-[90vh] w-full max-w-md flex-col overflow-y-auto overflow-x-hidden rounded-3xl border border-border-strong bg-elevated shadow-2xl"
+            className="relative flex max-h-[90vh] w-full max-w-md flex-col overflow-y-auto overflow-x-hidden rounded-xl border border-[color:var(--line)] bg-paper shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between bg-elevated/95 px-6 pb-3 pt-6 backdrop-blur-sm">
+            <div className="sticky top-0 z-10 flex items-center justify-between bg-paper/95 px-6 pb-3 pt-6 backdrop-blur-sm">
               <h2
                 id="checkout-title"
-                className="font-display text-2xl font-medium"
+                className="font-display text-2xl font-semibold text-ink"
               >
                 {success
                   ? "You're in."
@@ -101,7 +101,7 @@ export function CheckoutModal() {
               <button
                 type="button"
                 onClick={close}
-                className="grid size-9 place-items-center rounded-full border border-border-subtle text-text-secondary transition-colors hover:text-text-primary"
+                className="grid size-9 place-items-center rounded-pill border border-[color:var(--line)] text-muted transition-colors hover:text-ink hover:border-gold"
                 aria-label="Close"
               >
                 <X className="size-4" />

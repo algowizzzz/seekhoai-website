@@ -20,7 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <label
           htmlFor={inputId}
           className={cn(
-            "mb-2 block font-mono text-xs uppercase tracking-[0.16em] text-text-secondary",
+            "mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-muted",
             hideLabel && "sr-only",
           )}
         >
@@ -31,15 +31,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         ref={ref}
         id={inputId}
         className={cn(
-          "h-11 w-full rounded-full border border-border-subtle bg-subtle px-5 text-text-primary placeholder:text-text-tertiary",
-          "transition-colors duration-200 focus:border-accent-warm focus:outline-none",
-          error && "border-red-500/60 focus:border-red-500",
+          "h-11 w-full rounded-pill border border-[color:var(--line)] bg-paper px-5 text-ink placeholder:text-muted-2",
+          "transition-colors duration-200 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30",
+          error && "border-red-500/60 focus:border-red-500 focus:ring-red-200",
           className,
         )}
         aria-invalid={error ? "true" : "false"}
         {...rest}
       />
-      {error && <p className="mt-1.5 text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-red-600">{error}</p>}
     </div>
   );
 });

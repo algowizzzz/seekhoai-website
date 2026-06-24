@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { nav, brand } from "@/content/content";
+import { nav } from "@/content/content";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
+import { Wordmark } from "@/components/ui/Wordmark";
 import { useCheckout } from "@/context/CheckoutContext";
 
 export function Nav() {
@@ -21,22 +22,22 @@ export function Nav() {
 
   return (
     <motion.nav
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-all duration-300",
         scrolled
-          ? "bg-base/70 backdrop-blur-xl shadow-[0_1px_0_0_var(--border-subtle)]"
-          : "bg-transparent",
+          ? "bg-cream/85 backdrop-blur-xl backdrop-saturate-150 shadow-[0_1px_0_0_var(--border-subtle)]"
+          : "bg-cream/30 backdrop-blur-md",
       )}
     >
-      <div className="container-content flex h-16 items-center justify-between md:h-20">
+      <div className="container-content flex h-16 items-center justify-between md:h-[72px]">
         <a
           href={onHome ? "#hero" : "/"}
-          className="font-display text-xl font-medium tracking-tight"
+          className="inline-flex items-center transition-opacity hover:opacity-80"
         >
-          {brand.name}
+          <Wordmark tone="auto" size="nav" />
         </a>
 
         <Button variant="primary" size="sm" onClick={() => openCheckout()}>
