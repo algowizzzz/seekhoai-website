@@ -30,16 +30,16 @@ const wrap = (preview: string, inner: string) => `<!doctype html>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>SeekhoAI</title>
 </head>
-<body style="margin:0;padding:0;background:#f5f3ef;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1a1d2a;-webkit-font-smoothing:antialiased;">
+<body style="margin:0;padding:0;background:#f6f3ec;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#07302e;-webkit-font-smoothing:antialiased;">
   <!-- preview text -->
-  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;color:#f5f3ef;font-size:1px;line-height:1px;">${preview}</div>
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f5f3ef;padding:24px 12px;">
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;color:#f6f3ec;font-size:1px;line-height:1px;">${preview}</div>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f6f3ec;padding:24px 12px;">
     <tr><td align="center">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;border-radius:14px;box-shadow:0 1px 2px rgba(20,20,20,0.04);overflow:hidden;">
         <!-- header -->
         <tr><td style="padding:24px 32px 0 32px;">
-          <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:#1a1d2a;">
-            <span style="color:#f97316;">●</span>&nbsp; SeekhoAI
+          <p style="margin:0;font-family:'Schibsted Grotesk','Inter',Helvetica,Arial,sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.03em;color:#07302e;line-height:1;">
+            Seekho<span style="color:#b87a1f;font-weight:800;">&nbsp;AI</span>
           </p>
         </td></tr>
         <!-- body -->
@@ -47,12 +47,12 @@ const wrap = (preview: string, inner: string) => `<!doctype html>
           ${inner}
         </td></tr>
         <!-- footer -->
-        <tr><td style="padding:20px 32px 28px 32px;border-top:1px solid #eeece6;background:#fafaf7;">
-          <p style="margin:0 0 8px;font-size:13px;color:#6b6f7d;line-height:1.6;">
+        <tr><td style="padding:20px 32px 28px 32px;border-top:1px solid #dedacf;background:#efe9dd;">
+          <p style="margin:0 0 8px;font-size:13px;color:#5d736f;line-height:1.6;">
             SeekhoAI · Pakistan's most-enrolled AI course · 38,099+ students worldwide
           </p>
-          <p style="margin:0;font-size:12px;color:#9aa0ad;line-height:1.6;">
-            You're getting this because you signed up at <a href="${SITE_URL}" style="color:#9aa0ad;text-decoration:underline;">seekhoai.pk</a>.
+          <p style="margin:0;font-size:12px;color:#7e9490;line-height:1.6;">
+            You're getting this because you signed up at <a href="${SITE_URL}" style="color:#7e9490;text-decoration:underline;">seekhoai.pk</a>.
             Don't want these? Just reply <strong>unsubscribe</strong>.
           </p>
         </td></tr>
@@ -62,16 +62,17 @@ const wrap = (preview: string, inner: string) => `<!doctype html>
 </body></html>`;
 
 // Primary CTA — large, mobile-tappable, brand orange
+// Primary CTA — gold pill with ink text (matches site button)
 const cta = (label: string, href: string) =>
   `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 24px 0;">
-    <tr><td style="border-radius:999px;background:#f97316;">
-      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:999px;">${label}</a>
+    <tr><td style="border-radius:999px;background:#f4b455;">
+      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:'Figtree','Inter',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;color:#07302e;text-decoration:none;border-radius:999px;letter-spacing:-0.01em;">${label}</a>
     </td></tr>
   </table>`;
 
-// Secondary text link
+// Secondary text link — gold-700 on white for legibility
 const linkBtn = (label: string, href: string) =>
-  `<a href="${href}" style="color:#f97316;font-weight:600;text-decoration:none;border-bottom:1px solid #f97316;padding-bottom:1px;">${label}</a>`;
+  `<a href="${href}" style="color:#b87a1f;font-weight:600;text-decoration:none;border-bottom:1px solid #b87a1f;padding-bottom:1px;">${label}</a>`;
 
 export const welcomeEmails: WelcomeEmail[] = [
   // ─── 1. Welcome + free-course delivery ─────────────────────────────────
@@ -98,28 +99,28 @@ Founder, SeekhoAI`,
     html: wrap(
       `14+ hours, 179 lectures — yours, free. Here's where to start.`,
       `
-      <h1 style="margin:0 0 12px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-0.01em;color:#1a1d2a;">
+      <h1 style="margin:0 0 12px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-0.01em;color:#07302e;">
         Your free course is ready.
       </h1>
-      <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3d4250;">
+      <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3a4f4c;">
         Welcome to SeekhoAI. Your <strong>Introduction to GenAI</strong> course on Udemy is unlocked and waiting for you.
       </p>
       ${cta("Open the course →", UDEMY_FREE_URL)}
-      <div style="display:flex;gap:8px;margin:0 0 24px;font-size:13px;color:#6b6f7d;">
-        <span>14+ hours</span><span style="color:#c4c8d2;">·</span>
-        <span>179 lectures</span><span style="color:#c4c8d2;">·</span>
+      <div style="display:flex;gap:8px;margin:0 0 24px;font-size:13px;color:#5d736f;">
+        <span>14+ hours</span><span style="color:#cfe5e1;">·</span>
+        <span>179 lectures</span><span style="color:#cfe5e1;">·</span>
         <span>Lifetime access</span>
       </div>
-      <p style="margin:24px 0 8px;font-size:14px;font-weight:600;color:#1a1d2a;text-transform:uppercase;letter-spacing:0.04em;">Start here</p>
-      <ol style="margin:0 0 24px;padding-left:20px;color:#3d4250;line-height:1.7;font-size:15px;">
+      <p style="margin:24px 0 8px;font-size:14px;font-weight:600;color:#07302e;text-transform:uppercase;letter-spacing:0.04em;">Start here</p>
+      <ol style="margin:0 0 24px;padding-left:20px;color:#3a4f4c;line-height:1.7;font-size:15px;">
         <li>Open the course at the link above.</li>
         <li>Start with <strong>Section 1</strong> — Prompt Engineering basics.</li>
         <li>Do the hands-on demo in lecture 4. That's where it clicks.</li>
       </ol>
-      <p style="margin:24px 0 8px;font-size:15px;line-height:1.6;color:#3d4250;">
+      <p style="margin:24px 0 8px;font-size:15px;line-height:1.6;color:#3a4f4c;">
         Stuck on anything? Just reply to this email. I read every one.
       </p>
-      <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad, Founder of SeekhoAI</p>
+      <p style="margin:0;font-size:15px;color:#5d736f;">— Saad, Founder of SeekhoAI</p>
     `,
     ),
   },
@@ -148,30 +149,30 @@ Reopen the course: ${UDEMY_FREE_URL}
     html: wrap(
       `One tip that immediately raises the quality of everything ChatGPT writes for you.`,
       `
-      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#07302e;">
         The 3 things every good prompt needs.
       </h1>
-      <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3d4250;">
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3a4f4c;">
         Most users type a question into ChatGPT and hope. The ones who get reliable, professional output every time follow a simple structure:
       </p>
-      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:20px 24px;margin:20px 0 24px;">
-        <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:22px;font-weight:700;color:#c2410c;letter-spacing:-0.01em;">
+      <div style="background:#fdf3e0;border:1px solid #f4d68a;border-radius:12px;padding:20px 24px;margin:20px 0 24px;">
+        <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:22px;font-weight:700;color:#b87a1f;letter-spacing:-0.01em;">
           Role + Context + Format
         </p>
       </div>
-      <ul style="margin:0 0 24px;padding-left:0;list-style:none;color:#3d4250;font-size:15px;line-height:1.7;">
-        <li style="padding:6px 0;"><strong style="color:#1a1d2a;">Role</strong> — tell ChatGPT who it is. <em style="color:#6b6f7d;">"You are a senior copywriter…"</em></li>
-        <li style="padding:6px 0;"><strong style="color:#1a1d2a;">Context</strong> — give it the facts. <em style="color:#6b6f7d;">"The product is a 999 PKR AI course in Pakistan…"</em></li>
-        <li style="padding:6px 0;"><strong style="color:#1a1d2a;">Format</strong> — say exactly what shape you want. <em style="color:#6b6f7d;">"Write 3 ad headlines, max 8 words each…"</em></li>
+      <ul style="margin:0 0 24px;padding-left:0;list-style:none;color:#3a4f4c;font-size:15px;line-height:1.7;">
+        <li style="padding:6px 0;"><strong style="color:#07302e;">Role</strong> — tell ChatGPT who it is. <em style="color:#5d736f;">"You are a senior copywriter…"</em></li>
+        <li style="padding:6px 0;"><strong style="color:#07302e;">Context</strong> — give it the facts. <em style="color:#5d736f;">"The product is a 999 PKR AI course in Pakistan…"</em></li>
+        <li style="padding:6px 0;"><strong style="color:#07302e;">Format</strong> — say exactly what shape you want. <em style="color:#5d736f;">"Write 3 ad headlines, max 8 words each…"</em></li>
       </ul>
-      <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#3d4250;">
+      <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#3a4f4c;">
         Try it on ChatGPT today. The difference is night-and-day.
       </p>
-      <p style="margin:0 0 16px;font-size:14px;color:#6b6f7d;">
+      <p style="margin:0 0 16px;font-size:14px;color:#5d736f;">
         This is from Section 1 of your free course — lecture 3 walks through 5 more examples.
       </p>
       ${cta("Reopen the course →", UDEMY_FREE_URL)}
-      <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad</p>
+      <p style="margin:0;font-size:15px;color:#5d736f;">— Saad</p>
     `,
     ),
   },
@@ -205,26 +206,26 @@ No pressure — the free course is yours regardless.
     html: wrap(
       `Where the Complete AI Bootcamp picks up from where the free course ends.`,
       `
-      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#07302e;">
         Liking the free course?
       </h1>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.65;color:#3d4250;">
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.65;color:#3a4f4c;">
         The free course covers what GenAI is and how to prompt well. The <strong>Complete AI Bootcamp</strong> picks up from there:
       </p>
       <table style="width:100%;border-collapse:separate;border-spacing:0;margin:0 0 24px;">
-        <tr><td style="padding:10px 0;border-bottom:1px solid #eeece6;font-size:15px;color:#3d4250;line-height:1.5;"><strong style="color:#1a1d2a;">MidJourney mastery</strong> — design artwork good enough to sell on Etsy.</td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #eeece6;font-size:15px;color:#3d4250;line-height:1.5;"><strong style="color:#1a1d2a;">AI agents</strong> with LangChain and LangGraph.</td></tr>
-        <tr><td style="padding:10px 0;border-bottom:1px solid #eeece6;font-size:15px;color:#3d4250;line-height:1.5;"><strong style="color:#1a1d2a;">Vibe Coding</strong> — ship apps without writing code.</td></tr>
-        <tr><td style="padding:10px 0;font-size:15px;color:#3d4250;line-height:1.5;"><strong style="color:#1a1d2a;">AI marketing &amp; SEO</strong> that actually pulls traffic.</td></tr>
+        <tr><td style="padding:10px 0;border-bottom:1px solid #dedacf;font-size:15px;color:#3a4f4c;line-height:1.5;"><strong style="color:#07302e;">MidJourney mastery</strong> — design artwork good enough to sell on Etsy.</td></tr>
+        <tr><td style="padding:10px 0;border-bottom:1px solid #dedacf;font-size:15px;color:#3a4f4c;line-height:1.5;"><strong style="color:#07302e;">AI agents</strong> with LangChain and LangGraph.</td></tr>
+        <tr><td style="padding:10px 0;border-bottom:1px solid #dedacf;font-size:15px;color:#3a4f4c;line-height:1.5;"><strong style="color:#07302e;">Vibe Coding</strong> — ship apps without writing code.</td></tr>
+        <tr><td style="padding:10px 0;font-size:15px;color:#3a4f4c;line-height:1.5;"><strong style="color:#07302e;">AI marketing &amp; SEO</strong> that actually pulls traffic.</td></tr>
       </table>
-      <p style="margin:0 0 4px;font-size:14px;color:#6b6f7d;letter-spacing:0.04em;text-transform:uppercase;">Intro price</p>
-      <p style="margin:0 0 4px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:30px;line-height:1.1;font-weight:700;color:#1a1d2a;">
-        <span style="color:#9aa0ad;font-weight:400;text-decoration:line-through;font-size:18px;">${PRICE_FULL}</span>
+      <p style="margin:0 0 4px;font-size:14px;color:#5d736f;letter-spacing:0.04em;text-transform:uppercase;">Intro price</p>
+      <p style="margin:0 0 4px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:30px;line-height:1.1;font-weight:700;color:#07302e;">
+        <span style="color:#7e9490;font-weight:400;text-decoration:line-through;font-size:18px;">${PRICE_FULL}</span>
         &nbsp;${PRICE_NOW}
       </p>
-      <p style="margin:0 0 24px;font-size:13px;color:#6b6f7d;">One-time · Lifetime access · 30-day money-back · JazzCash &amp; Easypaisa</p>
+      <p style="margin:0 0 24px;font-size:13px;color:#5d736f;">One-time · Lifetime access · 30-day money-back · JazzCash &amp; Easypaisa</p>
       ${cta("See the full bootcamp →", PAID_URL)}
-      <p style="margin:0;font-size:14px;color:#6b6f7d;">No pressure. The free course is yours either way.</p>
+      <p style="margin:0;font-size:14px;color:#5d736f;">No pressure. The free course is yours either way.</p>
     `,
     ),
   },
@@ -257,10 +258,10 @@ ${PAID_URL}
     html: wrap(
       `What people actually say after taking the course.`,
       `
-      <h1 style="margin:0 0 8px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      <h1 style="margin:0 0 8px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#07302e;">
         38,099 students later.
       </h1>
-      <p style="margin:0 0 24px;font-size:15px;color:#6b6f7d;">A few of the 13,017 reviews on Udemy:</p>
+      <p style="margin:0 0 24px;font-size:15px;color:#5d736f;">A few of the 13,017 reviews on Udemy:</p>
 
       ${[
         { name: "Ananya", when: "5 months ago", quote: "Amazing, above expectations!" },
@@ -270,15 +271,15 @@ ${PAID_URL}
       ]
         .map(
           (r) => `
-        <div style="border:1px solid #eeece6;border-radius:12px;padding:16px 20px;margin:0 0 12px;background:#fafaf7;">
-          <p style="margin:0 0 8px;color:#f97316;font-size:14px;letter-spacing:0.06em;">★★★★★</p>
-          <p style="margin:0 0 10px;font-size:15px;line-height:1.55;color:#1a1d2a;">"${r.quote}"</p>
-          <p style="margin:0;font-size:13px;color:#6b6f7d;"><strong style="color:#1a1d2a;">${r.name}</strong> · ${r.when} · via Udemy</p>
+        <div style="border:1px solid #dedacf;border-radius:12px;padding:16px 20px;margin:0 0 12px;background:#efe9dd;">
+          <p style="margin:0 0 8px;color:#f4b455;font-size:14px;letter-spacing:0.06em;">★★★★★</p>
+          <p style="margin:0 0 10px;font-size:15px;line-height:1.55;color:#07302e;">"${r.quote}"</p>
+          <p style="margin:0;font-size:13px;color:#5d736f;"><strong style="color:#07302e;">${r.name}</strong> · ${r.when} · via Udemy</p>
         </div>`,
         )
         .join("")}
 
-      <p style="margin:20px 0 24px;font-size:13px;color:#6b6f7d;letter-spacing:0.04em;text-transform:uppercase;">
+      <p style="margin:20px 0 24px;font-size:13px;color:#5d736f;letter-spacing:0.04em;text-transform:uppercase;">
         38,099+ students · 13,017+ reviews · 4.5★ · 100+ countries
       </p>
       ${cta("See the full bootcamp →", PAID_URL)}
@@ -316,7 +317,7 @@ ${PAID_URL}
     html: wrap(
       `Refunds, time commitment, certificate, payment in PKR — answered.`,
       `
-      <h1 style="margin:0 0 20px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      <h1 style="margin:0 0 20px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:#07302e;">
         Common questions before enrolling.
       </h1>
 
@@ -329,14 +330,14 @@ ${PAID_URL}
       ]
         .map(
           (it) => `
-        <div style="margin:0 0 18px;padding-bottom:18px;border-bottom:1px solid #eeece6;">
-          <p style="margin:0 0 6px;font-size:16px;font-weight:600;color:#1a1d2a;">${it.q}</p>
-          <p style="margin:0;font-size:15px;line-height:1.6;color:#3d4250;">${it.a}</p>
+        <div style="margin:0 0 18px;padding-bottom:18px;border-bottom:1px solid #dedacf;">
+          <p style="margin:0 0 6px;font-size:16px;font-weight:600;color:#07302e;">${it.q}</p>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#3a4f4c;">${it.a}</p>
         </div>`,
         )
         .join("")}
 
-      <p style="margin:20px 0 24px;font-size:15px;color:#3d4250;">
+      <p style="margin:20px 0 24px;font-size:15px;color:#3a4f4c;">
         Anything else? Just reply — I read every email.
       </p>
       ${cta("Enrol — " + PRICE_NOW + " →", PAID_URL)}
@@ -362,22 +363,22 @@ ${PAID_URL}
     html: wrap(
       `If the Complete AI Bootcamp isn't for you, you get every rupee back.`,
       `
-      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:26px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:26px;line-height:1.25;font-weight:700;color:#07302e;">
         30 days to decide.
       </h1>
-      <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3d4250;">
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3a4f4c;">
         Enrolling in the bootcamp doesn't have to be a leap of faith. You get <strong>30 full days</strong> to try the entire course.
       </p>
-      <p style="margin:0 0 24px;font-size:16px;line-height:1.65;color:#3d4250;">
+      <p style="margin:0 0 24px;font-size:16px;line-height:1.65;color:#3a4f4c;">
         If anything about it isn't right for you, email us and we send back every rupee. No forms. No "why are you leaving" calls. Just a refund.
       </p>
-      <div style="background:#fff7ed;border-left:3px solid #f97316;border-radius:6px;padding:18px 22px;margin:0 0 28px;">
-        <p style="margin:0;font-size:15px;line-height:1.65;color:#1a1d2a;">
+      <div style="background:#fdf3e0;border-left:3px solid #f4b455;border-radius:6px;padding:18px 22px;margin:0 0 28px;">
+        <p style="margin:0;font-size:15px;line-height:1.65;color:#07302e;">
           The worst-case is: you try the bootcamp for 30 days, decide it's not for you, get your <strong>999 PKR</strong> back, and walk away with whatever you learned in that month. No risk.
         </p>
       </div>
       ${cta("Try the bootcamp →", PAID_URL)}
-      <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad</p>
+      <p style="margin:0;font-size:15px;color:#5d736f;">— Saad</p>
     `,
     ),
   },
@@ -400,20 +401,20 @@ Lifetime access. 30-day money-back. JazzCash or Easypaisa.
     html: wrap(
       `999 PKR is the launch price. Going up as reviews accumulate.`,
       `
-      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:26px;line-height:1.25;font-weight:700;color:#1a1d2a;">
+      <h1 style="margin:0 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:26px;line-height:1.25;font-weight:700;color:#07302e;">
         Intro price won't last forever.
       </h1>
-      <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3d4250;">
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#3a4f4c;">
         The Complete AI Bootcamp is at <strong>${PRICE_NOW}</strong> right now (${PRICE_OFF} off the regular ${PRICE_FULL}). It's an intro price for a reason — we're raising it as reviews accumulate and as we ship new modules.
       </p>
-      <p style="margin:0 0 24px;font-size:16px;line-height:1.65;color:#3d4250;">
+      <p style="margin:0 0 24px;font-size:16px;line-height:1.65;color:#3a4f4c;">
         If you've been weighing it, this is the right time. If you're not, no worries — I won't keep emailing you about this offer.
       </p>
       ${cta("Enrol — " + PRICE_NOW + " →", PAID_URL)}
-      <p style="margin:0 0 16px;font-size:13px;color:#6b6f7d;">
+      <p style="margin:0 0 16px;font-size:13px;color:#5d736f;">
         Lifetime access · 30-day money-back · JazzCash / Easypaisa
       </p>
-      <p style="margin:0;font-size:15px;color:#6b6f7d;">— Saad</p>
+      <p style="margin:0;font-size:15px;color:#5d736f;">— Saad</p>
     `,
     ),
   },
