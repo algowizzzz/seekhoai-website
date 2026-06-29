@@ -7,6 +7,8 @@ import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { brand, instructor, testimonialSection } from "@/content/content";
+import { track } from "@/lib/analytics";
+import { useFormTracking } from "@/lib/useFormTracking";
 
 const FREE_COURSE_BULLETS = [
   "What generative AI really is, explained without the jargon.",
@@ -75,6 +77,7 @@ type FormState =
 export function FreeLanding() {
   const formRef = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState<FormState>({ status: "idle" });
+  const formTracking = useFormTracking("enroll_free_landing");
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -90,6 +93,7 @@ export function FreeLanding() {
 
     if (!name || !email || !phone) {
       setState({ status: "error", message: "Please fill in all three fields." });
+      formTracking.trackValidationError("required_fields", "missing");
       return;
     }
     if (!consent) {
@@ -97,9 +101,11 @@ export function FreeLanding() {
         status: "error",
         message: "Please tick the WhatsApp consent box so we can send your access link.",
       });
+      formTracking.trackValidationError("consent", "unchecked");
       return;
     }
 
+    formTracking.markSubmitted();
     setState({ status: "submitting" });
     try {
       const res = await fetch("/api/enroll/free", {
@@ -113,14 +119,20 @@ export function FreeLanding() {
           status: "error",
           message: "Something went wrong. Please try again in a moment.",
         });
+        track("form_submit_failed", { form_name: "enroll_free_landing", status: res.status });
         return;
       }
       fireLeadEvent();
+      track("generate_lead", { source: "enroll_free_landing" });
       setState({ status: "success" });
-    } catch {
+    } catch (err) {
       setState({
         status: "error",
         message: "Network error. Please try again.",
+      });
+      track("form_submit_failed", {
+        form_name: "enroll_free_landing",
+        error: String(err).slice(0, 200),
       });
     }
   }
@@ -171,7 +183,12 @@ export function FreeLanding() {
                 {state.status === "success" ? (
                   <SuccessPanel />
                 ) : (
-                  <form onSubmit={onSubmit} className="flex flex-col gap-4">
+                  <form
+                    onSubmit={onSubmit}
+                    onFocus={formTracking.onFocus}
+                    onBlur={formTracking.onBlur}
+                    className="flex flex-col gap-4"
+                  >
                     <div>
                       <p className="font-display text-2xl font-semibold text-ink">
                         Get free access
