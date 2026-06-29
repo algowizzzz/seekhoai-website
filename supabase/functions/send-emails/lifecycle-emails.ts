@@ -46,13 +46,13 @@ const wrap = (preview: string, inner: string) => `<!doctype html>
         <tr><td style="padding:24px 32px 32px 32px;">
           ${inner}
         </td></tr>
-        <tr><td style="padding:20px 32px 28px 32px;border-top:1px solid #dedacf;background:#efe9dd;">
-          <p style="margin:0 0 8px;font-size:13px;color:#5d736f;line-height:1.6;">
+        <tr><td style="padding:24px 32px 28px 32px;background:#0a3a3c;">
+          <p style="margin:0 0 8px;font-size:13px;color:#cfe5e1;line-height:1.6;">
             SeekhoAI · Pakistan's most-enrolled AI course · 38,099+ students worldwide
           </p>
-          <p style="margin:0;font-size:12px;color:#7e9490;line-height:1.6;">
-            <a href="${SITE_URL}" style="color:#7e9490;text-decoration:underline;">seekhoai.pk</a> ·
-            Don't want these? Reply <strong>unsubscribe</strong>.
+          <p style="margin:0;font-size:12px;color:#7ab8b1;line-height:1.6;">
+            <a href="${SITE_URL}" style="color:#f4b455;text-decoration:underline;">seekhoai.pk</a> ·
+            Don't want these? Reply <strong style="color:#cfe5e1;">unsubscribe</strong>.
           </p>
         </td></tr>
       </table>
@@ -112,7 +112,7 @@ Stuck on access or anything else? Reply to this email and we'll fix it within 24
       </p>
 
       <div style="background:#efe9dd;border:1px solid #dedacf;border-radius:12px;padding:18px 22px;margin:0 0 24px;">
-        <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5d736f;">Order summary</p>
+        <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#11716f;">Order summary</p>
         <table style="width:100%;font-size:14px;color:#07302e;">
           <tr><td style="padding:4px 0;color:#5d736f;">Amount paid</td><td style="padding:4px 0;text-align:right;color:#f4b455;font-weight:700;">${amountStr}</td></tr>
           <tr><td style="padding:4px 0;color:#5d736f;">Order ID</td><td style="padding:4px 0;text-align:right;font-family:Menlo,monospace;font-size:11px;color:#3a4f4c;">${sessionId}</td></tr>
@@ -121,7 +121,7 @@ Stuck on access or anything else? Reply to this email and we'll fix it within 24
 
       ${cta("Open your course →", UDEMY_PAID_URL)}
 
-      <p style="margin:24px 0 8px;font-size:14px;font-weight:600;color:#07302e;text-transform:uppercase;letter-spacing:0.04em;">What to do first</p>
+      <p style="margin:24px 0 8px;font-size:13px;font-weight:700;color:#11716f;text-transform:uppercase;letter-spacing:0.14em;">What to do first</p>
       <ol style="margin:0 0 24px;padding-left:20px;color:#3a4f4c;line-height:1.7;font-size:15px;">
         <li>Open the course at the link above.</li>
         <li>Start with <strong>Module 1</strong> — Foundational Prompt Engineering.</li>
@@ -161,7 +161,7 @@ ${PAID_URL}
       You signed up yesterday but haven't picked up the full bootcamp yet — totally fine. Just checking in.
     </p>
     <div style="background:#efe9dd;border:1px solid #dedacf;border-radius:12px;padding:18px 22px;margin:0 0 24px;">
-      <p style="margin:0 0 4px;font-size:13px;color:#5d736f;letter-spacing:0.04em;text-transform:uppercase;">Intro price still active</p>
+      <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#11716f;letter-spacing:0.14em;text-transform:uppercase;">Intro price still active</p>
       <p style="margin:0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#07302e;line-height:1.1;">
         <span style="color:#7e9490;font-weight:400;text-decoration:line-through;font-size:16px;">${PRICE_FULL}</span>
         &nbsp;${PRICE_NOW}

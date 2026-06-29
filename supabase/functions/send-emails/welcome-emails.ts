@@ -47,13 +47,13 @@ const wrap = (preview: string, inner: string) => `<!doctype html>
           ${inner}
         </td></tr>
         <!-- footer -->
-        <tr><td style="padding:20px 32px 28px 32px;border-top:1px solid #dedacf;background:#efe9dd;">
-          <p style="margin:0 0 8px;font-size:13px;color:#5d736f;line-height:1.6;">
+        <tr><td style="padding:24px 32px 28px 32px;background:#0a3a3c;">
+          <p style="margin:0 0 8px;font-size:13px;color:#cfe5e1;line-height:1.6;">
             SeekhoAI · Pakistan's most-enrolled AI course · 38,099+ students worldwide
           </p>
-          <p style="margin:0;font-size:12px;color:#7e9490;line-height:1.6;">
-            You're getting this because you signed up at <a href="${SITE_URL}" style="color:#7e9490;text-decoration:underline;">seekhoai.pk</a>.
-            Don't want these? Just reply <strong>unsubscribe</strong>.
+          <p style="margin:0;font-size:12px;color:#7ab8b1;line-height:1.6;">
+            You're getting this because you signed up at <a href="${SITE_URL}" style="color:#f4b455;text-decoration:underline;">seekhoai.pk</a>.
+            Don't want these? Just reply <strong style="color:#cfe5e1;">unsubscribe</strong>.
           </p>
         </td></tr>
       </table>
@@ -111,7 +111,7 @@ Founder, SeekhoAI`,
         <span>179 lectures</span><span style="color:#cfe5e1;">·</span>
         <span>Lifetime access</span>
       </div>
-      <p style="margin:24px 0 8px;font-size:14px;font-weight:600;color:#07302e;text-transform:uppercase;letter-spacing:0.04em;">Start here</p>
+      <p style="margin:24px 0 8px;font-size:13px;font-weight:700;color:#11716f;text-transform:uppercase;letter-spacing:0.14em;">Start here</p>
       <ol style="margin:0 0 24px;padding-left:20px;color:#3a4f4c;line-height:1.7;font-size:15px;">
         <li>Open the course at the link above.</li>
         <li>Start with <strong>Section 1</strong> — Prompt Engineering basics.</li>
@@ -218,7 +218,7 @@ No pressure — the free course is yours regardless.
         <tr><td style="padding:10px 0;border-bottom:1px solid #dedacf;font-size:15px;color:#3a4f4c;line-height:1.5;"><strong style="color:#07302e;">Vibe Coding</strong> — ship apps without writing code.</td></tr>
         <tr><td style="padding:10px 0;font-size:15px;color:#3a4f4c;line-height:1.5;"><strong style="color:#07302e;">AI marketing &amp; SEO</strong> that actually pulls traffic.</td></tr>
       </table>
-      <p style="margin:0 0 4px;font-size:14px;color:#5d736f;letter-spacing:0.04em;text-transform:uppercase;">Intro price</p>
+      <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#11716f;letter-spacing:0.14em;text-transform:uppercase;">Intro price</p>
       <p style="margin:0 0 4px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:30px;line-height:1.1;font-weight:700;color:#07302e;">
         <span style="color:#7e9490;font-weight:400;text-decoration:line-through;font-size:18px;">${PRICE_FULL}</span>
         &nbsp;${PRICE_NOW}
