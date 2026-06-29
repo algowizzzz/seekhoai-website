@@ -23,9 +23,23 @@ const META_STANDARD_EVENTS: Record<string, string> = {
   trailer_play: "ViewContent",
 };
 
+const DEBUG_KEY = "seekhoai_analytics_debug";
+
 function isDebug() {
   if (typeof window === "undefined") return false;
-  return new URLSearchParams(window.location.search).has("analytics_debug");
+  if (new URLSearchParams(window.location.search).has("analytics_debug")) {
+    try {
+      sessionStorage.setItem(DEBUG_KEY, "1");
+    } catch {
+      /* sessionStorage blocked */
+    }
+    return true;
+  }
+  try {
+    return sessionStorage.getItem(DEBUG_KEY) === "1";
+  } catch {
+    return false;
+  }
 }
 
 export function track(event: string, params: AnalyticsParams = {}) {
@@ -36,6 +50,7 @@ export function track(event: string, params: AnalyticsParams = {}) {
     if (v === undefined || v === null) continue;
     cleaned[k] = v;
   }
+  if (isDebug()) cleaned.debug_mode = true;
 
   try {
     window.gtag?.("event", event, cleaned);
