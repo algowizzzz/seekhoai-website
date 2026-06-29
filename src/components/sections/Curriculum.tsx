@@ -3,8 +3,10 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { Accordion } from "@/components/ui/Accordion";
 import { curriculum } from "@/content/content";
+import { useSectionView } from "@/lib/useSectionView";
 
 export function Curriculum() {
+  const sectionRef = useSectionView("curriculum");
   const items = curriculum.modules.map((m) => ({
     id: m.number,
     number: `MODULE ${m.number}`,
@@ -38,6 +40,7 @@ export function Curriculum() {
   return (
     <section
       id="curriculum"
+      ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative bg-cream py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
@@ -51,7 +54,7 @@ export function Curriculum() {
         </Reveal>
 
         <Reveal className="mt-16 md:mt-20">
-          <Accordion items={items} defaultOpen="01" />
+          <Accordion items={items} defaultOpen="01" trackingName="curriculum" />
         </Reveal>
       </div>
     </section>

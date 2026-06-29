@@ -4,12 +4,15 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { finalCTA } from "@/content/content";
 import { useCheckout } from "@/context/CheckoutContext";
+import { useSectionView } from "@/lib/useSectionView";
 
 export function FinalCTA() {
   const { open: openCheckout } = useCheckout();
+  const sectionRef = useSectionView("final_cta");
 
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative overflow-hidden bg-ink py-16 text-text-on-dark md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
@@ -35,7 +38,13 @@ export function FinalCTA() {
             {finalCTA.body}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button variant="primary" size="lg" onClick={() => openCheckout()}>
+            <Button
+              variant="primary"
+              size="lg"
+              ctaLocation="final_cta"
+              ctaLabel={finalCTA.cta.label}
+              onClick={() => openCheckout()}
+            >
               {finalCTA.cta.label}
             </Button>
             <a

@@ -45,11 +45,19 @@ export function Hero() {
         </ul>
 
         <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <Button variant="primary" size="lg" onClick={() => openCheckout()}>
+          <Button
+            variant="primary"
+            size="lg"
+            ctaLocation="hero"
+            ctaLabel={hero.ctas.primary.label}
+            onClick={() => openCheckout()}
+          >
             {hero.ctas.primary.label}
           </Button>
           <a
             href={hero.ctas.secondary.href}
+            data-cta-location="hero"
+            data-cta-label={hero.ctas.secondary.label}
             className="text-sm text-text-on-dark-muted underline-offset-4 transition hover:text-gold hover:underline"
           >
             {hero.ctas.secondary.label}

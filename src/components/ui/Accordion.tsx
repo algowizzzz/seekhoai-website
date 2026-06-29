@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { track } from "@/lib/analytics";
 
 interface AccordionItem {
   id: string;
@@ -16,10 +17,18 @@ interface AccordionProps {
   items: AccordionItem[];
   className?: string;
   defaultOpen?: string | null;
+  trackingName?: string;
 }
 
-export function Accordion({ items, className, defaultOpen = null }: AccordionProps) {
+export function Accordion({ items, className, defaultOpen = null, trackingName }: AccordionProps) {
   const [openId, setOpenId] = useState<string | null>(defaultOpen);
+
+  const handleToggle = (id: string, currentlyOpen: boolean) => {
+    setOpenId(currentlyOpen ? null : id);
+    if (!currentlyOpen && trackingName) {
+      track("accordion_open", { accordion_name: trackingName, item_id: id });
+    }
+  };
 
   return (
     <div
@@ -34,7 +43,7 @@ export function Accordion({ items, className, defaultOpen = null }: AccordionPro
           <div key={item.id}>
             <button
               type="button"
-              onClick={() => setOpenId(open ? null : item.id)}
+              onClick={() => handleToggle(item.id, open)}
               aria-expanded={open}
               className="group flex w-full items-center gap-6 py-6 text-left transition-colors duration-200 hover:text-gold-700"
             >

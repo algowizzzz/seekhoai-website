@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Check, Loader2 } from "lucide-react";
 import { hero } from "@/content/content";
 import { cn } from "@/lib/cn";
+import { useFormTracking } from "@/lib/useFormTracking";
+import { track } from "@/lib/analytics";
 
 const schema = z.object({
   email: z
@@ -22,11 +24,13 @@ type FormValues = z.infer<typeof schema>;
 
 export function EmailCaptureForm({ className }: { className?: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const formTracking = useFormTracking("email_capture_hero");
   const { register, handleSubmit, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = async (values: FormValues) => {
+    formTracking.markSubmitted();
     setStatus("loading");
     try {
       const res = await fetch("/api/email", {
@@ -35,10 +39,25 @@ export function EmailCaptureForm({ className }: { className?: string }) {
         body: JSON.stringify({ ...values, source: "hero" }),
       });
       const data = await res.json();
-      if (data.ok) setStatus("success");
-      else setStatus("error");
-    } catch {
+      if (data.ok) {
+        setStatus("success");
+        track("generate_lead", { source: "email_capture_hero" });
+      } else {
+        setStatus("error");
+        track("form_submit_failed", { form_name: "email_capture_hero", status: res.status });
+      }
+    } catch (err) {
       setStatus("error");
+      track("form_submit_failed", {
+        form_name: "email_capture_hero",
+        error: String(err).slice(0, 200),
+      });
+    }
+  };
+
+  const onInvalid = (errs: typeof formState.errors) => {
+    for (const [field, e] of Object.entries(errs)) {
+      if (e) formTracking.trackValidationError(field, String(e.type ?? "invalid"));
     }
   };
 
@@ -58,7 +77,12 @@ export function EmailCaptureForm({ className }: { className?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={cn("w-full max-w-xl", className)}>
+    <form
+      onSubmit={handleSubmit(onSubmit, onInvalid)}
+      onFocus={formTracking.onFocus}
+      onBlur={formTracking.onBlur}
+      className={cn("w-full max-w-xl", className)}
+    >
       <div className="flex flex-col gap-2 rounded-pill border border-[color:var(--line)] bg-paper p-1.5 focus-within:border-gold sm:flex-row">
         <label htmlFor="hero-email" className="sr-only">
           Email address

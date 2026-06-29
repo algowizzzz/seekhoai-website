@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { pricing } from "@/content/content";
 import { useCoupon, priceWithCoupon } from "@/context/CouponContext";
 import type { CheckoutMode } from "@/context/CheckoutContext";
+import { useFormTracking } from "@/lib/useFormTracking";
+import { track } from "@/lib/analytics";
 
 const schema = z.object({
   email: z
@@ -49,6 +51,9 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
     ? "Get free access →"
     : `Continue to payment — ${applied ? totalLabel : formatPkr(pricing.price)}`;
 
+  const formName = isFree ? "enroll_free" : "enroll_paid";
+  const formTracking = useFormTracking(formName);
+
   const {
     register,
     handleSubmit,
@@ -59,6 +64,7 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
   });
 
   const onSubmit = async (values: EnrollmentFormValues) => {
+    formTracking.markSubmitted();
     const endpoint = isFree ? "/api/enroll/free" : "/api/checkout";
     try {
       const res = await fetch(endpoint, {
@@ -71,20 +77,48 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
         }),
       });
       const data = await res.json();
-      if (!data.ok) return;
+      if (!data.ok) {
+        track("form_submit_failed", { form_name: formName, status: res.status });
+        return;
+      }
+
+      if (isFree) {
+        track("generate_lead", { source: "enroll_free", coupon_code: code || null });
+      } else {
+        track("checkout_started", {
+          value: finalPrice,
+          currency: pricing.currency,
+          coupon_code: code || null,
+          discount_pct: discountPct,
+        });
+      }
 
       if (!isFree && data.redirectUrl) {
         window.location.href = data.redirectUrl;
         return;
       }
       onSuccess(data.redirectUrl as string | undefined);
-    } catch {
-      /* swallow */
+    } catch (err) {
+      track("form_submit_failed", {
+        form_name: formName,
+        error: String(err).slice(0, 200),
+      });
+    }
+  };
+
+  const onInvalid = (errs: typeof errors) => {
+    for (const [field, e] of Object.entries(errs)) {
+      if (e) formTracking.trackValidationError(field, String(e.type ?? "invalid"));
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-6 pb-8">
+    <form
+      onSubmit={handleSubmit(onSubmit, onInvalid)}
+      onFocus={formTracking.onFocus}
+      onBlur={formTracking.onBlur}
+      className="space-y-4 px-6 pb-8"
+    >
       <div className="rounded-md border border-[color:var(--line)] bg-cream-2/60 p-4 text-sm">
         <div className="flex items-center justify-between text-muted">
           <span>{isFree ? "Introduction to GenAI" : "Complete AI Bootcamp"}</span>

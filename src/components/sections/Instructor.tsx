@@ -4,11 +4,14 @@ import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import { instructor } from "@/content/content";
 import { WithUdemyLinks } from "@/components/ui/UdemyLink";
+import { useSectionView } from "@/lib/useSectionView";
 
 export function Instructor() {
+  const sectionRef = useSectionView("instructor");
   return (
     <section
       id="instructor"
+      ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative bg-ink py-12 text-text-on-dark md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >

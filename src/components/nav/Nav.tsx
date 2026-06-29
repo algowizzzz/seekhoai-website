@@ -40,7 +40,13 @@ export function Nav() {
           <Wordmark tone="auto" size="nav" />
         </a>
 
-        <Button variant="primary" size="sm" onClick={() => openCheckout()}>
+        <Button
+          variant="primary"
+          size="sm"
+          ctaLocation="nav"
+          ctaLabel={nav.cta.label}
+          onClick={() => openCheckout()}
+        >
           {nav.cta.label}
         </Button>
       </div>

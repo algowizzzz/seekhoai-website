@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 
 interface Props {
   videoId: string;
@@ -60,7 +61,10 @@ export function YouTubeFacade({ videoId, title, posterSrc }: Props) {
   return (
     <button
       type="button"
-      onClick={() => setActivated(true)}
+      onClick={() => {
+        track("trailer_play", { source: "hero_facade", video_id: videoId });
+        setActivated(true);
+      }}
       onMouseEnter={handlePreconnect}
       onFocus={handlePreconnect}
       aria-label={`Play video: ${title}`}

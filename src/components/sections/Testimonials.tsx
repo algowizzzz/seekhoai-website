@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Star, StarHalf } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { testimonialSection } from "@/content/content";
+import { useSectionView } from "@/lib/useSectionView";
 
 function Stars({ count }: { count: number }) {
   const full = Math.floor(count);
@@ -40,9 +41,11 @@ function Stars({ count }: { count: number }) {
 
 export function Testimonials() {
   const { eyebrow, title, intro, reviews } = testimonialSection;
+  const sectionRef = useSectionView("testimonials");
 
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative bg-cream py-12 md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1100px" }}
     >

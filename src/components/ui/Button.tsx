@@ -1,7 +1,8 @@
 "use client";
 
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type ButtonHTMLAttributes, type MouseEvent, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { track, session } from "@/lib/analytics";
 
 type Variant = "primary" | "ghost" | "warm" | "dark" | "ghostOnDark";
 type Size = "sm" | "md" | "lg";
@@ -12,6 +13,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
   iconRight?: ReactNode;
   loading?: boolean;
+  ctaLocation?: string;
+  ctaLabel?: string;
 }
 
 // `primary` / `warm` are aliases: solid gold CTA, ink text, gold-tinted shadow.
@@ -47,14 +50,30 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     loading,
     children,
     disabled,
+    ctaLocation,
+    ctaLabel,
+    onClick,
     ...rest
   },
   ref,
 ) {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (!disabled && !loading && ctaLocation) {
+      session.recordCtaClick();
+      track("cta_click", {
+        cta_location: ctaLocation,
+        cta_label: ctaLabel || (typeof children === "string" ? children : ""),
+        cta_variant: variant,
+      });
+    }
+    onClick?.(e);
+  };
+
   return (
     <button
       ref={ref}
       disabled={disabled || loading}
+      onClick={handleClick}
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-pill font-semibold tracking-tight transition-all duration-200 ease-brand will-change-transform",
         "active:translate-y-0 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0",

@@ -1,23 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useTrailer } from "@/context/TrailerContext";
+import { track } from "@/lib/analytics";
 
 const TRAILER_EMBED_URL =
   "https://www.youtube.com/embed/homKQ7wx9BY?autoplay=1&rel=0";
 
 export function TrailerModal() {
   const { isOpen, close } = useTrailer();
+  const openedAtRef = useRef(0);
 
   useEffect(() => {
     if (!isOpen) return;
+    openedAtRef.current = performance.now();
+    track("trailer_open", { source: "modal" });
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
     document.addEventListener("keydown", onKey);
     return () => {
+      track("trailer_close", {
+        watched_ms: Math.round(performance.now() - openedAtRef.current),
+      });
       document.body.style.overflow = original;
       document.removeEventListener("keydown", onKey);
     };

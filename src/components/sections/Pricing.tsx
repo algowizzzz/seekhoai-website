@@ -6,6 +6,7 @@ import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { pricing, payments } from "@/content/content";
 import { useCheckout } from "@/context/CheckoutContext";
+import { useSectionView } from "@/lib/useSectionView";
 
 const hasManualPayment = Boolean(
   payments.easypaisa.accountNumber || payments.jazzcash.accountNumber,
@@ -17,10 +18,12 @@ function formatPkr(n: number) {
 
 export function Pricing() {
   const { open: openCheckout } = useCheckout();
+  const sectionRef = useSectionView("pricing", { extraEvent: "view_pricing" });
 
   return (
     <section
       id="pricing"
+      ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative bg-ink py-12 text-text-on-dark md:py-32"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px 1200px" }}
     >
@@ -70,6 +73,8 @@ export function Pricing() {
                 variant="primary"
                 size="lg"
                 className="mt-8"
+                ctaLocation="pricing"
+                ctaLabel={pricing.cta.label}
                 onClick={() => openCheckout()}
               >
                 {pricing.cta.label}

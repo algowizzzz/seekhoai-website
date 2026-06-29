@@ -13,6 +13,7 @@ import { useCoupon } from "@/context/CouponContext";
 import { usePopupTriggers } from "./usePopupTriggers";
 import { Button } from "@/components/ui/Button";
 import { springModal } from "@/lib/motion-presets";
+import { track } from "@/lib/analytics";
 
 const CouponScene = dynamic(
   () => import("./CouponScene").then((m) => m.CouponScene),
@@ -52,6 +53,9 @@ export function DiscountPopup() {
   });
 
   const handleDismiss = () => {
+    if (submitState !== "success") {
+      track("discount_popup_dismiss", { code: discountCode.code });
+    }
     setOpen(false);
     onDismiss();
     setTimeout(() => {
@@ -70,7 +74,10 @@ export function DiscountPopup() {
   }, []);
 
   useEffect(() => {
-    if (shouldShow) setOpen(true);
+    if (shouldShow) {
+      setOpen(true);
+      track("discount_popup_shown", { code: discountCode.code });
+    }
   }, [shouldShow]);
 
   useEffect(() => {
@@ -109,6 +116,11 @@ export function DiscountPopup() {
       apply(discountCode.code, discountCode.pct);
       onClaim();
       setSubmitState("success");
+      track("discount_code_claimed", {
+        code: discountCode.code,
+        discount_pct: discountCode.pct,
+      });
+      track("generate_lead", { source: "discount_popup" });
 
       if (formRef.current) {
         const rect = formRef.current.getBoundingClientRect();

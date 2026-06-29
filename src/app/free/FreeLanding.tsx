@@ -379,6 +379,8 @@ export function FreeLanding() {
               variant="primary"
               size="lg"
               className="mt-8"
+              ctaLocation="free_closing"
+              ctaLabel="Get free access"
               onClick={scrollToForm}
             >
               Get free access

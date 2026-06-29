@@ -9,6 +9,7 @@ import { TrailerModal } from "@/components/trailer/TrailerModal";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
 import { GoogleAnalytics } from "@/components/tracking/GoogleAnalytics";
+import { SessionTracker } from "@/components/tracking/SessionTracker";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -86,6 +87,7 @@ export default function RootLayout({
       <body className="bg-base text-text-primary">
         <MetaPixel />
         <GoogleAnalytics />
+        <SessionTracker />
         <CouponProvider>
           <CheckoutProvider>
             <TrailerProvider>

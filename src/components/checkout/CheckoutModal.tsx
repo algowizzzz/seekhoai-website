@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import confetti from "canvas-confetti";
@@ -10,6 +10,7 @@ import { springModal } from "@/lib/motion-presets";
 import { useCheckout } from "@/context/CheckoutContext";
 import { useCoupon, priceWithCoupon } from "@/context/CouponContext";
 import { pricing } from "@/content/content";
+import { track } from "@/lib/analytics";
 
 export function CheckoutModal() {
   const { isOpen, mode, close } = useCheckout();
@@ -18,13 +19,32 @@ export function CheckoutModal() {
   const { final } = priceWithCoupon(pricing.price, discountPct);
   const [success, setSuccess] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
+  const openedAtRef = useRef(0);
+  const successRef = useRef(false);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
+      openedAtRef.current = performance.now();
+      successRef.current = false;
+      track("begin_checkout", {
+        mode,
+        value: final,
+        currency: pricing.currency,
+        discount_pct: discountPct,
+      });
+    } else {
+      if (openedAtRef.current && !successRef.current) {
+        track("checkout_abandon", {
+          mode,
+          value: final,
+          currency: pricing.currency,
+          time_in_modal_ms: Math.round(performance.now() - openedAtRef.current),
+        });
+      }
       const t = setTimeout(() => setSuccess(false), 300);
       return () => clearTimeout(t);
     }
-  }, [isOpen]);
+  }, [isOpen, mode, final, discountPct]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,6 +59,7 @@ export function CheckoutModal() {
   }, [isOpen, close]);
 
   const handleSuccess = (url?: string) => {
+    successRef.current = true;
     setRedirectUrl(url);
     setSuccess(true);
     confetti({
