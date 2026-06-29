@@ -120,7 +120,11 @@ export function DiscountPopup() {
         code: discountCode.code,
         discount_pct: discountCode.pct,
       });
-      track("generate_lead", { source: "discount_popup" });
+      track("generate_lead", {
+        source: "discount_popup",
+        currency: "PKR",
+        value: 0,
+      });
 
       if (formRef.current) {
         const rect = formRef.current.getBoundingClientRect();

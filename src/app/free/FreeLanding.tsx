@@ -123,7 +123,11 @@ export function FreeLanding() {
         return;
       }
       fireLeadEvent();
-      track("generate_lead", { source: "enroll_free_landing" });
+      track("generate_lead", {
+        source: "enroll_free_landing",
+        currency: "PKR",
+        value: 0,
+      });
       setState({ status: "success" });
     } catch (err) {
       setState({

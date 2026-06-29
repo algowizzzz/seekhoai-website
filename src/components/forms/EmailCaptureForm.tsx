@@ -41,7 +41,11 @@ export function EmailCaptureForm({ className }: { className?: string }) {
       const data = await res.json();
       if (data.ok) {
         setStatus("success");
-        track("generate_lead", { source: "email_capture_hero" });
+        track("generate_lead", {
+          source: "email_capture_hero",
+          currency: "PKR",
+          value: 0,
+        });
       } else {
         setStatus("error");
         track("form_submit_failed", { form_name: "email_capture_hero", status: res.status });

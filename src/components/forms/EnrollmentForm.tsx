@@ -83,7 +83,12 @@ export function EnrollmentForm({ mode, onSuccess, finalPrice }: Props) {
       }
 
       if (isFree) {
-        track("generate_lead", { source: "enroll_free", coupon_code: code || null });
+        track("generate_lead", {
+          source: "enroll_free",
+          coupon_code: code || null,
+          currency: "PKR",
+          value: 0,
+        });
       } else {
         track("checkout_started", {
           value: finalPrice,
