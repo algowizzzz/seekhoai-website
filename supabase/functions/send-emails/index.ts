@@ -374,6 +374,29 @@ Deno.serve(async (req: Request) => {
         });
         break;
       }
+      case "preview-template": {
+        // Safe single-shot preview — sends one chosen template to one address
+        // without hitting the DB. For visually testing scheduled templates.
+        const email = String(body.email ?? "");
+        const template = String(body.template ?? "");
+        if (!email) throw new Error("missing_email");
+
+        let tpl: { subject: string; text: string; html: string } | null = null;
+        if (template === "pending-cart") tpl = pendingCartEmail;
+        else if (template === "weekly-newsletter") tpl = weeklyNewsletterEmail;
+        else if (template === "weekly-non-buyer") tpl = weeklyNonBuyerEmail;
+        else if (template.startsWith("welcome-")) {
+          const idx = Number(template.slice("welcome-".length)) - 1;
+          if (Number.isInteger(idx) && idx >= 0 && idx < welcomeEmails.length) {
+            tpl = welcomeEmails[idx];
+          }
+        }
+
+        if (!tpl) throw new Error("unknown_template");
+        await sendOne(email, tpl.subject, tpl.text, tpl.html);
+        extra = { template, sent_to: email };
+        break;
+      }
       case "scheduled-pending-cart": {
         extra = await handleScheduledPendingCart();
         break;
