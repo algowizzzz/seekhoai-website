@@ -18,7 +18,7 @@ export function Hero() {
       {/* Diagonal light shaft (echoes the logo poster) */}
       <div aria-hidden className="hero-shaft" />
 
-      <div className="container-content relative z-20 pt-28 md:pt-32">
+      <div className="container-content relative z-20 pt-28 pb-20 md:pt-32 md:pb-24">
         <p className="eyebrow eyebrow-on-dark">{hero.eyebrow}</p>
 
         {/* h1 is the LCP candidate — paint immediately, no fade-in. */}
