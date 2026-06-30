@@ -69,7 +69,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-10 w-full max-w-2xl overflow-hidden rounded-lg border border-white/10 bg-black/30 shadow-lg"
+          className="mt-12 mx-auto w-full max-w-4xl overflow-hidden rounded-lg border border-white/10 bg-black/30 shadow-lg md:mt-16"
           style={{ aspectRatio: "16 / 9" }}
         >
           <YouTubeFacade
